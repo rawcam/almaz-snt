@@ -103,7 +103,7 @@ export default function GardenerHub() {
               <i className={`${section.icon} text-2xl text-green-deep`}></i>
               <Link
                 href={section.link}
-                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-deep"
+                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-deep cursor-pointer"
               >
                 {section.title}
               </Link>

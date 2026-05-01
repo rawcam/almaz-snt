@@ -1,3 +1,4 @@
+// src/components/GardenerHub.jsx
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -96,13 +97,13 @@ export default function GardenerHub() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm hover:shadow-md transition-all"
+            className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center gap-3 mb-4">
               <i className={`${section.icon} text-2xl text-green-deep`}></i>
               <Link
                 href={section.link}
-                className="text-xl font-semibold text-dark hover:text-green-deep transition-colors cursor-pointer"
+                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-deep"
               >
                 {section.title}
               </Link>
@@ -111,7 +112,7 @@ export default function GardenerHub() {
               {section.items.map((item, i) => (
                 <li
                   key={i}
-                  className="flex items-start gap-2 text-sm text-gray-600 hover:text-green-deep transition-colors cursor-pointer"
+                  className="flex items-start gap-2 text-sm text-gray-600 transition-colors duration-200 hover:text-green-deep cursor-default"
                 >
                   <span className="text-gold mt-1 shrink-0">•</span>
                   {item}

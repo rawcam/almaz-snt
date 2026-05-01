@@ -1,3 +1,4 @@
+// src/pages/articles/emergency.js
 import Navbar from '../../components/Navbar'
 import { motion } from 'framer-motion'
 
@@ -15,18 +16,12 @@ export default function Emergency() {
             Экстренные службы
           </span>
           <h1 className="text-5xl md:text-6xl font-medium mt-4 mb-8 text-dark">
-            Что делать при укусе клеща
+            Что делать в экстренной ситуации
           </h1>
           <p className="text-gray-600 leading-relaxed mb-6">
-            Если вы обнаружили присосавшегося клеща, не паникуйте. Аккуратно удалите его с помощью
-            пинцета или нитки, стараясь не оторвать хоботок. Место укуса обработайте антисептиком.
-            Поместите клеща в герметичную ёмкость и отвезите в лабораторию для анализа.
+            Номера телефонов и алгоритмы действий при пожаре, укусе клеща, отключении электричества и других происшествиях.
           </p>
-          <h2 className="text-2xl font-semibold text-dark mt-8 mb-4">Куда обращаться</h2>
-          <p className="text-gray-600 leading-relaxed">
-            Ближайший травмпункт: г. Ступино, ул. Чайковского, 15. Телефон: +7 (496) 123‑45‑69.
-            При повышении температуры срочно вызывайте скорую (112).
-          </p>
+          <p className="text-gray-500 text-sm">Данные проверены и обновляются ежегодно.</p>
         </motion.article>
       </div>
     </div>

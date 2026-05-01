@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const sections = [
   {
     icon: 'fa-solid fa-book-open',
     title: 'Сад и огород',
+    link: '/almaz-snt/articles/apple-trees',
     items: [
       'Когда и как сажать яблони, груши, вишню',
       'Уход за газоном: стрижка, полив, подкормка',
@@ -14,6 +16,7 @@ const sections = [
   {
     icon: 'fa-solid fa-file-contract',
     title: 'Правила СНТ',
+    link: '/almaz-snt/articles/rules',
     items: [
       'Режим въезда транспорта и парковки',
       'Уход за ливнёвой канализацией на участке',
@@ -24,6 +27,7 @@ const sections = [
   {
     icon: 'fa-solid fa-phone-volume',
     title: 'Экстренные службы',
+    link: '/almaz-snt/articles/emergency',
     items: [
       'Скорая помощь: 112 или 03',
       'Пожарная часть: +7 (496) 123-45-68',
@@ -34,6 +38,7 @@ const sections = [
   {
     icon: 'fa-solid fa-shop',
     title: 'Инфраструктура района',
+    link: '/almaz-snt/articles/infrastructure',
     items: [
       'Поставщики песка, щебня, навоза',
       'Магазины садовых товаров рядом',
@@ -44,6 +49,7 @@ const sections = [
   {
     icon: 'fa-solid fa-house-chimney',
     title: 'Уход за участком',
+    link: '/almaz-snt/articles/maintenance',
     items: [
       'Уход за бассейном: чистка, химия',
       'Как подготовить водопровод к зиме',
@@ -54,6 +60,7 @@ const sections = [
   {
     icon: 'fa-solid fa-address-book',
     title: 'Контакты правления',
+    link: '/almaz-snt/articles/contacts-board',
     items: [
       'Председатель: +7 (496) 123-45-67',
       'Бухгалтер: +7 (496) 123-45-78',
@@ -93,15 +100,18 @@ export default function GardenerHub() {
           >
             <div className="flex items-center gap-3 mb-4">
               <i className={`${section.icon} text-2xl text-green-deep`}></i>
-              <h3 className="text-xl font-semibold text-dark">
+              <Link
+                href={section.link}
+                className="text-xl font-semibold text-dark hover:text-green-deep transition-colors cursor-pointer"
+              >
                 {section.title}
-              </h3>
+              </Link>
             </div>
             <ul className="space-y-2">
               {section.items.map((item, i) => (
                 <li
                   key={i}
-                  className="flex items-start gap-2 text-sm text-gray-600"
+                  className="flex items-start gap-2 text-sm text-gray-600 hover:text-green-deep transition-colors cursor-pointer"
                 >
                   <span className="text-gold mt-1 shrink-0">•</span>
                   {item}

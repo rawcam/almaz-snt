@@ -1,15 +1,14 @@
-import Navbar from '../components/Navbar';
-import Hero3D from '../components/Hero3D';
-import Stats from '../components/Stats';
-import NewsCard from '../components/NewsCard';
-import { motion } from 'framer-motion';
+import Navbar from '../components/Navbar'
+import Hero3D from '../components/Hero3D'
+import Stats from '../components/Stats'
+import NewsCard from '../components/NewsCard'
+import { motion } from 'framer-motion'
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-almond">
       <Navbar />
 
-      {/* Hero с 3D */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <Hero3D />
         <div className="container mx-auto px-4 relative z-10 py-20">
@@ -29,10 +28,10 @@ export default function Home() {
               Частное садовое товарищество с 2001 года. Комфорт, безопасность и прозрачность — как драгоценность.
             </p>
             <div className="flex gap-4 mt-8">
-              <a href="/forum" className="btn-outline-gold inline-block px-8 py-3 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white">
+              <a href="/forum" className="inline-block px-8 py-3 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white">
                 Сообщество
               </a>
-              <a href="/docs" className="btn-primary inline-block px-8 py-3 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#12392e] shadow-lg">
+              <a href="/docs" className="inline-block px-8 py-3 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#12392e] shadow-lg">
                 Документы
               </a>
             </div>
@@ -42,7 +41,6 @@ export default function Home() {
 
       <Stats />
 
-      {/* Новости */}
       <section className="py-20 container mx-auto px-4">
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
           Будьте в курсе
@@ -70,7 +68,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
@@ -95,5 +92,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  );
+  )
 }

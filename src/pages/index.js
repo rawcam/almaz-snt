@@ -28,10 +28,10 @@ export default function Home() {
               Частное садовое товарищество с 2001 года. Комфорт, безопасность и прозрачность — как драгоценность.
             </p>
             <div className="flex gap-4 mt-8">
-              <a href="/forum" className="inline-block px-8 py-3 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white">
+              <a href="/almaz-snt/forum" className="inline-block px-8 py-3 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white">
                 Сообщество
               </a>
-              <a href="/docs" className="inline-block px-8 py-3 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#12392e] shadow-lg">
+              <a href="/almaz-snt/docs" className="inline-block px-8 py-3 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#12392e] shadow-lg">
                 Документы
               </a>
             </div>
@@ -48,19 +48,19 @@ export default function Home() {
         <h2 className="text-4xl font-medium mt-2 mb-12">Новости товарищества</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <NewsCard
-            image="/assets/news1.jpg"
+            image="/almaz-snt/assets/news1.jpg"
             tag="Событие"
             title="Открытие летнего сезона 2026"
             description="С 5 мая включаем водопровод. Проверьте краны на участках."
           />
           <NewsCard
-            image="/assets/news2.jpg"
+            image="/almaz-snt/assets/news2.jpg"
             tag="Важно"
             title="Общее собрание 15 мая"
             description="Утверждение сметы на 2026 год и выборы правления. Явка обязательна."
           />
           <NewsCard
-            image="/assets/news3.jpg"
+            image="/almaz-snt/assets/news3.jpg"
             tag="Инфраструктура"
             title="График вывоза мусора"
             description="С 20 апреля машина приезжает по вторникам и пятницам."
@@ -77,9 +77,9 @@ export default function Home() {
           <div>
             <h5 className="text-white font-semibold">Навигация</h5>
             <ul className="mt-2 space-y-1">
-              <li><a href="/news" className="hover:text-gold">Новости</a></li>
-              <li><a href="/docs" className="hover:text-gold">Документы</a></li>
-              <li><a href="/forum" className="hover:text-gold">Сообщество</a></li>
+              <li><a href="/almaz-snt/news" className="hover:text-gold">Новости</a></li>
+              <li><a href="/almaz-snt/docs" className="hover:text-gold">Документы</a></li>
+              <li><a href="/almaz-snt/forum" className="hover:text-gold">Сообщество</a></li>
             </ul>
           </div>
           <div>

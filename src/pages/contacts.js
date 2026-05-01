@@ -22,24 +22,36 @@ export default function Contacts() {
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-6">
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">
-              <h3 className="font-semibold text-lg text-dark">📍 Адрес</h3>
+              <h3 className="font-semibold text-lg text-dark flex items-center gap-3">
+                <i className="fa-solid fa-location-dot text-green-deep"></i>
+                Адрес
+              </h3>
               <p className="text-gray-500 mt-2">
                 Московская обл., Ступинский район, д. Леньково, СНТ «Алмаз»
               </p>
             </div>
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">
-              <h3 className="font-semibold text-lg text-dark">📞 Телефон</h3>
+              <h3 className="font-semibold text-lg text-dark flex items-center gap-3">
+                <i className="fa-solid fa-phone text-green-deep"></i>
+                Телефон
+              </h3>
               <p className="text-gray-500 mt-2">
                 +7 (496) 123-45-67<br />
                 <span className="text-xs">Сб, Вс с 10:00 до 16:00</span>
               </p>
             </div>
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">
-              <h3 className="font-semibold text-lg text-dark">✉️ Электронная почта</h3>
+              <h3 className="font-semibold text-lg text-dark flex items-center gap-3">
+                <i className="fa-solid fa-envelope text-green-deep"></i>
+                Электронная почта
+              </h3>
               <p className="text-gray-500 mt-2">cnt-almaz@yandex.ru</p>
             </div>
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">
-              <h3 className="font-semibold text-lg text-dark">🏦 Реквизиты</h3>
+              <h3 className="font-semibold text-lg text-dark flex items-center gap-3">
+                <i className="fa-solid fa-building-columns text-green-deep"></i>
+                Реквизиты
+              </h3>
               <p className="text-gray-500 mt-2 text-sm">
                 ИНН: 5045028020<br />
                 Р/с: 40703810000000000000<br />

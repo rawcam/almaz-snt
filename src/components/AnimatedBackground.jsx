@@ -4,7 +4,6 @@ export default function AnimatedBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden bg-gradient-to-br from-[#e0e6d0] via-[#f5f0e6] to-[#d4c9a8]">
       <div className="absolute inset-0">
-        {/* Плавающие частицы */}
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
@@ -27,7 +26,6 @@ export default function AnimatedBackground() {
         ))}
       </div>
 
-      {/* Ромашки, клубника, бабочки */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.i
           className="fa-solid fa-sun absolute text-6xl text-yellow-300/80"

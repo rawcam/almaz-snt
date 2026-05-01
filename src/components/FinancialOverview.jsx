@@ -59,7 +59,7 @@ export default function FinancialOverview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="bg-white/70 backdrop-blur-xl rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
+            className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center gap-2 mb-3">
               <i className={`${item.icon} text-2xl text-green-deep`}></i>
@@ -67,13 +67,13 @@ export default function FinancialOverview() {
                 {item.title}
               </h3>
             </div>
-            <div className="text-2xl font-medium text-green-deep mb-2">
+            <div className="text-2xl font-light text-green-deep mb-2">
               {item.amount}
             </div>
-            <p className="text-sm text-gray-500 mb-4">{item.description}</p>
+            <p className="text-sm text-gray-600 mb-4">{item.description}</p>
             <Link
               href={item.link}
-              className="inline-flex items-center gap-1 text-sm font-medium text-green-deep hover:text-green-700 transition-colors"
+              className="inline-flex items-center gap-1 text-sm font-medium text-green-deep hover:text-green-900 transition-colors"
             >
               Подробнее
               <i className="fa-solid fa-arrow-right text-xs"></i>

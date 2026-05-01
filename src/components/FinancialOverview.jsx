@@ -7,22 +7,25 @@ const financials = [
     icon: 'fa-solid fa-coins',
     title: 'Членские взносы',
     amount: '3 500 ₽ / участок',
-    link: '/almaz-snt/articles/membership-fees',
+    link: '/almaz-snt/docs',
     description: 'На общие нужды: вывоз мусора, охрана, электричество',
+    shadowColor: 'rgba(184, 155, 94, 0.3)' // золотой
   },
   {
     icon: 'fa-solid fa-hammer',
     title: 'Целевые взносы',
     amount: '2 000 ₽ / участок',
-    link: '/almaz-snt/articles/target-fees',
+    link: '/almaz-snt/docs',
     description: 'Ремонт дороги и забора — лето 2026',
+    shadowColor: 'rgba(184, 155, 94, 0.3)'
   },
   {
     icon: 'fa-solid fa-exclamation-triangle',
     title: 'Задолженность',
     amount: 'Всего: 85 000 ₽',
-    link: '/almaz-snt/articles/debt',
+    link: '/almaz-snt/docs',
     description: 'По оплате электроэнергии и взносов',
+    shadowColor: 'rgba(220, 38, 38, 0.3)' // красный
   },
   {
     icon: 'fa-solid fa-tools',
@@ -30,6 +33,7 @@ const financials = [
     amount: 'от 500 ₽',
     link: '/almaz-snt/articles/services',
     description: 'Вырубка деревьев, вывоз мусора, ремонт',
+    shadowColor: 'rgba(107, 114, 128, 0.3)' // серый
   },
 ]
 
@@ -59,24 +63,24 @@ export default function FinancialOverview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm hover:shadow-md transition-shadow"
+            whileHover={{ y: -5, boxShadow: `0 15px 30px ${item.shadowColor}` }}
+            className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm transition-shadow cursor-pointer"
           >
-            <div className="flex items-center gap-2 mb-3">
-              <i className={`${item.icon} text-2xl text-green-deep`}></i>
-              <h3 className="text-lg font-semibold text-dark">
-                {item.title}
-              </h3>
-            </div>
-            <div className="text-2xl font-light text-green-deep mb-2">
-              {item.amount}
-            </div>
-            <p className="text-sm text-gray-600 mb-4">{item.description}</p>
-            <Link
-              href={item.link}
-              className="inline-flex items-center gap-1 text-sm font-medium text-green-deep hover:text-green-900 transition-colors"
-            >
-              Подробнее
-              <i className="fa-solid fa-arrow-right text-xs"></i>
+            <Link href={item.link} className="block h-full">
+              <div className="flex items-center gap-2 mb-3">
+                <i className={`${item.icon} text-2xl text-green-deep`}></i>
+                <h3 className="text-lg font-semibold text-dark">
+                  {item.title}
+                </h3>
+              </div>
+              <div className="text-2xl font-light text-green-deep mb-2">
+                {item.amount}
+              </div>
+              <p className="text-sm text-gray-600 mb-4">{item.description}</p>
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-green-deep hover:text-green-900 transition-colors">
+                Подробнее
+                <i className="fa-solid fa-arrow-right text-xs"></i>
+              </span>
             </Link>
           </motion.div>
         ))}

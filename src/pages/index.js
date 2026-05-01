@@ -12,29 +12,29 @@ export default function Home() {
     <div className="min-h-screen bg-almond">
       <Navbar />
 
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <AnimatedBackground />
-        <div className="container mx-auto px-4 relative z-10 py-20">
+        <div className="container mx-auto px-4 relative z-10 py-20 flex justify-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="max-w-2xl bg-white/20 backdrop-blur-xl rounded-3xl p-8 shadow-lg border border-white/30"
+            className="max-w-xl bg-white/10 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/20 text-center mx-auto"
           >
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
               Ступинский район, деревня Леньково
             </span>
-            <h1 className="text-6xl md:text-7xl font-medium mt-4 leading-tight text-dark">
+            <h1 className="text-5xl md:text-6xl font-medium mt-4 leading-tight text-dark">
               АЛМАЗ <br />в тишине садов
             </h1>
-            <p className="text-xl text-gray-600 mt-6 max-w-lg">
+            <p className="text-lg text-gray-600 mt-4 max-w-md mx-auto">
               Частное садовое товарищество с 2001 года. Комфорт, безопасность и прозрачность — как драгоценность.
             </p>
-            <div className="flex gap-4 mt-8">
-              <a href="/almaz-snt/forum" className="inline-block px-8 py-3 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white">
+            <div className="flex justify-center gap-4 mt-6">
+              <a href="/almaz-snt/forum" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white text-sm">
                 Сообщество
               </a>
-              <a href="/almaz-snt/docs" className="inline-block px-8 py-3 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#12392e] shadow-lg">
+              <a href="/almaz-snt/docs" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#12392e] shadow-lg text-sm">
                 Документы
               </a>
             </div>

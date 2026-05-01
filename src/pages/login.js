@@ -21,9 +21,12 @@ export default function Login() {
           transition={{ duration: 0.8 }}
           className="w-full max-w-md bg-white/70 backdrop-blur-xl rounded-3xl p-8 shadow-lg border border-white/30"
         >
-          <h1 className="text-3xl font-medium text-dark mb-2">
-            Личный кабинет
-          </h1>
+          <div className="flex items-center gap-3 mb-4">
+            <i className="fa-solid fa-lock text-green-deep text-2xl"></i>
+            <h1 className="text-3xl font-medium text-dark">
+              Личный кабинет
+            </h1>
+          </div>
           <p className="text-gray-500 mb-8">
             Войдите для просмотра платежей и передачи показаний.
           </p>

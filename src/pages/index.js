@@ -1,5 +1,5 @@
 import Navbar from '../components/Navbar'
-import Hero3D from '../components/Hero3D'
+import AnimatedBackground from '../components/AnimatedBackground'
 import Stats from '../components/Stats'
 import NewsCard from '../components/NewsCard'
 import { motion } from 'framer-motion'
@@ -10,7 +10,7 @@ export default function Home() {
       <Navbar />
 
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <Hero3D />
+        <AnimatedBackground />
         <div className="container mx-auto px-4 relative z-10 py-20">
           <motion.div
             initial={{ opacity: 0, y: 40 }}

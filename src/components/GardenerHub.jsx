@@ -6,13 +6,14 @@ const sections = [
   {
     icon: 'fa-solid fa-book-open',
     title: 'Сад и огород',
-    link: '/almaz-snt/articles/apple-trees',
+    link: '/almaz-snt/articles/garden',
     items: [
       'Когда и как сажать яблони, груши, вишню',
       'Уход за газоном: стрижка, полив, подкормка',
       'Сезон высадки рассады томатов и перцев',
       'Календарь обработок от вредителей',
     ],
+    shadowColor: 'rgba(76, 175, 80, 0.3)'
   },
   {
     icon: 'fa-solid fa-file-contract',
@@ -24,6 +25,7 @@ const sections = [
       'Строительные нормы: заборы, хозпостройки',
       'Порядок проведения собраний',
     ],
+    shadowColor: 'rgba(59, 130, 246, 0.3)'
   },
   {
     icon: 'fa-solid fa-phone-volume',
@@ -35,6 +37,7 @@ const sections = [
       'Газовая служба: 04',
       'Что делать при укусе клеща: алгоритм',
     ],
+    shadowColor: 'rgba(239, 68, 68, 0.3)'
   },
   {
     icon: 'fa-solid fa-shop',
@@ -46,6 +49,7 @@ const sections = [
       'Интересные места: Серпухов, Коломна',
       'Куда поехать за грибами в сезон',
     ],
+    shadowColor: 'rgba(168, 85, 247, 0.3)'
   },
   {
     icon: 'fa-solid fa-house-chimney',
@@ -57,6 +61,7 @@ const sections = [
       'Советы по компостированию',
       'Борьба с борщевиком на участке',
     ],
+    shadowColor: 'rgba(34, 197, 94, 0.3)'
   },
   {
     icon: 'fa-solid fa-address-book',
@@ -68,6 +73,7 @@ const sections = [
       'Электрик: +7 (496) 123-45-89',
       'Приём по субботам с 11:00 до 14:00',
     ],
+    shadowColor: 'rgba(107, 114, 128, 0.3)'
   },
 ]
 
@@ -97,13 +103,14 @@ export default function GardenerHub() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+            whileHover={{ y: -5, boxShadow: `0 15px 30px ${section.shadowColor}` }}
+            className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm transition-shadow"
           >
             <div className="flex items-center gap-3 mb-4">
               <i className={`${section.icon} text-2xl text-green-deep`}></i>
               <Link
                 href={section.link}
-                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-deep cursor-pointer"
+                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-deep hover:underline cursor-pointer"
               >
                 {section.title}
               </Link>

@@ -1,7 +1,6 @@
 // src/components/WeatherWidgets.jsx
 import { motion } from 'framer-motion'
 
-// демо-данные (пока нет реального API)
 const weatherNow = {
   temp: 22,
   feelsLike: 20,
@@ -17,7 +16,7 @@ const waterList = [
 ]
 
 const pollenLevels = {
-  tree: 3,   // 0-5
+  tree: 3,
   grass: 2,
   weed: 1
 }
@@ -51,7 +50,9 @@ export default function WeatherWidgets() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.1 }}
+          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(56, 189, 248, 0.3)' }}
           className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
         >
           <div className="flex items-center justify-between mb-3">
@@ -70,7 +71,9 @@ export default function WeatherWidgets() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.2 }}
+          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(2, 132, 199, 0.3)' }}
           className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
         >
           <h3 className="text-sm font-medium text-gray-600 mb-3">
@@ -91,7 +94,9 @@ export default function WeatherWidgets() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.3 }}
+          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(250, 204, 21, 0.3)' }}
           className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
         >
           <h3 className="text-sm font-medium text-gray-600 mb-3">
@@ -124,7 +129,9 @@ export default function WeatherWidgets() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.4 }}
+          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(34, 197, 94, 0.3)' }}
           className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
         >
           <h3 className="text-sm font-medium text-gray-600 mb-3">

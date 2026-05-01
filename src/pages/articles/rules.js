@@ -1,3 +1,4 @@
+// src/pages/articles/rules.js
 import Navbar from '../../components/Navbar'
 import { motion } from 'framer-motion'
 
@@ -15,18 +16,12 @@ export default function Rules() {
             Правила СНТ
           </span>
           <h1 className="text-5xl md:text-6xl font-medium mt-4 mb-8 text-dark">
-            Правила въезда и парковки
+            Правила и регламенты
           </h1>
           <p className="text-gray-600 leading-relaxed mb-6">
-            На территории СНТ действует ограничение скорости 10 км/ч. Парковка разрешена только на
-            специально отведённых площадках или на собственном участке. Шлагбаум открывается по
-           的个人ным пропускам. Гостевой транспорт допускается только в сопровождении члена СНТ.
+            Здесь собраны актуальные внутренние нормы товарищества. Ознакомьтесь с ними, чтобы избежать недоразумений.
           </p>
-          <h2 className="text-2xl font-semibold text-dark mt-8 mb-4">Ответственность</h2>
-          <p className="text-gray-600 leading-relaxed">
-            Нарушение правил может привести к административной ответственности и ограничению доступа.
-            Ознакомьтесь с полным сводом в разделе «Документы».
-          </p>
+          <p className="text-gray-500 text-sm">Страница будет регулярно дополняться правлением.</p>
         </motion.article>
       </div>
     </div>

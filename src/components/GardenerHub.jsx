@@ -2,7 +2,8 @@ import { motion } from 'framer-motion'
 
 const sections = [
   {
-    title: '📚 Сад и огород',
+    icon: 'fa-solid fa-book-open',
+    title: 'Сад и огород',
     items: [
       'Когда и как сажать яблони, груши, вишню',
       'Уход за газоном: стрижка, полив, подкормка',
@@ -11,7 +12,8 @@ const sections = [
     ],
   },
   {
-    title: '📋 Правила СНТ',
+    icon: 'fa-solid fa-file-contract',
+    title: 'Правила СНТ',
     items: [
       'Режим въезда транспорта и парковки',
       'Уход за ливнёвой канализацией на участке',
@@ -20,7 +22,8 @@ const sections = [
     ],
   },
   {
-    title: '🆘 Экстренные службы',
+    icon: 'fa-solid fa-phone-volume',
+    title: 'Экстренные службы',
     items: [
       'Скорая помощь: 112 или 03',
       'Пожарная часть: +7 (496) 123-45-68',
@@ -29,7 +32,8 @@ const sections = [
     ],
   },
   {
-    title: '🏘️ Инфраструктура района',
+    icon: 'fa-solid fa-shop',
+    title: 'Инфраструктура района',
     items: [
       'Поставщики песка, щебня, навоза',
       'Магазины садовых товаров рядом',
@@ -38,7 +42,8 @@ const sections = [
     ],
   },
   {
-    title: '🏡 Уход за участком',
+    icon: 'fa-solid fa-house-chimney',
+    title: 'Уход за участком',
     items: [
       'Уход за бассейном: чистка, химия',
       'Как подготовить водопровод к зиме',
@@ -47,7 +52,8 @@ const sections = [
     ],
   },
   {
-    title: '📞 Контакты правления',
+    icon: 'fa-solid fa-address-book',
+    title: 'Контакты правления',
     items: [
       'Председатель: +7 (496) 123-45-67',
       'Бухгалтер: +7 (496) 123-45-78',
@@ -85,9 +91,12 @@ export default function GardenerHub() {
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm hover:shadow-md transition-all"
           >
-            <h3 className="text-xl font-semibold text-dark mb-4">
-              {section.title}
-            </h3>
+            <div className="flex items-center gap-3 mb-4">
+              <i className={`${section.icon} text-2xl text-green-deep`}></i>
+              <h3 className="text-xl font-semibold text-dark">
+                {section.title}
+              </h3>
+            </div>
             <ul className="space-y-2">
               {section.items.map((item, i) => (
                 <li

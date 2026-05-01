@@ -45,7 +45,8 @@ export default function Forum() {
             href="#"
             className="inline-flex items-center gap-2 px-6 py-3 bg-green-deep text-white rounded-full hover:bg-[#12392e] transition-colors shadow-lg"
           >
-            <span>+</span> Новая тема
+            <i className="fa-solid fa-plus"></i>
+            Новая тема
           </a>
         </motion.div>
 

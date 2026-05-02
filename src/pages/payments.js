@@ -8,7 +8,10 @@ const mockData = [
   { id: 1, owner: 'Иванов И.И.', plot: '12', membership: 3500, target: 2000, electricity: 0, debt: 0 },
   { id: 2, owner: 'Петров П.П.', plot: '25', membership: 3500, target: 2000, electricity: 1500, debt: 1500 },
   { id: 3, owner: 'Сидорова А.В.', plot: '7', membership: 0, target: 0, electricity: 800, debt: 4300 },
-  // добавьте остальные
+  { id: 4, owner: 'Григорьев В.М.', plot: '33', membership: 3500, target: 2000, electricity: 0, debt: 0 },
+  { id: 5, owner: 'Фёдорова Л.И.', plot: '19', membership: 0, target: 2000, electricity: 0, debt: 5500 },
+  { id: 6, owner: 'Алексеев С.Д.', plot: '8', membership: 3500, target: 0, electricity: 1200, debt: 4700 },
+  { id: 7, owner: 'Николаева О.А.', plot: '41', membership: 3500, target: 2000, electricity: 900, debt: 900 },
 ]
 
 export default function Payments() {

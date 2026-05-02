@@ -31,11 +31,11 @@ export default function Home() {
               Частное садовое товарищество с 2001 года. Комфорт, безопасность и прозрачность — как драгоценность.
             </p>
             <div className="flex justify-center gap-4 mt-6">
-              <a href="/forum" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white text-sm">
-                Сообщество
-              </a>
               <a href="/docs" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#1b5e20] shadow-sm text-sm">
                 Документы
+              </a>
+              <a href="/contacts" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white text-sm">
+                Контакты
               </a>
             </div>
           </motion.div>
@@ -84,7 +84,8 @@ export default function Home() {
             <ul className="mt-2 space-y-1">
               <li><a href="/news" className="hover:text-gold">Новости</a></li>
               <li><a href="/docs" className="hover:text-gold">Документы</a></li>
-              <li><a href="/forum" className="hover:text-gold">Сообщество</a></li>
+              <li><a href="/payments" className="hover:text-gold">Ведомости</a></li>
+              <li><a href="/contacts" className="hover:text-gold">Контакты</a></li>
             </ul>
           </div>
           <div>

@@ -8,10 +8,10 @@ const sections = [
     title: 'Сад и огород',
     link: '/articles/garden',
     items: [
-      'Когда и как сажать яблони, груши, вишню',
-      'Уход за газоном: стрижка, полив, подкормка',
-      'Сезон высадки рассады томатов и перцев',
-      'Календарь обработок от вредителей',
+      { text: 'Когда и как сажать яблони, груши, вишню', link: '/articles/garden/apple-trees' },
+      { text: 'Уход за газоном: стрижка, полив, подкормка', link: '/articles/garden/lawn-care' },
+      { text: 'Сезон высадки рассады томатов и перцев', link: '/articles/garden/seedlings' },
+      { text: 'Календарь обработок от вредителей', link: '/articles/garden/pest-control-calendar' },
     ],
     shadowColor: 'rgba(76, 175, 80, 0.3)',
     borderColor: 'rgba(76, 175, 80, 0.8)'
@@ -21,10 +21,10 @@ const sections = [
     title: 'Правила СНТ',
     link: '/articles/rules',
     items: [
-      'Режим въезда транспорта и парковки',
-      'Уход за ливнёвой канализацией на участке',
-      'Строительные нормы: заборы, хозпостройки',
-      'Порядок проведения собраний',
+      { text: 'Режим въезда транспорта и парковки', link: '/articles/rules' },
+      { text: 'Уход за ливнёвой канализацией на участке', link: '/articles/rules' },
+      { text: 'Строительные нормы: заборы, хозпостройки', link: '/articles/rules' },
+      { text: 'Порядок проведения собраний', link: '/articles/rules' },
     ],
     shadowColor: 'rgba(59, 130, 246, 0.3)',
     borderColor: 'rgba(59, 130, 246, 0.8)'
@@ -34,10 +34,10 @@ const sections = [
     title: 'Экстренные службы',
     link: '/articles/emergency',
     items: [
-      'Скорая помощь: 112 или 03',
-      'Пожарная часть: +7 (496) 123-45-68',
-      'Газовая служба: 04',
-      'Что делать при укусе клеща: алгоритм',
+      { text: 'Скорая помощь: 112 или 03', link: '/articles/emergency' },
+      { text: 'Пожарная часть: +7 (496) 123-45-68', link: '/articles/emergency' },
+      { text: 'Газовая служба: 04', link: '/articles/emergency' },
+      { text: 'Что делать при укусе клеща: алгоритм', link: '/articles/emergency' },
     ],
     shadowColor: 'rgba(239, 68, 68, 0.3)',
     borderColor: 'rgba(239, 68, 68, 0.8)'
@@ -47,10 +47,10 @@ const sections = [
     title: 'Инфраструктура района',
     link: '/articles/infrastructure',
     items: [
-      'Поставщики песка, щебня, навоза',
-      'Магазины садовых товаров рядом',
-      'Интересные места: Серпухов, Коломна',
-      'Куда поехать за грибами в сезон',
+      { text: 'Поставщики песка, щебня, навоза', link: '/articles/infrastructure' },
+      { text: 'Магазины садовых товаров рядом', link: '/articles/infrastructure' },
+      { text: 'Интересные места: Серпухов, Коломна', link: '/articles/infrastructure' },
+      { text: 'Куда поехать за грибами в сезон', link: '/articles/infrastructure' },
     ],
     shadowColor: 'rgba(168, 85, 247, 0.3)',
     borderColor: 'rgba(168, 85, 247, 0.8)'
@@ -60,10 +60,10 @@ const sections = [
     title: 'Уход за участком',
     link: '/articles/maintenance',
     items: [
-      'Уход за бассейном: чистка, химия',
-      'Как подготовить водопровод к зиме',
-      'Советы по компостированию',
-      'Борьба с борщевиком на участке',
+      { text: 'Уход за бассейном: чистка, химия', link: '/articles/maintenance' },
+      { text: 'Как подготовить водопровод к зиме', link: '/articles/maintenance' },
+      { text: 'Советы по компостированию', link: '/articles/maintenance' },
+      { text: 'Борьба с борщевиком на участке', link: '/articles/maintenance' },
     ],
     shadowColor: 'rgba(34, 197, 94, 0.3)',
     borderColor: 'rgba(34, 197, 94, 0.8)'
@@ -73,10 +73,10 @@ const sections = [
     title: 'Контакты правления',
     link: '/articles/contacts-board',
     items: [
-      'Председатель: +7 (496) 123-45-67',
-      'Бухгалтер: +7 (496) 123-45-78',
-      'Электрик: +7 (496) 123-45-89',
-      'Приём по субботам с 11:00 до 14:00',
+      { text: 'Председатель: +7 (496) 123-45-67', link: '/articles/contacts-board' },
+      { text: 'Бухгалтер: +7 (496) 123-45-78', link: '/articles/contacts-board' },
+      { text: 'Электрик: +7 (496) 123-45-89', link: '/articles/contacts-board' },
+      { text: 'Приём по субботам с 11:00 до 14:00', link: '/articles/contacts-board' },
     ],
     shadowColor: 'rgba(107, 114, 128, 0.3)',
     borderColor: 'rgba(107, 114, 128, 0.8)'
@@ -127,12 +127,14 @@ export default function GardenerHub() {
             </div>
             <ul className="space-y-2">
               {section.items.map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-2 text-sm text-gray-600 transition-colors duration-200 hover:text-green-600 cursor-default"
-                >
+                <li key={i} className="flex items-start gap-2 text-sm">
                   <span className="text-gold mt-1 shrink-0">•</span>
-                  {item}
+                  <Link
+                    href={item.link}
+                    className="text-gray-600 transition-colors duration-200 hover:text-green-600 hover:underline"
+                  >
+                    {item.text}
+                  </Link>
                 </li>
               ))}
             </ul>

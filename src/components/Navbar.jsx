@@ -13,6 +13,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <Link href="/news" className="text-gray-600 hover:text-green-deep transition">Новости</Link>
           <Link href="/docs" className="text-gray-600 hover:text-green-deep transition">Документы</Link>
+          <Link href="/payments" className="text-gray-600 hover:text-green-deep transition">Ведомости</Link>
           <Link href="/forum" className="text-gray-600 hover:text-green-deep transition">Сообщество</Link>
           <Link href="/contacts" className="text-gray-600 hover:text-green-deep transition">Контакты</Link>
           <Link href="/login" className="btn-primary">Кабинет</Link>
@@ -23,6 +24,16 @@ export default function Navbar() {
           </svg>
         </button>
       </div>
+      {open && (
+        <div className="md:hidden px-4 pb-4 space-y-2 bg-almond/95 backdrop-blur-xl">
+          <Link href="/news" className="block py-2 text-gray-600">Новости</Link>
+          <Link href="/docs" className="block py-2 text-gray-600">Документы</Link>
+          <Link href="/payments" className="block py-2 text-gray-600">Ведомости</Link>
+          <Link href="/forum" className="block py-2 text-gray-600">Сообщество</Link>
+          <Link href="/contacts" className="block py-2 text-gray-600">Контакты</Link>
+          <Link href="/login" className="block py-2 text-green-deep font-medium">Кабинет</Link>
+        </div>
+      )}
     </nav>
   )
 }

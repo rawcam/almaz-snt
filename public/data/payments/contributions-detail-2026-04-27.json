@@ -1,0 +1,19 @@
+[
+  {"plot":2,"debtMembership":0,"overMembership":2500,"debtTarget":2500,"overTarget":0,"debtElectricity":0,"overElectricity":188.7,"totalDebt":2500,"totalOverpayment":188.7},
+  {"plot":3,"debtMembership":0,"overMembership":0,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":310.72,"totalDebt":0,"totalOverpayment":310.72},
+  {"plot":4,"debtMembership":0,"overMembership":30700,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":30700,"totalOverpayment":0},
+  {"plot":5,"debtMembership":0,"overMembership":1500,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":159.64,"totalDebt":0,"totalOverpayment":1659.64},
+  {"plot":6,"debtMembership":0,"overMembership":0,"debtTarget":5500,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":8500,"totalOverpayment":0},
+  {"plot":7,"debtMembership":0,"overMembership":0,"debtTarget":2500,"overTarget":0,"debtElectricity":1404.38,"overElectricity":0,"totalDebt":3904.38,"totalOverpayment":0},
+  {"plot":8,"debtMembership":0,"overMembership":0,"debtTarget":2500,"overTarget":0,"debtElectricity":0,"overElectricity":700.51,"totalDebt":2500,"totalOverpayment":700.51},
+  {"plot":9,"debtMembership":1500,"overMembership":0,"debtTarget":0,"overTarget":0,"debtElectricity":5039.38,"overElectricity":0,"totalDebt":6539.38,"totalOverpayment":0},
+  {"plot":10,"debtMembership":6000,"overMembership":0,"debtTarget":0,"overTarget":0,"debtElectricity":101.94,"overElectricity":0,"totalDebt":6101.94,"totalOverpayment":0},
+  {"plot":11,"debtMembership":0,"overMembership":0,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":0,"totalOverpayment":0},
+  {"plot":12,"debtMembership":0,"overMembership":3937.5,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":0,"totalOverpayment":3937.5},
+  {"plot":13,"debtMembership":2700,"overMembership":0,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":2700,"totalOverpayment":0},
+  {"plot":14,"debtMembership":1500,"overMembership":0,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":357.45,"totalDebt":1500,"totalOverpayment":357.45},
+  {"plot":15,"debtMembership":3000,"overMembership":0,"debtTarget":1300,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":4300,"totalOverpayment":0},
+  {"plot":16,"debtMembership":1500,"overMembership":0,"debtTarget":2800,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":4300,"totalOverpayment":0},
+  {"plot":17,"debtMembership":1500,"overMembership":0,"debtTarget":0,"overTarget":0,"debtElectricity":0,"overElectricity":326.79,"totalDebt":1500,"totalOverpayment":326.79},
+  {"plot":18,"debtMembership":1500,"overMembership":0,"debtTarget":2500,"overTarget":0,"debtElectricity":0,"overElectricity":0,"totalDebt":4000,"totalOverpayment":0}
+]

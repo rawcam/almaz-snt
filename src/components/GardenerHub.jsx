@@ -110,7 +110,7 @@ export default function GardenerHub() {
               <i className={`${section.icon} text-2xl text-green-deep`}></i>
               <Link
                 href={section.link}
-                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-deep hover:underline cursor-pointer"
+                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-600 hover:underline cursor-pointer"
               >
                 {section.title}
               </Link>
@@ -119,7 +119,7 @@ export default function GardenerHub() {
               {section.items.map((item, i) => (
                 <li
                   key={i}
-                  className="flex items-start gap-2 text-sm text-gray-600 transition-colors duration-200 hover:text-green-deep cursor-default"
+                  className="flex items-start gap-2 text-sm text-gray-600 transition-colors duration-200 hover:text-green-600 cursor-default"
                 >
                   <span className="text-gold mt-1 shrink-0">•</span>
                   {item}

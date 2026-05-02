@@ -5,19 +5,29 @@ import { motion } from 'framer-motion'
 import { useState, useEffect, useMemo } from 'react'
 
 export default function Payments() {
+  const [activeTable, setActiveTable] = useState('electricity') // 'electricity' или 'contributions'
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState('plot')
   const [order, setOrder] = useState('asc')
-  const [data, setData] = useState([])
+  const [electricityData, setElectricityData] = useState([])
+  const [contributionsData, setContributionsData] = useState([])
 
   useEffect(() => {
+    // Загрузка данных по электроэнергии
+    fetch('/almaz-snt/data/payments/electricity-2026-04-27.json')
+      .then(res => res.json())
+      .then(json => setElectricityData(json))
+    // Загрузка данных по взносам
     fetch('/almaz-snt/data/payments/2026-04-27.json')
       .then(res => res.json())
-      .then(json => setData(json))
+      .then(json => setContributionsData(json))
   }, [])
 
+  // Текущий массив данных в зависимости от активной вкладки
+  const currentData = activeTable === 'electricity' ? electricityData : contributionsData
+
   const filtered = useMemo(() => {
-    let result = [...data]
+    let result = [...currentData]
     if (search) {
       result = result.filter(item =>
         item.plot.toString().includes(search)
@@ -25,13 +35,14 @@ export default function Payments() {
     }
     if (sortBy) {
       result.sort((a, b) => {
-        const valA = a[sortBy], valB = b[sortBy]
+        const valA = a[sortBy] ?? 0
+        const valB = b[sortBy] ?? 0
         if (typeof valA === 'string') return order === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA)
         return order === 'asc' ? valA - valB : valB - valA
       })
     }
     return result
-  }, [data, search, sortBy, order])
+  }, [currentData, search, sortBy, order])
 
   const handleSort = (field) => {
     if (sortBy === field) {
@@ -40,6 +51,11 @@ export default function Payments() {
       setSortBy(field)
       setOrder('asc')
     }
+  }
+
+  const formatNumber = (value) => {
+    if (value === null || value === undefined) return '—'
+    return Number(value).toLocaleString()
   }
 
   return (
@@ -57,28 +73,132 @@ export default function Payments() {
             Прозрачность
           </span>
           <h1 className="text-5xl md:text-6xl font-medium mt-4 text-dark">
-            Ведомости по оплате
+            Ведомости
           </h1>
-          <p className="text-gray-500 mt-2">на 27 апреля 2026 г.</p>
+          <p className="text-gray-500 mt-2">по состоянию на 27 апреля 2026 г.</p>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/30">
-          <div className="mb-6 flex flex-col md:flex-row gap-4">
-            <input
-              type="text"
-              placeholder="Введите номер участка..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-xl border border-gray-200 bg-white/50 focus:outline-none focus:ring-2 focus:ring-green-deep"
-            />
+        {/* Переключатель таблиц и кнопки скачивания */}
+        <div className="max-w-5xl mx-auto mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setActiveTable('electricity')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeTable === 'electricity'
+                  ? 'bg-green-deep text-white shadow-sm'
+                  : 'bg-white/70 text-gray-600 hover:bg-white/90'
+              }`}
+            >
+              Расход электроэнергии
+            </button>
+            <button
+              onClick={() => setActiveTable('contributions')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeTable === 'contributions'
+                  ? 'bg-green-deep text-white shadow-sm'
+                  : 'bg-white/70 text-gray-600 hover:bg-white/90'
+              }`}
+            >
+              Взносы и свет
+            </button>
           </div>
+          <div className="flex gap-2">
+            {activeTable === 'electricity' ? (
+              <a
+                href="/almaz-snt/uploads/payments/electricity-2026-04-27.xls"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white/70 rounded-full text-sm font-medium text-green-deep hover:bg-white/90 transition-colors shadow-sm"
+                download
+              >
+                <i className="fa-solid fa-file-excel"></i> Скачать Excel
+              </a>
+            ) : (
+              <a
+                href="/almaz-snt/uploads/payments/contributions-2026-04-27.xls"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white/70 rounded-full text-sm font-medium text-green-deep hover:bg-white/90 transition-colors shadow-sm"
+                download
+              >
+                <i className="fa-solid fa-file-excel"></i> Скачать Excel
+              </a>
+            )}
+          </div>
+        </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+        {/* Поиск */}
+        <div className="max-w-5xl mx-auto mb-4">
+          <input
+            type="text"
+            placeholder="Поиск по номеру участка..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full px-4 py-2 rounded-xl border border-gray-200 bg-white/50 focus:outline-none focus:ring-2 focus:ring-green-deep"
+          />
+        </div>
+
+        {/* Таблица */}
+        <div className="max-w-5xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl p-4 md:p-6 shadow-lg border border-white/30 overflow-x-auto">
+          {activeTable === 'electricity' ? (
+            <table className="w-full text-left min-w-[800px]">
+              <thead className="border-b border-gray-200">
+                <tr>
+                  <th className="py-3 px-2 font-semibold text-dark cursor-pointer" onClick={() => handleSort('plot')}>
+                    Уч. {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('readingStart')}>
+                    Показания на начало {sortBy === 'readingStart' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('readingEnd')}>
+                    На конец {sortBy === 'readingEnd' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('consumption')}>
+                    Расход {sortBy === 'consumption' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('debtStart')}>
+                    Долг на начало {sortBy === 'debtStart' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('overpaymentStart')}>
+                    Переплата на начало {sortBy === 'overpaymentStart' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('charged')}>
+                    Начислено {sortBy === 'charged' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('paid')}>
+                    Оплачено {sortBy === 'paid' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('debtEnd')}>
+                    Долг на конец {sortBy === 'debtEnd' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-2 cursor-pointer" onClick={() => handleSort('overpaymentEnd')}>
+                    Переплата на конец {sortBy === 'overpaymentEnd' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map(item => (
+                  <tr key={item.plot} className="border-b border-gray-100 hover:bg-white/50 transition-colors">
+                    <td className="py-3 px-2 font-medium">{item.plot}</td>
+                    <td className="py-3 px-2">{formatNumber(item.readingStart)}</td>
+                    <td className="py-3 px-2">{formatNumber(item.readingEnd)}</td>
+                    <td className="py-3 px-2">{formatNumber(item.consumption)}</td>
+                    <td className="py-3 px-2">{formatNumber(item.debtStart)}</td>
+                    <td className="py-3 px-2">{formatNumber(item.overpaymentStart)}</td>
+                    <td className="py-3 px-2">{formatNumber(item.charged)}</td>
+                    <td className="py-3 px-2">{formatNumber(item.paid)}</td>
+                    <td className={`py-3 px-2 ${item.debtEnd > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                      {formatNumber(item.debtEnd)}
+                    </td>
+                    <td className={`py-3 px-2 ${item.overpaymentEnd > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
+                      {formatNumber(item.overpaymentEnd)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <table className="w-full text-left min-w-[400px]">
               <thead className="border-b border-gray-200">
                 <tr>
                   <th className="py-3 px-4 font-semibold text-dark cursor-pointer" onClick={() => handleSort('plot')}>
-                    Участок {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
+                    Уч. {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
                   </th>
                   <th className="py-3 px-4 cursor-pointer" onClick={() => handleSort('debt')}>
                     Долг, ₽ {sortBy === 'debt' && (order === 'asc' ? '↑' : '↓')}
@@ -93,16 +213,16 @@ export default function Payments() {
                   <tr key={item.plot} className="border-b border-gray-100 hover:bg-white/50 transition-colors">
                     <td className="py-3 px-4 font-medium">{item.plot}</td>
                     <td className={`py-3 px-4 ${item.debt > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                      {item.debt.toLocaleString()}
+                      {formatNumber(item.debt)}
                     </td>
                     <td className={`py-3 px-4 ${item.overpayment > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
-                      {item.overpayment.toLocaleString()}
+                      {formatNumber(item.overpayment)}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+          )}
         </div>
 
         {/* Архивная справка */}
@@ -112,7 +232,7 @@ export default function Payments() {
           viewport={{ once: true }}
           className="text-center text-gray-400 text-sm mt-10"
         >
-          Архив ведомостей за предыдущие периоды будет доступен в ближайшее время.
+          Данные обновляются ежемесячно. Предыдущие ведомости будут доступны в архиве.
         </motion.p>
       </div>
 

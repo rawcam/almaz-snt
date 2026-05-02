@@ -14,6 +14,7 @@ export default function Navbar() {
           <Link href="/news" className="text-gray-600 hover:text-green-deep transition">Новости</Link>
           <Link href="/docs" className="text-gray-600 hover:text-green-deep transition">Документы</Link>
           <Link href="/payments" className="text-gray-600 hover:text-green-deep transition">Ведомости</Link>
+          <Link href="/articles" className="text-gray-600 hover:text-green-deep transition">Справочник</Link>
           <Link href="/contacts" className="text-gray-600 hover:text-green-deep transition">Контакты</Link>
         </div>
         <button className="md:hidden" onClick={() => setOpen(!open)}>
@@ -27,6 +28,7 @@ export default function Navbar() {
           <Link href="/news" className="block py-2 text-gray-600">Новости</Link>
           <Link href="/docs" className="block py-2 text-gray-600">Документы</Link>
           <Link href="/payments" className="block py-2 text-gray-600">Ведомости</Link>
+          <Link href="/articles" className="block py-2 text-gray-600">Справочник</Link>
           <Link href="/contacts" className="block py-2 text-gray-600">Контакты</Link>
         </div>
       )}

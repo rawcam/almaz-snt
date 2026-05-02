@@ -23,7 +23,7 @@ const financials = [
     icon: 'fa-solid fa-exclamation-triangle',
     title: 'Задолженность',
     amount: 'Всего: 85 000 ₽',
-    link: '/docs',
+    link: '/payments',
     description: 'По оплате электроэнергии и взносов',
     shadowColor: 'rgba(220, 38, 38, 0.3)'
   },
@@ -77,7 +77,7 @@ export default function FinancialOverview() {
                 {item.amount}
               </div>
               <p className="text-sm text-gray-600 mb-4">{item.description}</p>
-              <span className="inline-flex items-center gap-1 text-sm font-medium text-green-deep hover:text-green-900 transition-colors">
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-green-600 hover:text-green-900 transition-colors">
                 Подробнее
                 <i className="fa-solid fa-arrow-right text-xs"></i>
               </span>

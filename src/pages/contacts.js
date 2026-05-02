@@ -1,11 +1,14 @@
+// src/pages/contacts.js
 import Navbar from '../components/Navbar'
+import AnimatedBackground from '../components/AnimatedBackground'
 import { motion } from 'framer-motion'
 
 export default function Contacts() {
   return (
     <div className="min-h-screen bg-almond">
+      <AnimatedBackground opacity={0.2} />
       <Navbar />
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

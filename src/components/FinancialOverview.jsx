@@ -9,7 +9,8 @@ const financials = [
     amount: '3 500 ₽ / участок',
     link: '/docs',
     description: 'На общие нужды: вывоз мусора, охрана, электричество',
-    shadowColor: 'rgba(184, 155, 94, 0.3)' // золотой
+    shadowColor: 'rgba(184, 155, 94, 0.3)',
+    borderColor: 'rgba(184, 155, 94, 0.8)'
   },
   {
     icon: 'fa-solid fa-hammer',
@@ -17,7 +18,8 @@ const financials = [
     amount: '2 000 ₽ / участок',
     link: '/docs',
     description: 'Ремонт дороги и забора — лето 2026',
-    shadowColor: 'rgba(184, 155, 94, 0.3)'
+    shadowColor: 'rgba(184, 155, 94, 0.3)',
+    borderColor: 'rgba(184, 155, 94, 0.8)'
   },
   {
     icon: 'fa-solid fa-exclamation-triangle',
@@ -25,7 +27,8 @@ const financials = [
     amount: 'Всего: 85 000 ₽',
     link: '/payments',
     description: 'По оплате электроэнергии и взносов',
-    shadowColor: 'rgba(220, 38, 38, 0.3)' // красный
+    shadowColor: 'rgba(220, 38, 38, 0.3)',
+    borderColor: 'rgba(220, 38, 38, 0.8)'
   },
   {
     icon: 'fa-solid fa-tools',
@@ -33,7 +36,8 @@ const financials = [
     amount: 'от 500 ₽',
     link: '/articles/services',
     description: 'Вырубка деревьев, вывоз мусора, ремонт',
-    shadowColor: 'rgba(107, 114, 128, 0.3)' // серый
+    shadowColor: 'rgba(107, 114, 128, 0.3)',
+    borderColor: 'rgba(107, 114, 128, 0.8)'
   },
 ]
 
@@ -63,8 +67,12 @@ export default function FinancialOverview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            whileHover={{ y: -5, boxShadow: `0 15px 30px ${item.shadowColor}` }}
-            className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm transition-shadow cursor-pointer"
+            whileHover={{
+              y: -5,
+              boxShadow: `0 15px 30px ${item.shadowColor}`,
+              borderColor: item.borderColor
+            }}
+            className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm transition-all cursor-pointer"
           >
             <Link href={item.link} className="block h-full">
               <div className="flex items-center gap-2 mb-3">

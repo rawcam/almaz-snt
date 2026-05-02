@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import Link from 'next/link'
 import { useState } from 'react'
 

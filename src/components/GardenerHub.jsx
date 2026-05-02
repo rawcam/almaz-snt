@@ -6,7 +6,7 @@ const sections = [
   {
     icon: 'fa-solid fa-book-open',
     title: 'Сад и огород',
-    link: '/almaz-snt/articles/garden',
+    link: '/articles/garden',
     items: [
       'Когда и как сажать яблони, груши, вишню',
       'Уход за газоном: стрижка, полив, подкормка',
@@ -18,7 +18,7 @@ const sections = [
   {
     icon: 'fa-solid fa-file-contract',
     title: 'Правила СНТ',
-    link: '/almaz-snt/articles/rules',
+    link: '/articles/rules',
     items: [
       'Режим въезда транспорта и парковки',
       'Уход за ливнёвой канализацией на участке',
@@ -30,7 +30,7 @@ const sections = [
   {
     icon: 'fa-solid fa-phone-volume',
     title: 'Экстренные службы',
-    link: '/almaz-snt/articles/emergency',
+    link: '/articles/emergency',
     items: [
       'Скорая помощь: 112 или 03',
       'Пожарная часть: +7 (496) 123-45-68',
@@ -42,7 +42,7 @@ const sections = [
   {
     icon: 'fa-solid fa-shop',
     title: 'Инфраструктура района',
-    link: '/almaz-snt/articles/infrastructure',
+    link: '/articles/infrastructure',
     items: [
       'Поставщики песка, щебня, навоза',
       'Магазины садовых товаров рядом',
@@ -54,7 +54,7 @@ const sections = [
   {
     icon: 'fa-solid fa-house-chimney',
     title: 'Уход за участком',
-    link: '/almaz-snt/articles/maintenance',
+    link: '/articles/maintenance',
     items: [
       'Уход за бассейном: чистка, химия',
       'Как подготовить водопровод к зиме',
@@ -66,7 +66,7 @@ const sections = [
   {
     icon: 'fa-solid fa-address-book',
     title: 'Контакты правления',
-    link: '/almaz-snt/articles/contacts-board',
+    link: '/articles/contacts-board',
     items: [
       'Председатель: +7 (496) 123-45-67',
       'Бухгалтер: +7 (496) 123-45-78',

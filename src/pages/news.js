@@ -83,6 +83,31 @@ export default function News() {
           ))}
         </div>
       </div>
+
+      <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20 relative z-10">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h4 className="text-white text-lg font-semibold">СНТ «Алмаз»</h4>
+            <p className="mt-2">Московская обл., Ступинский р-н, д. Леньково.</p>
+          </div>
+          <div>
+            <h5 className="text-white font-semibold">Навигация</h5>
+            <ul className="mt-2 space-y-1">
+              <li><a href="/news" className="hover:text-gold">Новости</a></li>
+              <li><a href="/docs" className="hover:text-gold">Документы</a></li>
+              <li><a href="/payments" className="hover:text-gold">Ведомости</a></li>
+              <li><a href="/contacts" className="hover:text-gold">Контакты</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 className="text-white font-semibold">Контакты</h5>
+            <p className="mt-2">cnt-almaz@yandex.ru<br />+7 (496) 123-45-67</p>
+          </div>
+        </div>
+        <div className="text-center mt-8 text-sm text-gray-500">
+          © 2026 СНТ «Алмаз». Все права защищены.
+        </div>
+      </footer>
     </div>
   )
 }

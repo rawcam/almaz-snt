@@ -7,15 +7,15 @@ const financials = [
     icon: 'fa-solid fa-coins',
     title: 'Членские взносы',
     amount: '3 500 ₽ / участок',
-    link: '/almaz-snt/docs',
+    link: '/docs',
     description: 'На общие нужды: вывоз мусора, охрана, электричество',
-    shadowColor: 'rgba(184, 155, 94, 0.3)' // золотой
+    shadowColor: 'rgba(184, 155, 94, 0.3)'
   },
   {
     icon: 'fa-solid fa-hammer',
     title: 'Целевые взносы',
     amount: '2 000 ₽ / участок',
-    link: '/almaz-snt/docs',
+    link: '/docs',
     description: 'Ремонт дороги и забора — лето 2026',
     shadowColor: 'rgba(184, 155, 94, 0.3)'
   },
@@ -23,17 +23,17 @@ const financials = [
     icon: 'fa-solid fa-exclamation-triangle',
     title: 'Задолженность',
     amount: 'Всего: 85 000 ₽',
-    link: '/almaz-snt/docs',
+    link: '/docs',
     description: 'По оплате электроэнергии и взносов',
-    shadowColor: 'rgba(220, 38, 38, 0.3)' // красный
+    shadowColor: 'rgba(220, 38, 38, 0.3)'
   },
   {
     icon: 'fa-solid fa-tools',
     title: 'Услуги подрядчиков',
     amount: 'от 500 ₽',
-    link: '/almaz-snt/articles/services',
+    link: '/articles/services',
     description: 'Вырубка деревьев, вывоз мусора, ремонт',
-    shadowColor: 'rgba(107, 114, 128, 0.3)' // серый
+    shadowColor: 'rgba(107, 114, 128, 0.3)'
   },
 ]
 

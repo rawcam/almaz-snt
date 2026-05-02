@@ -2,41 +2,36 @@
 import Navbar from '../components/Navbar'
 import AnimatedBackground from '../components/AnimatedBackground'
 import { motion } from 'framer-motion'
-import { useState, useMemo } from 'react'
-
-const mockData = [
-  { id: 1, owner: 'Иванов И.И.', plot: '12', membership: 3500, target: 2000, electricity: 0, debt: 0 },
-  { id: 2, owner: 'Петров П.П.', plot: '25', membership: 3500, target: 2000, electricity: 1500, debt: 1500 },
-  { id: 3, owner: 'Сидорова А.В.', plot: '7', membership: 0, target: 0, electricity: 800, debt: 4300 },
-  { id: 4, owner: 'Григорьев В.М.', plot: '33', membership: 3500, target: 2000, electricity: 0, debt: 0 },
-  { id: 5, owner: 'Фёдорова Л.И.', plot: '19', membership: 0, target: 2000, electricity: 0, debt: 5500 },
-  { id: 6, owner: 'Алексеев С.Д.', plot: '8', membership: 3500, target: 0, electricity: 1200, debt: 4700 },
-  { id: 7, owner: 'Николаева О.А.', plot: '41', membership: 3500, target: 2000, electricity: 900, debt: 900 },
-]
+import { useState, useEffect, useMemo } from 'react'
 
 export default function Payments() {
   const [search, setSearch] = useState('')
-  const [sortBy, setSortBy] = useState('')
+  const [sortBy, setSortBy] = useState('plot')
   const [order, setOrder] = useState('asc')
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    fetch('/almaz-snt/data/payments/2026-04-27.json')
+      .then(res => res.json())
+      .then(json => setData(json))
+  }, [])
 
   const filtered = useMemo(() => {
-    let data = [...mockData]
+    let result = [...data]
     if (search) {
-      const lower = search.toLowerCase()
-      data = data.filter(item =>
-        item.owner.toLowerCase().includes(lower) ||
-        item.plot.includes(lower)
+      result = result.filter(item =>
+        item.plot.toString().includes(search)
       )
     }
     if (sortBy) {
-      data.sort((a, b) => {
+      result.sort((a, b) => {
         const valA = a[sortBy], valB = b[sortBy]
         if (typeof valA === 'string') return order === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA)
         return order === 'asc' ? valA - valB : valB - valA
       })
     }
-    return data
-  }, [search, sortBy, order])
+    return result
+  }, [data, search, sortBy, order])
 
   const handleSort = (field) => {
     if (sortBy === field) {
@@ -64,13 +59,14 @@ export default function Payments() {
           <h1 className="text-5xl md:text-6xl font-medium mt-4 text-dark">
             Ведомости по оплате
           </h1>
+          <p className="text-gray-500 mt-2">на 27 апреля 2026 г.</p>
         </motion.div>
 
-        <div className="max-w-5xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/30">
+        <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/30">
           <div className="mb-6 flex flex-col md:flex-row gap-4">
             <input
               type="text"
-              placeholder="Поиск по владельцу или участку..."
+              placeholder="Введите номер участка..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="flex-1 px-4 py-2 rounded-xl border border-gray-200 bg-white/50 focus:outline-none focus:ring-2 focus:ring-green-deep"
@@ -81,36 +77,26 @@ export default function Payments() {
             <table className="w-full text-left">
               <thead className="border-b border-gray-200">
                 <tr>
-                  <th className="py-3 px-4 font-semibold text-dark cursor-pointer" onClick={() => handleSort('owner')}>
-                    Владелец {sortBy === 'owner' && (order === 'asc' ? '↑' : '↓')}
-                  </th>
-                  <th className="py-3 px-4 cursor-pointer" onClick={() => handleSort('plot')}>
+                  <th className="py-3 px-4 font-semibold text-dark cursor-pointer" onClick={() => handleSort('plot')}>
                     Участок {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th className="py-3 px-4 cursor-pointer" onClick={() => handleSort('membership')}>
-                    Членские взн. {sortBy === 'membership' && (order === 'asc' ? '↑' : '↓')}
-                  </th>
-                  <th className="py-3 px-4 cursor-pointer" onClick={() => handleSort('target')}>
-                    Целевые {sortBy === 'target' && (order === 'asc' ? '↑' : '↓')}
-                  </th>
-                  <th className="py-3 px-4 cursor-pointer" onClick={() => handleSort('electricity')}>
-                    Эл-во {sortBy === 'electricity' && (order === 'asc' ? '↑' : '↓')}
-                  </th>
                   <th className="py-3 px-4 cursor-pointer" onClick={() => handleSort('debt')}>
-                    Долг {sortBy === 'debt' && (order === 'asc' ? '↑' : '↓')}
+                    Долг, ₽ {sortBy === 'debt' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-4 cursor-pointer" onClick={() => handleSort('overpayment')}>
+                    Переплата, ₽ {sortBy === 'overpayment' && (order === 'asc' ? '↑' : '↓')}
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map(item => (
-                  <tr key={item.id} className="border-b border-gray-100 hover:bg-white/50 transition-colors">
-                    <td className="py-3 px-4">{item.owner}</td>
-                    <td className="py-3 px-4">{item.plot}</td>
-                    <td className="py-3 px-4">{item.membership} ₽</td>
-                    <td className="py-3 px-4">{item.target} ₽</td>
-                    <td className="py-3 px-4">{item.electricity} ₽</td>
-                    <td className={`py-3 px-4 ${item.debt > 0 ? 'text-red-500 font-medium' : 'text-green-600'}`}>
-                      {item.debt} ₽
+                  <tr key={item.plot} className="border-b border-gray-100 hover:bg-white/50 transition-colors">
+                    <td className="py-3 px-4 font-medium">{item.plot}</td>
+                    <td className={`py-3 px-4 ${item.debt > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                      {item.debt.toLocaleString()}
+                    </td>
+                    <td className={`py-3 px-4 ${item.overpayment > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
+                      {item.overpayment.toLocaleString()}
                     </td>
                   </tr>
                 ))}
@@ -118,6 +104,16 @@ export default function Payments() {
             </table>
           </div>
         </div>
+
+        {/* Архивная справка */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-gray-400 text-sm mt-10"
+        >
+          Архив ведомостей за предыдущие периоды будет доступен в ближайшее время.
+        </motion.p>
       </div>
 
       <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20 relative z-10">

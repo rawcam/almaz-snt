@@ -25,6 +25,16 @@ const articles = [
     link: '/articles/emergency/tick',
     description: 'Правильное удаление, куда отвезти на анализ, когда нужна иммунопрофилактика.',
   },
+  {
+    title: 'Безопасная работа с инструментом и техникой',
+    link: '/articles/emergency/tools-safety',
+    description: 'Электроинструмент, бензопилы, косилки, снегоуборщики – правила эксплуатации и защита.',
+  },
+  {
+    title: 'Предупреждение травматизма на участке',
+    link: '/articles/emergency/injury-prevention',
+    description: 'Работа на лестницах, переноска тяжестей, колюще-режущий инструмент, погрузка-разгрузка.',
+  },
 ]
 
 export default function Emergency() {

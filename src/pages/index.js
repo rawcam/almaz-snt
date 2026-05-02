@@ -19,7 +19,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="max-w-xl bg-white/10 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/20 text-center mx-auto"
+            className="max-w-xl bg-white rounded-3xl p-6 shadow-lg border border-gray-100 text-center mx-auto"
           >
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
               Ступинский район, деревня Леньково
@@ -34,7 +34,7 @@ export default function Home() {
               <a href="/forum" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all border border-gold text-green-deep hover:bg-gold hover:text-white text-sm">
                 Сообщество
               </a>
-              <a href="/docs" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#12392e] shadow-lg text-sm">
+              <a href="/docs" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#1b5e20] shadow-sm text-sm">
                 Документы
               </a>
             </div>

@@ -1,152 +1,144 @@
-// src/components/WeatherWidgets.jsx
+// src/components/GardenerHub.jsx
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
-const weatherNow = {
-  temp: 22,
-  feelsLike: 20,
-  humidity: 45,
-  description: 'ясно',
-  icon: 'fa-solid fa-sun'
-}
-
-const waterList = [
-  { name: 'Ока (Ступино)', temp: 16.5 },
-  { name: 'Пруд Леньково', temp: 18.2 },
-  { name: 'Река Северка', temp: 17.8 }
+const sections = [
+  {
+    icon: 'fa-solid fa-book-open',
+    title: 'Сад и огород',
+    link: '/articles/garden',
+    items: [
+      'Когда и как сажать яблони, груши, вишню',
+      'Уход за газоном: стрижка, полив, подкормка',
+      'Сезон высадки рассады томатов и перцев',
+      'Календарь обработок от вредителей',
+    ],
+    shadowColor: 'rgba(76, 175, 80, 0.3)'
+  },
+  {
+    icon: 'fa-solid fa-file-contract',
+    title: 'Правила СНТ',
+    link: '/articles/rules',
+    items: [
+      'Режим въезда транспорта и парковки',
+      'Уход за ливнёвой канализацией на участке',
+      'Строительные нормы: заборы, хозпостройки',
+      'Порядок проведения собраний',
+    ],
+    shadowColor: 'rgba(59, 130, 246, 0.3)'
+  },
+  {
+    icon: 'fa-solid fa-phone-volume',
+    title: 'Экстренные службы',
+    link: '/articles/emergency',
+    items: [
+      'Скорая помощь: 112 или 03',
+      'Пожарная часть: +7 (496) 123-45-68',
+      'Газовая служба: 04',
+      'Что делать при укусе клеща: алгоритм',
+    ],
+    shadowColor: 'rgba(239, 68, 68, 0.3)'
+  },
+  {
+    icon: 'fa-solid fa-shop',
+    title: 'Инфраструктура района',
+    link: '/articles/infrastructure',
+    items: [
+      'Поставщики песка, щебня, навоза',
+      'Магазины садовых товаров рядом',
+      'Интересные места: Серпухов, Коломна',
+      'Куда поехать за грибами в сезон',
+    ],
+    shadowColor: 'rgba(168, 85, 247, 0.3)'
+  },
+  {
+    icon: 'fa-solid fa-house-chimney',
+    title: 'Уход за участком',
+    link: '/articles/maintenance',
+    items: [
+      'Уход за бассейном: чистка, химия',
+      'Как подготовить водопровод к зиме',
+      'Советы по компостированию',
+      'Борьба с борщевиком на участке',
+    ],
+    shadowColor: 'rgba(34, 197, 94, 0.3)'
+  },
+  {
+    icon: 'fa-solid fa-address-book',
+    title: 'Контакты правления',
+    link: '/articles/contacts-board',
+    items: [
+      'Председатель: +7 (496) 123-45-67',
+      'Бухгалтер: +7 (496) 123-45-78',
+      'Электрик: +7 (496) 123-45-89',
+      'Приём по субботам с 11:00 до 14:00',
+    ],
+    shadowColor: 'rgba(107, 114, 128, 0.3)'
+  },
 ]
 
-const pollenLevels = {
-  tree: 3,
-  grass: 2,
-  weed: 1
-}
-
-const seasonWorks = [
-  { month: 'Май', event: 'Цветение берёзы. Посадка картофеля.' },
-  { month: 'Июнь', event: 'Цветение злаков. Сбор клубники.' },
-  { month: 'Июль', event: 'Цветение полыни. Начало грибного сезона.' }
-]
-
-export default function WeatherWidgets() {
+export default function GardenerHub() {
   return (
-    <section className="container mx-auto px-4 py-12">
+    <section className="py-16 container mx-auto px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-10"
+        className="text-center mb-12"
       >
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
-          Природа и климат
+          Полезная информация
         </span>
         <h2 className="text-4xl md:text-5xl font-medium mt-4 text-dark">
-          Погода и сезонность
+          Справочник садовода
         </h2>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Погода сейчас */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(56, 189, 248, 0.3)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
-        >
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-gray-600"><i className="fa-solid fa-location-dot mr-1 text-green-deep"></i>СНТ Алмаз</span>
-            <i className={`${weatherNow.icon} text-2xl text-yellow-500`}></i>
-          </div>
-          <div className="text-6xl font-light text-dark">{weatherNow.temp}°</div>
-          <div className="text-sm text-gray-500 mb-4">Ощущается {weatherNow.feelsLike}°</div>
-          <div className="flex justify-between text-sm text-gray-500">
-            <span><i className="fa-solid fa-droplet mr-1 text-green-deep"></i>{weatherNow.humidity}%</span>
-            <span className="capitalize">{weatherNow.description}</span>
-          </div>
-        </motion.div>
-
-        {/* Водоёмы */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(2, 132, 199, 0.3)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
-        >
-          <h3 className="text-sm font-medium text-gray-600 mb-3">
-            <i className="fa-solid fa-water mr-1 text-green-deep"></i>Температура воды
-          </h3>
-          <ul className="space-y-2">
-            {waterList.map((w, i) => (
-              <li key={i} className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">{w.name}</span>
-                <span className="text-lg font-medium text-green-deep">{w.temp}°</span>
-              </li>
-            ))}
-          </ul>
-          <p className="text-xs text-gray-400 mt-3">* данные сервиса Meteum</p>
-        </motion.div>
-
-        {/* Пыльца */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(250, 204, 21, 0.3)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
-        >
-          <h3 className="text-sm font-medium text-gray-600 mb-3">
-            <i className="fa-solid fa-seedling mr-1 text-green-deep"></i>Пыльца
-          </h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Берёза</span>
-              <div className="w-24 bg-gray-200 rounded-full h-2">
-                <div className="bg-yellow-400 h-2 rounded-full" style={{ width: `${pollenLevels.tree * 20}%` }}></div>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sections.map((section, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ y: -5, boxShadow: `0 15px 30px ${section.shadowColor}` }}
+            className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm transition-shadow"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <i className={`${section.icon} text-2xl text-green-deep`}></i>
+              <Link
+                href={section.link}
+                className="text-xl font-semibold text-dark transition-colors duration-200 hover:text-green-deep hover:underline"
+              >
+                {section.title}
+              </Link>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Злаки</span>
-              <div className="w-24 bg-gray-200 rounded-full h-2">
-                <div className="bg-yellow-400 h-2 rounded-full" style={{ width: `${pollenLevels.grass * 20}%` }}></div>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Сорняки</span>
-              <div className="w-24 bg-gray-200 rounded-full h-2">
-                <div className="bg-yellow-400 h-2 rounded-full" style={{ width: `${pollenLevels.weed * 20}%` }}></div>
-              </div>
-            </div>
-          </div>
-          <p className="text-xs text-gray-400 mt-3">* Google Pollen API</p>
-        </motion.div>
-
-        {/* Сезонные работы */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.4 }}
-          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(34, 197, 94, 0.3)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm"
-        >
-          <h3 className="text-sm font-medium text-gray-600 mb-3">
-            <i className="fa-solid fa-calendar-check mr-1 text-green-deep"></i>Сезон
-          </h3>
-          <ul className="space-y-2">
-            {seasonWorks.map((s, i) => (
-              <li key={i} className="text-sm text-gray-600">
-                <span className="font-semibold text-green-deep">{s.month}:</span> {s.event}
-              </li>
-            ))}
-          </ul>
-          <p className="text-xs text-gray-400 mt-3">* обновляется ежемесячно</p>
-        </motion.div>
+            <ul className="space-y-2">
+              {section.items.map((item, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-2 text-sm text-gray-600 transition-colors duration-200 hover:text-green-deep cursor-default"
+                >
+                  <span className="text-gold mt-1 shrink-0">•</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
       </div>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="text-center text-gray-400 text-sm mt-10 max-w-2xl mx-auto"
+      >
+        Информация регулярно обновляется правлением.
+        Предложить тему или задать вопрос можно на форуме.
+      </motion.p>
     </section>
   )
 }

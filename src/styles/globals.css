@@ -1,3 +1,4 @@
+/* styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,8 +8,8 @@ body {
 }
 
 .btn-primary {
-  @apply bg-green-deep text-white px-8 py-3 rounded-full font-medium transition-all hover:bg-[#12392e] shadow-lg;
+  @apply bg-green-deep text-white px-8 py-3 rounded-full font-medium transition-all hover:bg-[#1b5e20] shadow-sm;
 }
 .btn-outline-gold {
-  @apply border border-gold text-green-deep px-8 py-3 rounded-full font-medium transition-all hover:bg-gold hover:text-white;
+  @apply border border-gold text-gold px-8 py-3 rounded-full font-medium transition-all hover:bg-gold hover:text-white;
 }

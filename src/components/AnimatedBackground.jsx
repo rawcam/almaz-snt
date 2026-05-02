@@ -1,10 +1,9 @@
 // src/components/AnimatedBackground.jsx
 import { motion } from 'framer-motion'
 
-export default function AnimatedBackground() {
+export default function AnimatedBackground({ opacity = 1 }) {
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden bg-gradient-to-br from-[#e0e6d0] via-[#f5f0e6] to-[#d4c9a8]">
-      {/* лёгкие пылинки */}
+    <div className="absolute inset-0 z-0 overflow-hidden bg-gradient-to-br from-[#e0e6d0] via-[#f5f0e6] to-[#d4c9a8]" style={{ opacity }}>
       <div className="absolute inset-0">
         {[...Array(30)].map((_, i) => (
           <motion.div
@@ -28,8 +27,8 @@ export default function AnimatedBackground() {
         ))}
       </div>
 
-      {/* дачные иконки – 15 штук */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* ... все иконки без изменений */}
         <motion.i className="fa-solid fa-sun absolute text-6xl text-yellow-300/70" style={{ left: '10%', top: '80%' }}
           animate={{ y: [0, -25, 0], rotate: [0, 12, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} />
         <motion.i className="fa-solid fa-cloud absolute text-5xl text-white/80" style={{ right: '5%', top: '10%' }}
@@ -47,7 +46,6 @@ export default function AnimatedBackground() {
         <motion.i className="fa-solid fa-fan absolute text-5xl text-green-400/50" style={{ left: '15%', top: '15%' }}
           animate={{ rotate: [0, 360] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} />
 
-        {/* новые дачные символы */}
         <motion.i className="fa-solid fa-house absolute text-4xl text-amber-700/60" style={{ left: '5%', top: '40%' }}
           animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }} />
         <motion.i className="fa-solid fa-fire absolute text-4xl text-orange-500/70" style={{ right: '25%', top: '75%' }}

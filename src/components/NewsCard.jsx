@@ -1,10 +1,15 @@
+// src/components/NewsCard.jsx
 import { motion } from 'framer-motion'
 
 export default function NewsCard({ image, tag, title, description, link = '#' }) {
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
+      whileHover={{
+        y: -5,
+        boxShadow: '0 15px 30px rgba(0,0,0,0.08)',
+        borderColor: 'rgba(201, 169, 110, 0.8)'
+      }}
+      className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition-all"
     >
       <img src={image} alt={title} className="w-full h-48 object-cover" />
       <div className="p-5">

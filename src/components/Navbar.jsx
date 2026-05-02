@@ -14,9 +14,7 @@ export default function Navbar() {
           <Link href="/news" className="text-gray-600 hover:text-green-deep transition">Новости</Link>
           <Link href="/docs" className="text-gray-600 hover:text-green-deep transition">Документы</Link>
           <Link href="/payments" className="text-gray-600 hover:text-green-deep transition">Ведомости</Link>
-          <Link href="/forum" className="text-gray-600 hover:text-green-deep transition">Сообщество</Link>
           <Link href="/contacts" className="text-gray-600 hover:text-green-deep transition">Контакты</Link>
-          <Link href="/login" className="btn-primary">Кабинет</Link>
         </div>
         <button className="md:hidden" onClick={() => setOpen(!open)}>
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,9 +27,7 @@ export default function Navbar() {
           <Link href="/news" className="block py-2 text-gray-600">Новости</Link>
           <Link href="/docs" className="block py-2 text-gray-600">Документы</Link>
           <Link href="/payments" className="block py-2 text-gray-600">Ведомости</Link>
-          <Link href="/forum" className="block py-2 text-gray-600">Сообщество</Link>
           <Link href="/contacts" className="block py-2 text-gray-600">Контакты</Link>
-          <Link href="/login" className="block py-2 text-green-deep font-medium">Кабинет</Link>
         </div>
       )}
     </nav>

@@ -46,7 +46,7 @@ export default function Home() {
       <WeatherWidgets />
       <GardenerHub />
 
-      <section className="py-20 container mx-auto px-4">
+      <section className="py-20 container mx-auto px-4 relative z-10">
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
           Будьте в курсе
         </span>
@@ -73,7 +73,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20">
+      <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20 relative z-10">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h4 className="text-white text-lg font-semibold">СНТ «Алмаз»</h4>

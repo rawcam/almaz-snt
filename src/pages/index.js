@@ -19,16 +19,34 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="max-w-xl bg-white rounded-3xl p-6 shadow-lg border border-gray-100 text-center mx-auto"
+            className="relative max-w-xl bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center mx-auto"
           >
+            {/* Бабочка в левом верхнем углу */}
+            <motion.div
+              className="absolute -top-4 -left-4 text-4xl text-amber-500"
+              animate={{ y: [0, -10, 0], rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <i className="fa-solid fa-bug"></i>
+            </motion.div>
+
+            {/* Ромашка в правом нижнем углу */}
+            <motion.div
+              className="absolute -bottom-4 -right-4 text-4xl text-white bg-green-400 rounded-full p-2"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+            >
+              <i className="fa-solid fa-fan"></i>
+            </motion.div>
+
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
               Ступинский район, деревня Леньково
             </span>
             <h1 className="text-5xl md:text-6xl font-medium mt-4 leading-tight text-dark">
-              АЛМАЗ <br />в тишине садов
+              СНТ «АЛМАЗ»
             </h1>
             <p className="text-lg text-gray-600 mt-4 max-w-md mx-auto">
-              Частное садовое товарищество с 2001 года. Комфорт, безопасность и прозрачность — как драгоценность.
+              Добро пожаловать!
             </p>
             <div className="flex justify-center gap-4 mt-6">
               <a href="/docs" className="inline-block px-6 py-2.5 rounded-full font-medium transition-all bg-green-deep text-white hover:bg-[#1b5e20] shadow-sm text-sm">

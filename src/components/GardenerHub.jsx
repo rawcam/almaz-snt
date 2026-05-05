@@ -21,10 +21,10 @@ const sections = [
     title: 'Правила СНТ',
     link: '/articles/rules',
     items: [
-      { text: 'Режим въезда транспорта и парковки', link: '/articles/rules' },
-      { text: 'Уход за ливнёвой канализацией на участке', link: '/articles/rules' },
-      { text: 'Строительные нормы: заборы, хозпостройки', link: '/articles/rules' },
-      { text: 'Порядок проведения собраний', link: '/articles/rules' },
+      { text: 'Режим въезда транспорта и парковки', link: '/articles/rules/transport' },
+      { text: 'Уход за ливнёвой канализацией на участке', link: '/articles/rules/drainage' },
+      { text: 'Строительные нормы: заборы, хозпостройки', link: '/articles/rules/buildings' },
+      { text: 'Порядок проведения собраний', link: '/articles/rules/meetings' },
     ],
     shadowColor: 'rgba(59, 130, 246, 0.3)',
     borderColor: 'rgba(59, 130, 246, 0.8)'
@@ -32,12 +32,12 @@ const sections = [
   {
     icon: 'fa-solid fa-phone-volume',
     title: 'Экстренные службы',
-    link: '/articles/emergency',
+    link: '/emergency',
     items: [
-      { text: 'Скорая помощь: 112 или 03', link: '/articles/emergency' },
-      { text: 'Пожарная часть: +7 (496) 123-45-68', link: '/articles/emergency' },
-      { text: 'Газовая служба: 04', link: '/articles/emergency' },
-      { text: 'Что делать при укусе клеща: алгоритм', link: '/articles/emergency' },
+      { text: 'Скорая помощь: вызов и первая помощь', link: '/emergency/ambulance' },
+      { text: 'Пожарная безопасность', link: '/emergency/fire' },
+      { text: 'Утечка газа: экстренные меры', link: '/emergency/gas' },
+      { text: 'Укус клеща: алгоритм действий', link: '/emergency/tick' },
     ],
     shadowColor: 'rgba(239, 68, 68, 0.3)',
     borderColor: 'rgba(239, 68, 68, 0.8)'

@@ -1,68 +1,253 @@
 // src/components/AnimatedBackground.jsx
-import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react';
 
-export default function AnimatedBackground({ opacity = 1 }) {
+export default function AnimatedBackground() {
+  const sceneRef = useRef(null);
+
+  useEffect(() => {
+    const layers = sceneRef.current.querySelectorAll('.layer[data-depth]');
+    const handleMouseMove = (e) => {
+      const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      layers.forEach(layer => {
+        const depth = parseFloat(layer.getAttribute('data-depth'));
+        const moveX = mouseX * depth * 40;
+        const moveY = mouseY * depth * 40;
+        layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      });
+    };
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden bg-gradient-to-br from-[#e0e6d0] via-[#f5f0e6] to-[#d4c9a8]" style={{ opacity }}>
-      <div className="absolute inset-0">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-white rounded-full opacity-20"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              opacity: [0.1, 0.4, 0.1],
-            }}
-            transition={{
-              duration: 5 + Math.random() * 7,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
+    <div ref={sceneRef} className="parallax-scene">
+      {/* Небо */}
+      <div className="layer sky" data-depth="0.0"></div>
+
+      {/* Солнце */}
+      <div className="layer" data-depth="0.01">
+        <i className="fa-solid fa-sun sun-icon"></i>
       </div>
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* ... все иконки без изменений */}
-        <motion.i className="fa-solid fa-sun absolute text-6xl text-yellow-300/70" style={{ left: '10%', top: '80%' }}
-          animate={{ y: [0, -25, 0], rotate: [0, 12, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} />
-        <motion.i className="fa-solid fa-cloud absolute text-5xl text-white/80" style={{ right: '5%', top: '10%' }}
-          animate={{ x: [0, 30, 0] }} transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }} />
-        <motion.i className="fa-solid fa-cloud absolute text-4xl text-white/70" style={{ left: '40%', top: '5%' }}
-          animate={{ x: [0, -20, 0] }} transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 2 }} />
-        <motion.i className="fa-solid fa-strawberry absolute text-4xl text-red-400/70" style={{ left: '70%', top: '85%' }}
-          animate={{ y: [0, -18, 0], scale: [1, 1.1, 1] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }} />
-        <motion.i className="fa-solid fa-seedling absolute text-4xl text-green-500/60" style={{ left: '80%', top: '20%' }}
-          animate={{ y: [0, -30, 0], rotate: [0, 8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }} />
-        <motion.i className="fa-solid fa-leaf absolute text-3xl text-green-300/70" style={{ left: '40%', top: '90%' }}
-          animate={{ x: [0, 25, 0], rotate: [0, 18, 0] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }} />
-        <motion.i className="fa-solid fa-bug absolute text-3xl text-pink-300/60" style={{ right: '15%', top: '60%' }}
-          animate={{ x: [0, 15, -10, 0], y: [0, -12, 6, 0] }} transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2 }} />
-        <motion.i className="fa-solid fa-fan absolute text-5xl text-green-400/50" style={{ left: '15%', top: '15%' }}
-          animate={{ rotate: [0, 360] }} transition={{ duration: 25, repeat: Infinity, ease: 'linear' }} />
-
-        <motion.i className="fa-solid fa-house absolute text-4xl text-amber-700/60" style={{ left: '5%', top: '40%' }}
-          animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }} />
-        <motion.i className="fa-solid fa-fire absolute text-4xl text-orange-500/70" style={{ right: '25%', top: '75%' }}
-          animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }} />
-        <motion.i className="fa-solid fa-bicycle absolute text-4xl text-blue-400/60" style={{ left: '60%', top: '10%' }}
-          animate={{ x: [0, 40, 0], rotate: [0, 5, -5, 0] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }} />
-        <motion.i className="fa-solid fa-tree absolute text-5xl text-green-700/60" style={{ right: '10%', top: '30%' }}
-          animate={{ y: [0, -10, 0], rotate: [0, 3, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }} />
-        <motion.i className="fa-solid fa-caravan absolute text-4xl text-yellow-600/50" style={{ left: '30%', top: '25%' }}
-          animate={{ x: [0, -25, 0] }} transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut', delay: 3 }} />
-        <motion.i className="fa-solid fa-fish absolute text-3xl text-cyan-500/60" style={{ right: '5%', top: '50%' }}
-          animate={{ y: [0, -20, 0], rotate: [0, -10, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2.2 }} />
-        <motion.i className="fa-solid fa-drumstick-bite absolute text-3xl text-red-600/60" style={{ left: '50%', top: '70%' }}
-          animate={{ rotate: [0, 15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }} />
-        <motion.i className="fa-solid fa-tractor absolute text-4xl text-lime-800/50" style={{ left: '20%', top: '80%' }}
-          animate={{ x: [0, 15, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }} />
+      {/* Облака */}
+      <div className="layer" data-depth="0.02">
+        <i className="fa-solid fa-cloud cloud cloud1"></i>
+        <i className="fa-solid fa-cloud cloud cloud2"></i>
+        <i className="fa-solid fa-cloud cloud cloud3"></i>
       </div>
+
+      {/* Птицы */}
+      <div className="layer" data-depth="0.03">
+        <i className="fa-solid fa-dove bird bird1"></i>
+        <i className="fa-solid fa-crow bird bird2" style={{ color: '#555' }}></i>
+        <i className="fa-solid fa-dove bird bird3"></i>
+        <i className="fa-solid fa-crow bird bird4" style={{ color: '#444' }}></i>
+      </div>
+
+      {/* Передний план (все наземные объекты) */}
+      <div className="layer foreground-icons" data-depth="0.18">
+        <div className="grass"></div>
+        <div className="horizon"></div>
+
+        {/* Дым (над красным домом) */}
+        <div className="smoke">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        {/* 11 объектов от центра */}
+        <i className="fa-solid fa-house icon house" style={{ left: '4%', color: '#ef4444' }}></i>
+        <i className="fa-solid fa-tree icon tree" style={{ left: '13.2%', color: '#81c784' }}></i>
+        <i className="fa-solid fa-pig icon pig"></i>
+        <i className="fa-solid fa-dog icon dog"></i>
+        <i className="fa-solid fa-frog icon frog"></i>
+        <i className="fa-solid fa-house icon house" style={{ left: '50%', color: '#eab308' }}></i>
+        <i className="fa-solid fa-fire icon fire"></i>
+        <i className="fa-solid fa-cat icon cat"></i>
+        <i className="fa-solid fa-horse icon horse"></i>
+        <i className="fa-solid fa-tree icon tree" style={{ left: '86.8%', color: '#4caf50' }}></i>
+        <i className="fa-solid fa-house icon house" style={{ left: '96%', color: '#3b82f6' }}></i>
+      </div>
+
+      {/* Встроенные стили (только для этого компонента) */}
+      <style jsx>{`
+        .parallax-scene {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+        }
+        .layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          will-change: transform;
+        }
+        .sky {
+          background: linear-gradient(180deg, #a3c6e7 0%, #dce9f4 50%, #eef3f0 100%);
+        }
+        .sun-icon {
+          position: absolute;
+          top: 5%;
+          left: 10%;
+          font-size: 5rem;
+          color: #fbbf24;
+          text-shadow: 0 0 20px #fde047;
+          animation: sunSpin 20s linear infinite;
+          transform-origin: center;
+        }
+        @keyframes sunSpin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .cloud {
+          position: absolute;
+          font-size: 3rem;
+          color: white;
+          opacity: 0.9;
+          text-shadow: 0 2px 8px rgba(0,0,0,0.05);
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        .cloud1 { top: 12%; left: -10%; animation: cloudDrift1 40s linear infinite; }
+        .cloud2 { top: 25%; left: -15%; animation: cloudDrift2 50s linear infinite; }
+        .cloud3 { top: 8%; left: -20%; animation: cloudDrift3 45s linear infinite; }
+        @keyframes cloudDrift1 { from { transform: translateX(0); } to { transform: translateX(120vw); } }
+        @keyframes cloudDrift2 { from { transform: translateX(0); } to { transform: translateX(130vw); } }
+        @keyframes cloudDrift3 { from { transform: translateX(0); } to { transform: translateX(125vw); } }
+        .bird {
+          position: absolute;
+          font-size: 1.8rem;
+          opacity: 0.8;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        .bird1 { top: 18%; left: -5%; animation: birdFly1 18s infinite; animation-delay: 0s; }
+        .bird2 { top: 28%; left: -15%; animation: birdFly2 22s infinite; animation-delay: 5s; }
+        .bird3 { top: 22%; left: -25%; animation: birdFly3 20s infinite; animation-delay: 10s; }
+        .bird4 { top: 32%; left: -20%; animation: birdFly4 24s infinite; animation-delay: 2s; }
+        @keyframes birdFly1 { from { transform: translate(0, 0); } to { transform: translate(120vw, -30px); } }
+        @keyframes birdFly2 { from { transform: translate(0, 0); } to { transform: translate(130vw, -20px); } }
+        @keyframes birdFly3 { from { transform: translate(0, 0); } to { transform: translate(125vw, -25px); } }
+        @keyframes birdFly4 { from { transform: translate(0, 0); } to { transform: translate(135vw, -15px); } }
+        .foreground-icons {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+        }
+        .grass {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 28%;
+          background: linear-gradient(to bottom, #81a86e 0%, #4a6b3a 60%);
+        }
+        .horizon {
+          position: absolute;
+          bottom: 28%;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: rgba(0,0,0,0.1);
+        }
+        .icon {
+          position: absolute;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+          bottom: 28%;
+          transform: translateX(-50%);
+        }
+        .house {
+          font-size: 8rem;
+        }
+        .tree {
+          font-size: 4rem;
+        }
+        .fire {
+          font-size: 3rem;
+          color: #f97316;
+          left: 59.2%;
+          animation: fireFlicker 1.5s ease-in-out infinite;
+        }
+        @keyframes fireFlicker {
+          0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+          50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
+        .pig {
+          font-size: 4rem;
+          color: #f5b0b0;
+          left: 22.4%;
+          animation: sway 3s ease-in-out infinite;
+        }
+        .dog {
+          font-size: 3.5rem;
+          color: #8b5a2b;
+          left: 31.6%;
+          animation: sway 2.5s ease-in-out infinite;
+        }
+        .frog {
+          font-size: 3rem;
+          color: #4caf50;
+          left: 40.8%;
+          animation: bounce 1.5s ease-in-out infinite;
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateX(-50%) translateY(0); }
+          50% { transform: translateX(-50%) translateY(-6px); }
+        }
+        .cat {
+          font-size: 3.5rem;
+          color: #f97316;
+          left: 68.4%;
+          animation: sway 2.8s ease-in-out infinite;
+        }
+        .horse {
+          font-size: 6rem;
+          color: #78350f;
+          left: 77.6%;
+          animation: sway 3.2s ease-in-out infinite;
+        }
+        @keyframes sway {
+          0%, 100% { transform: translateX(-50%) rotate(0deg); }
+          25% { transform: translateX(-50%) rotate(2deg); }
+          75% { transform: translateX(-50%) rotate(-2deg); }
+        }
+        .smoke {
+          position: absolute;
+          bottom: calc(28% + 9rem);
+          left: calc(4% + 4rem);
+          transform: translateX(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .smoke span {
+          display: block;
+          width: 10px;
+          height: 10px;
+          background: #ccc;
+          border-radius: 50%;
+          margin: 2px 0;
+          opacity: 0.7;
+          animation: rise 3s infinite;
+        }
+        .smoke span:nth-child(1) { animation-delay: 0s; }
+        .smoke span:nth-child(2) { animation-delay: 0.5s; }
+        .smoke span:nth-child(3) { animation-delay: 1s; }
+        .smoke span:nth-child(4) { animation-delay: 1.5s; }
+        @keyframes rise {
+          0% { transform: translateY(0) scale(1); opacity: 0.7; }
+          100% { transform: translateY(-40px) scale(2); opacity: 0; }
+        }
+      `}</style>
     </div>
-  )
+  );
 }

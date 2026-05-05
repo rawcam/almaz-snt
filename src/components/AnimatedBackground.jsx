@@ -25,7 +25,7 @@ export default function AnimatedBackground() {
       {/* Небо */}
       <div className="layer sky" data-depth="0.0"></div>
 
-      {/* Солнце (опущено ниже) */}
+      {/* Солнце */}
       <div className="layer" data-depth="0.01">
         <i className="fa-solid fa-sun sun-icon"></i>
       </div>
@@ -50,7 +50,7 @@ export default function AnimatedBackground() {
         <div className="grass"></div>
         <div className="horizon"></div>
 
-        {/* Дым (над красным домом) */}
+        {/* Дым */}
         <div className="smoke">
           <span></span><span></span><span></span><span></span>
         </div>
@@ -77,7 +77,7 @@ export default function AnimatedBackground() {
           width: 100%;
           height: 100%;
           pointer-events: none;
-          z-index: 0;
+          z-index: -1; /* фон уходит под контент */
         }
         .layer {
           position: absolute;
@@ -86,6 +86,8 @@ export default function AnimatedBackground() {
           width: 100%;
           height: 100%;
           will-change: transform;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
         .sky {
           background: linear-gradient(180deg, #a3c6e7 0%, #dce9f4 50%, #eef3f0 100%);
@@ -99,6 +101,7 @@ export default function AnimatedBackground() {
           text-shadow: 0 0 20px #fde047;
           animation: sunSpin 20s linear infinite;
           transform-origin: center;
+          backface-visibility: hidden;
         }
         @keyframes sunSpin {
           0% { transform: rotate(0deg); }
@@ -112,6 +115,7 @@ export default function AnimatedBackground() {
           text-shadow: 0 2px 8px rgba(0,0,0,0.05);
           animation-timing-function: linear;
           animation-iteration-count: infinite;
+          backface-visibility: hidden;
         }
         .cloud1 { top: 18%; left: -10%; animation: cloudDrift1 40s linear infinite; }
         .cloud2 { top: 30%; left: -15%; animation: cloudDrift2 50s linear infinite; }
@@ -125,6 +129,7 @@ export default function AnimatedBackground() {
           opacity: 0.8;
           animation-timing-function: linear;
           animation-iteration-count: infinite;
+          backface-visibility: hidden;
         }
         .bird1 { top: 22%; left: -5%; animation: birdFly1 18s infinite; animation-delay: 0s; }
         .bird2 { top: 32%; left: -15%; animation: birdFly2 22s infinite; animation-delay: 5s; }
@@ -149,6 +154,7 @@ export default function AnimatedBackground() {
           width: 100%;
           height: 28%;
           background: linear-gradient(to bottom, #81a86e 0%, #4a6b3a 60%);
+          backface-visibility: hidden;
         }
         .horizon {
           position: absolute;
@@ -163,6 +169,7 @@ export default function AnimatedBackground() {
           text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
           bottom: 28%;
           transform: translateX(-50%);
+          backface-visibility: hidden;
         }
         .house { font-size: 8rem; }
         .tree { font-size: 4rem; }
@@ -227,6 +234,7 @@ export default function AnimatedBackground() {
           display: flex;
           flex-direction: column;
           align-items: center;
+          backface-visibility: hidden;
         }
         .smoke span {
           display: block;
@@ -237,6 +245,7 @@ export default function AnimatedBackground() {
           margin: 2px 0;
           opacity: 0.7;
           animation: rise 3s infinite;
+          backface-visibility: hidden;
         }
         .smoke span:nth-child(1) { animation-delay: 0s; }
         .smoke span:nth-child(2) { animation-delay: 0.5s; }

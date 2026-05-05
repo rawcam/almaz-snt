@@ -38,7 +38,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.1 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(56, 189, 248, 0.3)', borderColor: 'rgba(56, 189, 248, 0.8)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm transition-all"
+          className="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm transition-all"
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium text-gray-600"><i className="fa-solid fa-location-dot mr-1 text-green-deep"></i>СНТ Алмаз</span>
@@ -59,7 +59,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.2 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(2, 132, 199, 0.3)', borderColor: 'rgba(2, 132, 199, 0.8)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm transition-all"
+          className="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm transition-all"
         >
           <h3 className="text-sm font-medium text-gray-600 mb-3">
             <i className="fa-solid fa-water mr-1 text-green-deep"></i>Температура воды
@@ -82,7 +82,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.3 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(250, 204, 21, 0.3)', borderColor: 'rgba(250, 204, 21, 0.8)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm transition-all"
+          className="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm transition-all"
         >
           <h3 className="text-sm font-medium text-gray-600 mb-3">
             <i className="fa-solid fa-seedling mr-1 text-green-deep"></i>Пыльца
@@ -117,7 +117,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.4 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(34, 197, 94, 0.3)', borderColor: 'rgba(34, 197, 94, 0.8)' }}
-          className="backdrop-blur-xl bg-white/40 rounded-3xl p-5 border border-white/50 shadow-sm transition-all"
+          className="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm transition-all"
         >
           <h3 className="text-sm font-medium text-gray-600 mb-3">
             <i className="fa-solid fa-calendar-check mr-1 text-green-deep"></i>Сезон

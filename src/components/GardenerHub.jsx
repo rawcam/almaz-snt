@@ -114,7 +114,7 @@ export default function GardenerHub() {
               boxShadow: `0 15px 30px ${section.shadowColor}`,
               borderColor: section.borderColor
             }}
-            className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm border border-white/50 transition-all"
+            className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 transition-all"
           >
             <div className="flex items-center gap-3 mb-4">
               <i className={`${section.icon} text-2xl text-green-deep`}></i>

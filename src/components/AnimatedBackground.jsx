@@ -25,7 +25,7 @@ export default function AnimatedBackground() {
       {/* Небо */}
       <div className="layer sky" data-depth="0.0"></div>
 
-      {/* Солнце */}
+      {/* Солнце (опущено ниже) */}
       <div className="layer" data-depth="0.01">
         <i className="fa-solid fa-sun sun-icon"></i>
       </div>
@@ -55,7 +55,7 @@ export default function AnimatedBackground() {
           <span></span><span></span><span></span><span></span>
         </div>
 
-        {/* 11 объектов от центра */}
+        {/* 11 объектов от центра (расстояние одинаковое) */}
         <i className="fa-solid fa-house icon house" style={{ left: '4%', color: '#ef4444' }}></i>
         <i className="fa-solid fa-tree icon tree" style={{ left: '13.2%', color: '#81c784' }}></i>
         <i className="fa-solid fa-pig icon pig"></i>
@@ -69,7 +69,6 @@ export default function AnimatedBackground() {
         <i className="fa-solid fa-house icon house" style={{ left: '96%', color: '#3b82f6' }}></i>
       </div>
 
-      {/* Встроенные стили (только для этого компонента) */}
       <style jsx>{`
         .parallax-scene {
           position: fixed;
@@ -93,7 +92,7 @@ export default function AnimatedBackground() {
         }
         .sun-icon {
           position: absolute;
-          top: 5%;
+          top: 12%; /* опущено ниже */
           left: 10%;
           font-size: 5rem;
           color: #fbbf24;
@@ -114,9 +113,9 @@ export default function AnimatedBackground() {
           animation-timing-function: linear;
           animation-iteration-count: infinite;
         }
-        .cloud1 { top: 12%; left: -10%; animation: cloudDrift1 40s linear infinite; }
-        .cloud2 { top: 25%; left: -15%; animation: cloudDrift2 50s linear infinite; }
-        .cloud3 { top: 8%; left: -20%; animation: cloudDrift3 45s linear infinite; }
+        .cloud1 { top: 18%; left: -10%; animation: cloudDrift1 40s linear infinite; }
+        .cloud2 { top: 30%; left: -15%; animation: cloudDrift2 50s linear infinite; }
+        .cloud3 { top: 14%; left: -20%; animation: cloudDrift3 45s linear infinite; }
         @keyframes cloudDrift1 { from { transform: translateX(0); } to { transform: translateX(120vw); } }
         @keyframes cloudDrift2 { from { transform: translateX(0); } to { transform: translateX(130vw); } }
         @keyframes cloudDrift3 { from { transform: translateX(0); } to { transform: translateX(125vw); } }
@@ -127,10 +126,10 @@ export default function AnimatedBackground() {
           animation-timing-function: linear;
           animation-iteration-count: infinite;
         }
-        .bird1 { top: 18%; left: -5%; animation: birdFly1 18s infinite; animation-delay: 0s; }
-        .bird2 { top: 28%; left: -15%; animation: birdFly2 22s infinite; animation-delay: 5s; }
-        .bird3 { top: 22%; left: -25%; animation: birdFly3 20s infinite; animation-delay: 10s; }
-        .bird4 { top: 32%; left: -20%; animation: birdFly4 24s infinite; animation-delay: 2s; }
+        .bird1 { top: 22%; left: -5%; animation: birdFly1 18s infinite; animation-delay: 0s; }
+        .bird2 { top: 32%; left: -15%; animation: birdFly2 22s infinite; animation-delay: 5s; }
+        .bird3 { top: 26%; left: -25%; animation: birdFly3 20s infinite; animation-delay: 10s; }
+        .bird4 { top: 36%; left: -20%; animation: birdFly4 24s infinite; animation-delay: 2s; }
         @keyframes birdFly1 { from { transform: translate(0, 0); } to { transform: translate(120vw, -30px); } }
         @keyframes birdFly2 { from { transform: translate(0, 0); } to { transform: translate(130vw, -20px); } }
         @keyframes birdFly3 { from { transform: translate(0, 0); } to { transform: translate(125vw, -25px); } }

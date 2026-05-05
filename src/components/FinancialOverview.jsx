@@ -6,38 +6,29 @@ const financials = [
   {
     icon: 'fa-solid fa-coins',
     title: 'Членские взносы',
-    amount: '3 500 ₽ / участок',
+    amount: '1 200 – 1 800 ₽ / участок',
     link: '/docs',
-    description: 'На общие нужды: вывоз мусора, охрана, электричество',
+    description: '6 соток — 1 200 ₽, 8 соток — 1 500 ₽, 12 соток — 1 800 ₽',
     shadowColor: 'rgba(184, 155, 94, 0.3)',
     borderColor: 'rgba(184, 155, 94, 0.8)'
   },
   {
     icon: 'fa-solid fa-hammer',
     title: 'Целевые взносы',
-    amount: '2 000 ₽ / участок',
-    link: '/docs',
-    description: 'Ремонт дороги и забора — лето 2026',
-    shadowColor: 'rgba(184, 155, 94, 0.3)',
-    borderColor: 'rgba(184, 155, 94, 0.8)'
+    amount: '3 200 ₽ / участок',
+    link: '/news',
+    description: '2 000 ₽ – ограждение, 1 200 ₽ – ремонт дорог (2026 г.)',
+    shadowColor: 'rgba(76, 175, 80, 0.3)',
+    borderColor: 'rgba(76, 175, 80, 0.8)'
   },
   {
     icon: 'fa-solid fa-exclamation-triangle',
     title: 'Задолженность',
-    amount: 'Всего: 85 000 ₽',
+    amount: 'Всего: 178 971,12 ₽',
     link: '/payments',
-    description: 'По оплате электроэнергии и взносов',
+    description: 'По электроэнергии, членским и целевым взносам',
     shadowColor: 'rgba(220, 38, 38, 0.3)',
     borderColor: 'rgba(220, 38, 38, 0.8)'
-  },
-  {
-    icon: 'fa-solid fa-tools',
-    title: 'Услуги подрядчиков',
-    amount: 'от 500 ₽',
-    link: '/articles/services',
-    description: 'Вырубка деревьев, вывоз мусора, ремонт',
-    shadowColor: 'rgba(107, 114, 128, 0.3)',
-    borderColor: 'rgba(107, 114, 128, 0.8)'
   },
 ]
 
@@ -59,7 +50,7 @@ export default function FinancialOverview() {
         </h2>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
         {financials.map((item, index) => (
           <motion.div
             key={index}

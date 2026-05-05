@@ -47,7 +47,7 @@ const financials = [
 export default function FinancialOverview() {
   return (
     <section className="py-12 container mx-auto px-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {financials.map((item, index) => (
           <motion.div
             key={index}

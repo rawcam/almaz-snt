@@ -47,7 +47,7 @@ const financials = [
 export default function FinancialOverview() {
   return (
     <section className="py-12 container mx-auto px-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {financials.map((item, index) => (
           <motion.div
             key={index}
@@ -60,7 +60,7 @@ export default function FinancialOverview() {
               boxShadow: `0 15px 30px ${item.shadowColor}`,
               borderColor: item.borderColor,
             }}
-            className="backdrop-blur-xl bg-white/40 rounded-3xl p-6 border border-white/50 shadow-sm transition-all cursor-pointer"
+            className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm transition-all cursor-pointer"
           >
             <Link href={item.link} className="block h-full">
               <div className="flex items-center gap-2 mb-4">

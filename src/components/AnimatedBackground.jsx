@@ -45,7 +45,7 @@ export default function AnimatedBackground() {
         <i className="fa-solid fa-crow bird bird4" style={{ color: '#444' }}></i>
       </div>
 
-      {/* Передний план (все наземные объекты) */}
+      {/* Передний план */}
       <div className="layer foreground-icons" data-depth="0.18">
         <div className="grass"></div>
         <div className="horizon"></div>
@@ -55,10 +55,10 @@ export default function AnimatedBackground() {
           <span></span><span></span><span></span><span></span>
         </div>
 
-        {/* 11 объектов от центра (расстояние одинаковое) */}
+        {/* 11 объектов */}
         <i className="fa-solid fa-house icon house" style={{ left: '4%', color: '#ef4444' }}></i>
         <i className="fa-solid fa-tree icon tree" style={{ left: '13.2%', color: '#81c784' }}></i>
-        <i className="fa-solid fa-pig icon pig"></i>
+        <i className="fa-solid fa-mosquito icon mosquito"></i>
         <i className="fa-solid fa-dog icon dog"></i>
         <i className="fa-solid fa-frog icon frog"></i>
         <i className="fa-solid fa-house icon house" style={{ left: '50%', color: '#eab308' }}></i>
@@ -92,7 +92,7 @@ export default function AnimatedBackground() {
         }
         .sun-icon {
           position: absolute;
-          top: 12%; /* опущено ниже */
+          top: 12%;
           left: 10%;
           font-size: 5rem;
           color: #fbbf24;
@@ -164,27 +164,17 @@ export default function AnimatedBackground() {
           bottom: 28%;
           transform: translateX(-50%);
         }
-        .house {
-          font-size: 8rem;
-        }
-        .tree {
-          font-size: 4rem;
-        }
-        .fire {
-          font-size: 3rem;
-          color: #f97316;
-          left: 59.2%;
-          animation: fireFlicker 1.5s ease-in-out infinite;
-        }
-        @keyframes fireFlicker {
-          0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
-          50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
-        }
-        .pig {
-          font-size: 4rem;
-          color: #f5b0b0;
+        .house { font-size: 8rem; }
+        .tree { font-size: 4rem; }
+        .mosquito {
+          font-size: 3.5rem;
+          color: #4a4a4a;
           left: 22.4%;
-          animation: sway 3s ease-in-out infinite;
+          animation: buzz 0.5s infinite alternate;
+        }
+        @keyframes buzz {
+          0% { transform: translateX(-50%) translateY(0px); }
+          100% { transform: translateX(-50%) translateY(-3px); }
         }
         .dog {
           font-size: 3.5rem;
@@ -198,9 +188,11 @@ export default function AnimatedBackground() {
           left: 40.8%;
           animation: bounce 1.5s ease-in-out infinite;
         }
-        @keyframes bounce {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(-6px); }
+        .fire {
+          font-size: 3rem;
+          color: #f97316;
+          left: 59.2%;
+          animation: fireFlicker 1.5s ease-in-out infinite;
         }
         .cat {
           font-size: 3.5rem;
@@ -214,10 +206,18 @@ export default function AnimatedBackground() {
           left: 77.6%;
           animation: sway 3.2s ease-in-out infinite;
         }
+        @keyframes fireFlicker {
+          0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+          50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
         @keyframes sway {
           0%, 100% { transform: translateX(-50%) rotate(0deg); }
           25% { transform: translateX(-50%) rotate(2deg); }
           75% { transform: translateX(-50%) rotate(-2deg); }
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateX(-50%) translateY(0); }
+          50% { transform: translateX(-50%) translateY(-6px); }
         }
         .smoke {
           position: absolute;

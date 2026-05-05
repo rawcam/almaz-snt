@@ -6,45 +6,30 @@ const weatherNow = {
   feelsLike: 20,
   humidity: 45,
   description: 'ясно',
-  icon: 'fa-solid fa-sun'
+  icon: 'fa-solid fa-sun',
 }
 
 const waterList = [
   { name: 'Ока (Ступино)', temp: 16.5 },
   { name: 'Пруд Леньково', temp: 18.2 },
-  { name: 'Река Северка', temp: 17.8 }
+  { name: 'Река Северка', temp: 17.8 },
 ]
 
 const pollenLevels = {
   tree: 3,
   grass: 2,
-  weed: 1
+  weed: 1,
 }
 
 const seasonWorks = [
   { month: 'Май', event: 'Цветение берёзы. Посадка картофеля.' },
   { month: 'Июнь', event: 'Цветение злаков. Сбор клубники.' },
-  { month: 'Июль', event: 'Цветение полыни. Начало грибного сезона.' }
+  { month: 'Июль', event: 'Цветение полыни. Начало грибного сезона.' },
 ]
 
 export default function WeatherWidgets() {
   return (
-    <section className="container mx-auto px-4 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-10"
-      >
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
-          Природа и климат
-        </span>
-        <h2 className="text-4xl md:text-5xl font-medium mt-4 text-dark">
-          Погода и сезонность
-        </h2>
-      </motion.div>
-
+    <section className="container mx-auto px-4 py-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Погода сейчас */}
         <motion.div

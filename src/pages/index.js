@@ -5,8 +5,6 @@ import GardenerHub from '../components/GardenerHub'
 import FinancialOverview from '../components/FinancialOverview'
 import WeatherWidgets from '../components/WeatherWidgets'
 import NewsCard from '../components/NewsCard'
-import ButterflySVG from '../components/ButterflySVG'
-import DaisySVG from '../components/DaisySVG'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -21,30 +19,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="relative max-w-xl bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center mx-auto"
+            className="max-w-xl bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center mx-auto"
           >
-            {/* Бабочка в левом верхнем углу */}
-            <motion.div
-              className="absolute -top-6 -left-6"
-              animate={{ y: [0, -8, 0], x: [0, 4, -2, 0], rotate: [0, 8, -6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <ButterflySVG />
-            </motion.div>
-
-            {/* Ромашка в правом нижнем углу */}
-            <motion.div
-              className="absolute -bottom-4 -right-4"
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <DaisySVG />
-            </motion.div>
-
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
               Ступинский район, деревня Леньково
             </span>
-            <h1 className="text-5xl md:text-6xl font-medium mt-4 leading-tight text-dark">
+            <h1 className="text-3xl md:text-4xl font-medium mt-4 leading-tight text-dark">
               СНТ «АЛМАЗ»
             </h1>
             <p className="text-lg text-gray-600 mt-4 max-w-md mx-auto">

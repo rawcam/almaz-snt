@@ -15,7 +15,21 @@ const weatherIcons = {
   night_cloudy: 'fa-solid fa-cloud-moon',
 }
 
-// Вспомогательная функция для получения иконки погоды
+// Текстовые описания погоды
+function getWeatherDescription(code) {
+  if (code === 0) return 'Ясно'
+  if (code === 1) return 'Преимущественно ясно'
+  if (code === 2) return 'Переменная облачность'
+  if (code === 3) return 'Пасмурно'
+  if (code <= 48) return 'Туман'
+  if (code <= 57) return 'Морось'
+  if (code <= 67) return 'Дождь'
+  if (code <= 77) return 'Снег'
+  if (code <= 82) return 'Ливень'
+  if (code <= 86) return 'Снегопад'
+  return 'Гроза'
+}
+
 function getWeatherIcon(code, isDay) {
   if (isDay) {
     if (code === 0) return weatherIcons.clear
@@ -37,7 +51,6 @@ function getWeatherIcon(code, isDay) {
   }
 }
 
-// Вспомогательная функция для получения фонового класса
 function getWeatherBackground(code, isDay) {
   if (isDay) {
     if (code === 0) return 'bg-gradient-to-br from-yellow-100 to-amber-200'
@@ -56,11 +69,10 @@ export default function WeatherWidgets() {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        // Координаты СНТ Алмаз
         const lat = 55.1874
         const lon = 37.9858
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Europe%2FMoscow&forecast_days=3`
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,relative_humidity_2m_max&timezone=Europe%2FMoscow&forecast_days=3`
         )
         const data = await response.json()
         setWeather({
@@ -77,6 +89,8 @@ export default function WeatherWidgets() {
             maxTemp: Math.round(data.daily.temperature_2m_max[i]),
             minTemp: Math.round(data.daily.temperature_2m_min[i]),
             weatherCode: data.daily.weather_code[i],
+            windSpeed: data.daily.wind_speed_10m_max[i],
+            humidity: data.daily.relative_humidity_2m_max[i],
           })),
         })
       } catch (error) {
@@ -86,15 +100,15 @@ export default function WeatherWidgets() {
       }
     }
     fetchWeather()
-    const interval = setInterval(fetchWeather, 10 * 60 * 1000) // обновление каждые 10 минут
+    const interval = setInterval(fetchWeather, 10 * 60 * 1000)
     return () => clearInterval(interval)
   }, [])
 
   if (loading) {
     return (
       <section className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[...Array(3)].map((_, i) => (
             <div key={i} className="bg-white/70 backdrop-blur-xl rounded-3xl p-5 border border-gray-100 shadow-sm animate-pulse h-48" />
           ))}
         </div>
@@ -105,13 +119,12 @@ export default function WeatherWidgets() {
   if (!weather) return null
 
   const { current, daily } = weather
-  // Используем погодный код текущего дня для фона прогнозов, чтобы было единообразно
   const todayCode = daily && daily.length > 0 ? daily[0].weatherCode : current.weatherCode
   const tomorrowCode = daily && daily.length > 1 ? daily[1].weatherCode : todayCode
 
   return (
     <section className="container mx-auto px-4 py-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Погода сейчас */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -153,15 +166,23 @@ export default function WeatherWidgets() {
             <i className="fa-solid fa-calendar-day mr-1 text-green-deep"></i>Сегодня
           </h3>
           {daily && daily.length > 0 && (
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-light">{daily[0].maxTemp}°</div>
-                <div className="text-sm opacity-70">{daily[0].minTemp}°</div>
+            <>
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <div className="text-2xl font-light">{daily[0].maxTemp}°</div>
+                  <div className="text-sm opacity-70">{daily[0].minTemp}°</div>
+                </div>
+                <i className={`${getWeatherIcon(todayCode, true)} text-3xl text-yellow-400`}></i>
               </div>
-              <i className={`${getWeatherIcon(todayCode, true)} text-3xl text-yellow-400`}></i>
-            </div>
+              <div className="text-sm opacity-80 mb-1">
+                {getWeatherDescription(todayCode)}
+              </div>
+              <div className="flex justify-between text-xs opacity-70">
+                <span><i className="fa-solid fa-wind"></i> {daily[0].windSpeed} м/с</span>
+                <span><i className="fa-solid fa-droplet"></i> {daily[0].humidity}%</span>
+              </div>
+            </>
           )}
-          <p className="text-xs opacity-60 mt-3">Макс / Мин</p>
         </motion.div>
 
         {/* Прогноз на завтра */}
@@ -177,35 +198,23 @@ export default function WeatherWidgets() {
             <i className="fa-solid fa-calendar-alt mr-1 text-green-deep"></i>Завтра
           </h3>
           {daily && daily.length > 1 && (
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-light">{daily[1].maxTemp}°</div>
-                <div className="text-sm opacity-70">{daily[1].minTemp}°</div>
+            <>
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <div className="text-2xl font-light">{daily[1].maxTemp}°</div>
+                  <div className="text-sm opacity-70">{daily[1].minTemp}°</div>
+                </div>
+                <i className={`${getWeatherIcon(tomorrowCode, true)} text-3xl text-yellow-400`}></i>
               </div>
-              <i className={`${getWeatherIcon(tomorrowCode, true)} text-3xl text-yellow-400`}></i>
-            </div>
+              <div className="text-sm opacity-80 mb-1">
+                {getWeatherDescription(tomorrowCode)}
+              </div>
+              <div className="flex justify-between text-xs opacity-70">
+                <span><i className="fa-solid fa-wind"></i> {daily[1].windSpeed} м/с</span>
+                <span><i className="fa-solid fa-droplet"></i> {daily[1].humidity}%</span>
+              </div>
+            </>
           )}
-          <p className="text-xs opacity-60 mt-3">Прогноз</p>
-        </motion.div>
-
-        {/* Сезонные работы (оставим статичный текст) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.4 }}
-          whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(34, 197, 94, 0.3)', borderColor: 'rgba(34, 197, 94, 0.8)' }}
-          className="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm transition-all"
-        >
-          <h3 className="text-sm font-medium text-gray-600 mb-3">
-            <i className="fa-solid fa-calendar-check mr-1 text-green-deep"></i>Сезон
-          </h3>
-          <ul className="space-y-2 text-sm text-gray-600">
-            <li><span className="font-semibold text-green-deep">Май:</span> Цветение берёзы</li>
-            <li><span className="font-semibold text-green-deep">Июнь:</span> Сбор клубники</li>
-            <li><span className="font-semibold text-green-deep">Июль:</span> Грибной сезон</li>
-          </ul>
-          <p className="text-xs text-gray-400 mt-3">* обновляется ежемесячно</p>
         </motion.div>
       </div>
     </section>

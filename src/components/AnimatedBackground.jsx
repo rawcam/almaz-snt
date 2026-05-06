@@ -11,8 +11,8 @@ export default function AnimatedBackground() {
       const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
       layers.forEach(layer => {
         const depth = parseFloat(layer.getAttribute('data-depth'));
-        const moveX = mouseX * depth * 40;
-        const moveY = mouseY * depth * 40;
+        const moveX = mouseX * depth * 30;
+        const moveY = mouseY * depth * 30;
         layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
       });
     };
@@ -77,7 +77,7 @@ export default function AnimatedBackground() {
           width: 100%;
           height: 100%;
           pointer-events: none;
-          z-index: -1; /* фон уходит под контент */
+          z-index: -1; /* фон позади */
         }
         .layer {
           position: absolute;
@@ -254,6 +254,101 @@ export default function AnimatedBackground() {
         @keyframes rise {
           0% { transform: translateY(0) scale(1); opacity: 0.7; }
           100% { transform: translateY(-40px) scale(2); opacity: 0; }
+        }
+
+        /* Мобильные устройства */
+        @media (max-width: 768px) {
+          .sun-icon {
+            top: 8%;
+            left: 8%;
+            font-size: 3.5rem;
+          }
+          .cloud {
+            font-size: 2rem;
+          }
+          .bird {
+            font-size: 1.2rem;
+          }
+          .house {
+            font-size: 5rem;
+          }
+          .tree {
+            font-size: 2.5rem;
+          }
+          .mosquito {
+            font-size: 2.2rem;
+            left: 22%;
+          }
+          .dog {
+            font-size: 2.2rem;
+            left: 31%;
+          }
+          .frog {
+            font-size: 2rem;
+            left: 40%;
+          }
+          .fire {
+            font-size: 2.2rem;
+            left: 59%;
+          }
+          .cat {
+            font-size: 2.2rem;
+            left: 68%;
+          }
+          .horse {
+            font-size: 4rem;
+            left: 77%;
+          }
+          .smoke {
+            bottom: calc(28% + 5rem);
+            left: calc(4% + 2rem);
+          }
+          .smoke span {
+            width: 7px;
+            height: 7px;
+          }
+          .grass {
+            height: 30%;
+          }
+          .horizon {
+            bottom: 30%;
+          }
+          .icon {
+            bottom: 30%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .house {
+            font-size: 4rem;
+          }
+          .tree {
+            font-size: 2rem;
+          }
+          .mosquito {
+            font-size: 1.8rem;
+            left: 21%;
+          }
+          .dog {
+            font-size: 1.8rem;
+            left: 30%;
+          }
+          .frog {
+            font-size: 1.6rem;
+            left: 39%;
+          }
+          .fire {
+            font-size: 1.8rem;
+            left: 58%;
+          }
+          .cat {
+            font-size: 1.8rem;
+            left: 67%;
+          }
+          .horse {
+            font-size: 3.2rem;
+            left: 76%;
+          }
         }
       `}</style>
     </div>

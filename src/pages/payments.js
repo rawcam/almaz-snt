@@ -1,6 +1,5 @@
 // src/pages/payments.js
 import Navbar from '../components/Navbar'
-import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import { useState, useEffect, useMemo } from 'react'
 
@@ -60,8 +59,7 @@ export default function Payments() {
   }
 
   return (
-    <div className="min-h-screen bg-almond relative">
-      <AnimatedBackgroundLight opacity={0.5} />
+    <div className="min-h-screen relative">
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div

@@ -34,7 +34,7 @@ export default function AnimatedBackground() {
       <style jsx>{`
         .parallax-scene {
           position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-          pointer-events: none; z-index: -2; /* фон всегда позади */
+          pointer-events: none; z-index: 0; /* фундамент */
         }
         .sky {
           position: absolute; top: 0; left: 0; width: 100%; height: 100%;

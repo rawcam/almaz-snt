@@ -141,16 +141,6 @@ export default function GardenerHub() {
           </motion.div>
         ))}
       </div>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="text-center text-gray-400 text-sm mt-10 max-w-2xl mx-auto"
-      >
-        Информация регулярно обновляется правлением.
-        Предложить тему или задать вопрос можно на форуме.
-      </motion.p>
     </section>
   )
 }

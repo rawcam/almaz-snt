@@ -1,5 +1,6 @@
 // src/pages/emergency.js
 import Navbar from '../components/Navbar'
+import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -158,6 +159,7 @@ const safetyArticles = [
 export default function EmergencyPage() {
   return (
     <div className="min-h-screen relative">
+      <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10 max-w-6xl">
         <motion.div
@@ -169,7 +171,7 @@ export default function EmergencyPage() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Экстренные службы
           </span>
-          <h1 className="text-5xl md:text-6xl font-medium mt-4 text-dark">
+          <h1 className="text-5xl md:text-6xl font-semibold mt-4 text-dark">
             Помощь рядом
           </h1>
           <p className="text-gray-500 mt-4 max-w-xl mx-auto">
@@ -177,7 +179,6 @@ export default function EmergencyPage() {
           </p>
         </motion.div>
 
-        {/* Контакты по категориям */}
         {[{ title: '🚨 В радиусе 10 км (экстренные службы)', contacts: criticalContacts, border: 'border-red-200' },
           { title: '🏥 В радиусе 20 км (медицинская помощь)', contacts: medicalContacts, border: 'border-blue-200' },
           { title: '🏛️ В радиусе 50 км (общие вопросы)', contacts: generalContacts, border: 'border-green-200' },
@@ -213,7 +214,6 @@ export default function EmergencyPage() {
           </section>
         ))}
 
-        {/* Полезные статьи */}
         <section className="mt-14">
           <h2 className="text-2xl font-semibold text-dark mb-6">📘 Инструкции по безопасности</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

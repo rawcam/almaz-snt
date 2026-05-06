@@ -9,17 +9,13 @@ import { motion } from 'framer-motion'
 
 export default function Home() {
   return (
-    <div className="relative">
+    <div className="relative z-10">
+      <AnimatedBackground />
       <Navbar />
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <AnimatedBackground />
-        <div className="container mx-auto px-4 py-20 flex justify-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="max-w-xl bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center mx-auto"
-          >
+
+      <section className="relative min-h-screen flex items-center justify-center">
+        <div className="container mx-auto px-4 py-20 flex justify-center">
+          <div className="max-w-xl bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center mx-auto">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
               Ступинский район, деревня Леньково
             </span>
@@ -37,7 +33,7 @@ export default function Home() {
                 Контакты
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -45,12 +41,12 @@ export default function Home() {
       <WeatherWidgets />
       <GardenerHub />
 
-      <section className="py-20 container mx-auto px-4">
+      <section className="py-20 container mx-auto px-4 text-center">
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
           Будьте в курсе
         </span>
         <h2 className="text-4xl font-medium mt-2 mb-12">Новости товарищества</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
           <NewsCard
             image="/almaz-snt/assets/news1.jpg"
             tag="Событие"

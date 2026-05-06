@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar'
 import AnimatedBackgroundLight from '../../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useState } from 'react'
 
 const sections = [
   {
@@ -44,6 +45,8 @@ const sections = [
 ]
 
 export default function ArticlesHub() {
+  const [view, setView] = useState('list')
+
   return (
     <div className="min-h-screen relative">
       <AnimatedBackgroundLight opacity={0.5} />
@@ -58,7 +61,7 @@ export default function ArticlesHub() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Полезная информация
           </span>
-          <h1 className="text-5xl md:text-6xl font-semibold mt-4 text-dark">
+          <h1 className="text-3xl md:text-4xl font-semibold mt-4 text-dark">
             Справочник садовода
           </h1>
           <p className="text-gray-500 mt-4 max-w-xl mx-auto">
@@ -66,7 +69,33 @@ export default function ArticlesHub() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="flex justify-center gap-2 mb-8">
+          <button
+            onClick={() => setView('list')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              view === 'list'
+                ? 'bg-green-deep text-white shadow-sm'
+                : 'bg-white/70 text-gray-600 hover:bg-white/90'
+            }`}
+          >
+            <i className="fa-solid fa-list mr-1"></i> Список
+          </button>
+          <button
+            onClick={() => setView('grid')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              view === 'grid'
+                ? 'bg-green-deep text-white shadow-sm'
+                : 'bg-white/70 text-gray-600 hover:bg-white/90'
+            }`}
+          >
+            <i className="fa-solid fa-grid-2 mr-1"></i> Плитка
+          </button>
+        </div>
+
+        <div className={view === 'grid'
+          ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto'
+          : 'flex flex-col gap-4 max-w-5xl mx-auto'
+        }>
           {sections.map((section, index) => (
             <motion.div
               key={index}

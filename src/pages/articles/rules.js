@@ -1,6 +1,6 @@
 // src/pages/articles/rules.js
 import Navbar from '../../components/Navbar'
-import AnimatedBackground from '../../components/AnimatedBackground'
+import AnimatedBackgroundLight from '../../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -29,8 +29,8 @@ const articles = [
 
 export default function Rules() {
   return (
-    <div className="min-h-screen bg-almond">
-      <AnimatedBackground opacity={0.2} />
+    <div className="min-h-screen relative">
+      <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10 max-w-4xl">
         <motion.div
@@ -41,7 +41,7 @@ export default function Rules() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Правила СНТ
           </span>
-          <h1 className="text-5xl md:text-6xl font-medium mt-4 mb-12 text-dark">
+          <h1 className="text-5xl md:text-6xl font-semibold mt-4 mb-12 text-dark">
             Правила и регламенты
           </h1>
         </motion.div>

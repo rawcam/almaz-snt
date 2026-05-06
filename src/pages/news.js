@@ -11,23 +11,26 @@ const newsItems = [
     date: '01 мая 2026',
     title: 'Открытие летнего сезона 2026',
     excerpt: 'Дорогие садоводы! Поздравляем с началом дачного сезона. Пусть он будет тёплым и урожайным. Правление подготовило подарки…',
+    link: '/news/season-opening',
   },
   {
     tag: 'Важно',
     date: '25 апреля 2026',
     title: 'Общее собрание 15 мая',
     excerpt: 'Утверждение сметы на 2026 год и выборы правления. Явка обязательна. Повестка и проекты документов доступны в разделе «Документы».',
+    link: '/news/meeting-15-may',
   },
   {
     tag: 'Инфраструктура',
     date: '10 апреля 2026',
     title: 'График вывоза мусора',
     excerpt: 'С 20 апреля машина будет приезжать по вторникам и пятницам. Контейнеры установлены у центральных ворот — просьба соблюдать чистоту.',
+    link: '/news/garbage-schedule',
   },
 ]
 
 export default function News() {
-  const [view, setView] = useState('list') // 'list' или 'grid'
+  const [view, setView] = useState('list')
 
   return (
     <div className="min-h-screen relative">
@@ -42,12 +45,11 @@ export default function News() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Будьте в курсе
           </span>
-          <h1 className="text-5xl md:text-6xl font-serif font-semibold mt-4 mb-6 text-dark">
+          <h1 className="text-5xl md:text-6xl font-semibold mt-4 mb-6 text-dark">
             Новости товарищества
           </h1>
         </motion.div>
 
-        {/* Переключатель вида */}
         <div className="flex gap-2 mb-8">
           <button
             onClick={() => setView('list')}
@@ -71,7 +73,6 @@ export default function News() {
           </button>
         </div>
 
-        {/* Список / Плитка */}
         <div className={view === 'grid'
           ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
           : 'flex flex-col gap-4'

@@ -9,12 +9,12 @@ import { motion } from 'framer-motion'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-almond">
+    <div className="relative z-10"> {/* stacking context для всего контента */}
+      <AnimatedBackground />
       <Navbar />
 
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <AnimatedBackground />
-        <div className="container mx-auto px-4 relative z-10 py-20 flex justify-center">
+      <section className="relative min-h-screen flex items-center justify-center">
+        <div className="container mx-auto px-4 py-20 flex justify-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -46,7 +46,7 @@ export default function Home() {
       <WeatherWidgets />
       <GardenerHub />
 
-      <section className="py-20 container mx-auto px-4 relative z-10">
+      <section className="py-20 container mx-auto px-4">
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
           Будьте в курсе
         </span>
@@ -73,7 +73,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20 relative z-10">
+      <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h4 className="text-white text-lg font-semibold">СНТ «Алмаз»</h4>
@@ -98,5 +98,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

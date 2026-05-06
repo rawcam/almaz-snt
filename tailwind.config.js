@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        onest: ['Onest', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],  // основной шрифт (бывший 'Onest')
       },
       colors: {
         almond: '#fafbf8',

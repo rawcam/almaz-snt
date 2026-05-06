@@ -45,7 +45,8 @@ export default function News() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Будьте в курсе
           </span>
-          <h1 className="text-5xl md:text-6xl font-semibold mt-4 mb-6 text-dark">
+          {/* Уменьшен размер, убран засечный шрифт */}
+          <h1 className="text-3xl md:text-4xl font-semibold mt-4 mb-6 text-dark">
             Новости товарищества
           </h1>
         </motion.div>

@@ -1,10 +1,12 @@
 // src/pages/contacts.js
 import Navbar from '../components/Navbar'
+import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 
 export default function Contacts() {
   return (
     <div className="min-h-screen relative">
+      <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div
@@ -15,7 +17,7 @@ export default function Contacts() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Связь с правлением
           </span>
-          <h1 className="text-5xl md:text-6xl font-medium mt-4 mb-12 text-dark">
+          <h1 className="text-5xl md:text-6xl font-semibold mt-4 mb-12 text-dark">
             Контакты
           </h1>
         </motion.div>

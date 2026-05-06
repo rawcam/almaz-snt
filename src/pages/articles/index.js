@@ -1,6 +1,6 @@
 // src/pages/articles/index.js
 import Navbar from '../../components/Navbar'
-import AnimatedBackground from '../../components/AnimatedBackground'
+import AnimatedBackgroundLight from '../../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -20,7 +20,7 @@ const sections = [
   {
     icon: 'fa-solid fa-phone-volume',
     title: 'Экстренные службы',
-    link: '/articles/emergency',
+    link: '/emergency',
     description: 'Скорая, пожарная, газовая служба, укусы клеща.',
   },
   {
@@ -45,8 +45,8 @@ const sections = [
 
 export default function ArticlesHub() {
   return (
-    <div className="min-h-screen bg-almond">
-      <AnimatedBackground opacity={0.2} />
+    <div className="min-h-screen relative">
+      <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div
@@ -58,7 +58,7 @@ export default function ArticlesHub() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Полезная информация
           </span>
-          <h1 className="text-5xl md:text-6xl font-medium mt-4 text-dark">
+          <h1 className="text-5xl md:text-6xl font-semibold mt-4 text-dark">
             Справочник садовода
           </h1>
           <p className="text-gray-500 mt-4 max-w-xl mx-auto">

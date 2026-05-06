@@ -1,44 +1,24 @@
 // src/components/AnimatedBackground.jsx
-import { useEffect, useRef } from 'react';
-
 export default function AnimatedBackground() {
-  const sceneRef = useRef(null);
-
-  useEffect(() => {
-    const layers = sceneRef.current.querySelectorAll('.layer[data-depth]');
-    const handleMouseMove = (e) => {
-      const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-      layers.forEach(layer => {
-        const depth = parseFloat(layer.getAttribute('data-depth'));
-        const moveX = mouseX * depth * 30;
-        const moveY = mouseY * depth * 30;
-        layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      });
-    };
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
-    <div ref={sceneRef} className="parallax-scene">
+    <div className="parallax-scene">
       {/* Небо */}
-      <div className="layer sky" data-depth="0.0"></div>
+      <div className="layer sky"></div>
 
       {/* Солнце */}
-      <div className="layer" data-depth="0.01">
+      <div className="layer">
         <i className="fa-solid fa-sun sun-icon"></i>
       </div>
 
       {/* Облака */}
-      <div className="layer" data-depth="0.02">
+      <div className="layer">
         <i className="fa-solid fa-cloud cloud cloud1"></i>
         <i className="fa-solid fa-cloud cloud cloud2"></i>
         <i className="fa-solid fa-cloud cloud cloud3"></i>
       </div>
 
       {/* Птицы */}
-      <div className="layer" data-depth="0.03">
+      <div className="layer">
         <i className="fa-solid fa-dove bird bird1"></i>
         <i className="fa-solid fa-crow bird bird2" style={{ color: '#555' }}></i>
         <i className="fa-solid fa-dove bird bird3"></i>
@@ -46,7 +26,7 @@ export default function AnimatedBackground() {
       </div>
 
       {/* Передний план */}
-      <div className="layer foreground-icons" data-depth="0.18">
+      <div className="layer foreground-icons">
         <div className="grass"></div>
         <div className="horizon"></div>
 
@@ -77,7 +57,7 @@ export default function AnimatedBackground() {
           width: 100%;
           height: 100%;
           pointer-events: none;
-          z-index: 0; /* Был -1, теперь 0 – карточки стабильно сверху */
+          z-index: 0;
         }
         .layer {
           position: absolute;
@@ -85,9 +65,6 @@ export default function AnimatedBackground() {
           left: 0;
           width: 100%;
           height: 100%;
-          transform: translateZ(0); /* Включаем аппаратное ускорение без создания лишних слоёв */
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
         }
         .sky {
           background: linear-gradient(180deg, #a3c6e7 0%, #dce9f4 50%, #eef3f0 100%);

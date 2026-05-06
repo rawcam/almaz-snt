@@ -29,7 +29,7 @@ const articles = [
 
 export default function Garden() {
   return (
-    <div className="min-h-screen bg-almond relative">
+    <div className="min-h-screen relative">
       <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10 max-w-4xl">
@@ -41,7 +41,7 @@ export default function Garden() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Сад и огород
           </span>
-          <h1 className="text-5xl md:text-6xl font-medium mt-4 mb-12 text-dark">
+          <h1 className="text-5xl md:text-6xl font-semibold mt-4 mb-12 text-dark">
             Статьи по садоводству
           </h1>
         </motion.div>

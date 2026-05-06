@@ -2,6 +2,7 @@
 import Navbar from '../components/Navbar'
 import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 const documents = [
   {
@@ -47,6 +48,8 @@ const documents = [
 ]
 
 export default function Docs() {
+  const [view, setView] = useState('list')
+
   return (
     <div className="min-h-screen relative">
       <AnimatedBackgroundLight opacity={0.5} />
@@ -60,12 +63,38 @@ export default function Docs() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Прозрачность
           </span>
-          <h1 className="text-5xl md:text-6xl font-semibold mt-4 mb-12 text-dark">
+          <h1 className="text-3xl md:text-4xl font-semibold mt-4 mb-6 text-dark">
             Документы
           </h1>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto space-y-4">
+        <div className="flex gap-2 mb-8">
+          <button
+            onClick={() => setView('list')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              view === 'list'
+                ? 'bg-green-deep text-white shadow-sm'
+                : 'bg-white/70 text-gray-600 hover:bg-white/90'
+            }`}
+          >
+            <i className="fa-solid fa-list mr-1"></i> Список
+          </button>
+          <button
+            onClick={() => setView('grid')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              view === 'grid'
+                ? 'bg-green-deep text-white shadow-sm'
+                : 'bg-white/70 text-gray-600 hover:bg-white/90'
+            }`}
+          >
+            <i className="fa-solid fa-grid-2 mr-1"></i> Плитка
+          </button>
+        </div>
+
+        <div className={view === 'grid'
+          ? 'grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto'
+          : 'flex flex-col gap-4 max-w-4xl mx-auto'
+        }>
           {documents.map((doc, i) => (
             <motion.div
               key={doc.id}

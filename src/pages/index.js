@@ -46,24 +46,27 @@ export default function Home() {
           Будьте в курсе
         </span>
         <h2 className="text-4xl font-medium mt-2 mb-12">Новости товарищества</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+        <div className="flex flex-col gap-4 max-w-3xl mx-auto text-left">
           <NewsCard
-            image="/almaz-snt/assets/news1.jpg"
             tag="Событие"
+            date="01 мая 2026"
             title="Открытие летнего сезона 2026"
-            description="С 5 мая включаем водопровод. Проверьте краны на участках."
+            excerpt="Дорогие садоводы! Поздравляем с началом дачного сезона. Пусть он будет тёплым и урожайным!"
+            link="/news"
           />
           <NewsCard
-            image="/almaz-snt/assets/news2.jpg"
             tag="Важно"
+            date="25 апреля 2026"
             title="Общее собрание 15 мая"
-            description="Утверждение сметы на 2026 год и выборы правления. Явка обязательна."
+            excerpt="Утверждение сметы и выборы правления. Явка обязательна."
+            link="/news"
           />
           <NewsCard
-            image="/almaz-snt/assets/news3.jpg"
             tag="Инфраструктура"
+            date="10 апреля 2026"
             title="График вывоза мусора"
-            description="С 20 апреля машина приезжает по вторникам и пятницам."
+            excerpt="С 20 апреля машина приезжает по вторникам и пятницам."
+            link="/news"
           />
         </div>
       </section>

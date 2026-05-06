@@ -1,6 +1,5 @@
 // src/pages/news.js
 import Navbar from '../components/Navbar'
-import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 
 const newsItems = [
@@ -29,8 +28,7 @@ const newsItems = [
 
 export default function News() {
   return (
-    <div className="min-h-screen bg-almond relative">
-      <AnimatedBackgroundLight opacity={0.5} />
+    <div className="min-h-screen relative">
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div

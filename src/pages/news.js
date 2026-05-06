@@ -1,34 +1,37 @@
 // src/pages/news.js
 import Navbar from '../components/Navbar'
+import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
+import NewsCard from '../components/NewsCard'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 const newsItems = [
   {
-    date: '01 мая 2026',
     tag: 'Событие',
-    title: 'Открытие летнего сезона',
-    excerpt: 'С 5 мая включаем водопровод. Проверьте краны на участках.',
-    image: '/almaz-snt/assets/news1.jpg',
+    date: '01 мая 2026',
+    title: 'Открытие летнего сезона 2026',
+    excerpt: 'Дорогие садоводы! Поздравляем с началом дачного сезона. Пусть он будет тёплым и урожайным. Правление подготовило подарки…',
   },
   {
-    date: '25 апреля 2026',
     tag: 'Важно',
+    date: '25 апреля 2026',
     title: 'Общее собрание 15 мая',
-    excerpt: 'Утверждение сметы на 2026 год и выборы правления. Явка обязательна.',
-    image: '/almaz-snt/assets/news2.jpg',
+    excerpt: 'Утверждение сметы на 2026 год и выборы правления. Явка обязательна. Повестка и проекты документов доступны в разделе «Документы».',
   },
   {
-    date: '10 апреля 2026',
     tag: 'Инфраструктура',
+    date: '10 апреля 2026',
     title: 'График вывоза мусора',
-    excerpt: 'С 20 апреля машина приезжает по вторникам и пятницам.',
-    image: '/almaz-snt/assets/news3.jpg',
+    excerpt: 'С 20 апреля машина будет приезжать по вторникам и пятницам. Контейнеры установлены у центральных ворот — просьба соблюдать чистоту.',
   },
 ]
 
 export default function News() {
+  const [view, setView] = useState('list') // 'list' или 'grid'
+
   return (
     <div className="min-h-screen relative">
+      <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div
@@ -39,45 +42,42 @@ export default function News() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Будьте в курсе
           </span>
-          <h1 className="text-5xl md:text-6xl font-medium mt-4 mb-12 text-dark">
+          <h1 className="text-5xl md:text-6xl font-serif font-semibold mt-4 mb-6 text-dark">
             Новости товарищества
           </h1>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Переключатель вида */}
+        <div className="flex gap-2 mb-8">
+          <button
+            onClick={() => setView('list')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              view === 'list'
+                ? 'bg-green-deep text-white shadow-sm'
+                : 'bg-white/70 text-gray-600 hover:bg-white/90'
+            }`}
+          >
+            <i className="fa-solid fa-list mr-1"></i> Список
+          </button>
+          <button
+            onClick={() => setView('grid')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              view === 'grid'
+                ? 'bg-green-deep text-white shadow-sm'
+                : 'bg-white/70 text-gray-600 hover:bg-white/90'
+            }`}
+          >
+            <i className="fa-solid fa-grid-2 mr-1"></i> Плитка
+          </button>
+        </div>
+
+        {/* Список / Плитка */}
+        <div className={view === 'grid'
+          ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+          : 'flex flex-col gap-4'
+        }>
           {newsItems.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="bg-white/70 backdrop-blur-xl rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all"
-            >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gold">
-                    {item.tag}
-                  </span>
-                  <span className="text-xs text-gray-400">{item.date}</span>
-                </div>
-                <h3 className="text-xl font-semibold text-dark mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-gray-500 text-sm">{item.excerpt}</p>
-                <a
-                  href="#"
-                  className="inline-block mt-4 text-gold font-medium hover:underline text-sm"
-                >
-                  Читать полностью →
-                </a>
-              </div>
-            </motion.div>
+            <NewsCard key={i} {...item} />
           ))}
         </div>
       </div>

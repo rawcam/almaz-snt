@@ -105,6 +105,9 @@ export default function WeatherWidgets() {
   if (!weather) return null
 
   const { current, daily } = weather
+  // Используем погодный код текущего дня для фона прогнозов, чтобы было единообразно
+  const todayCode = daily && daily.length > 0 ? daily[0].weatherCode : current.weatherCode
+  const tomorrowCode = daily && daily.length > 1 ? daily[1].weatherCode : todayCode
 
   return (
     <section className="container mx-auto px-4 py-6">
@@ -144,21 +147,21 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.2 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(2, 132, 199, 0.3)', borderColor: 'rgba(2, 132, 199, 0.8)' }}
-          className="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm transition-all"
+          className={`${getWeatherBackground(todayCode, true)} rounded-3xl p-5 border border-gray-100 shadow-sm transition-all`}
         >
-          <h3 className="text-sm font-medium text-gray-600 mb-3">
+          <h3 className="text-sm font-medium opacity-80 mb-3">
             <i className="fa-solid fa-calendar-day mr-1 text-green-deep"></i>Сегодня
           </h3>
           {daily && daily.length > 0 && (
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-light">{daily[0].maxTemp}°</div>
-                <div className="text-sm text-gray-400">{daily[0].minTemp}°</div>
+                <div className="text-sm opacity-70">{daily[0].minTemp}°</div>
               </div>
-              <i className={`${getWeatherIcon(daily[0].weatherCode, true)} text-3xl text-yellow-400`}></i>
+              <i className={`${getWeatherIcon(todayCode, true)} text-3xl text-yellow-400`}></i>
             </div>
           )}
-          <p className="text-xs text-gray-400 mt-3">Макс / Мин</p>
+          <p className="text-xs opacity-60 mt-3">Макс / Мин</p>
         </motion.div>
 
         {/* Прогноз на завтра */}
@@ -168,21 +171,21 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.3 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(250, 204, 21, 0.3)', borderColor: 'rgba(250, 204, 21, 0.8)' }}
-          className="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm transition-all"
+          className={`${getWeatherBackground(tomorrowCode, true)} rounded-3xl p-5 border border-gray-100 shadow-sm transition-all`}
         >
-          <h3 className="text-sm font-medium text-gray-600 mb-3">
+          <h3 className="text-sm font-medium opacity-80 mb-3">
             <i className="fa-solid fa-calendar-alt mr-1 text-green-deep"></i>Завтра
           </h3>
           {daily && daily.length > 1 && (
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-light">{daily[1].maxTemp}°</div>
-                <div className="text-sm text-gray-400">{daily[1].minTemp}°</div>
+                <div className="text-sm opacity-70">{daily[1].minTemp}°</div>
               </div>
-              <i className={`${getWeatherIcon(daily[1].weatherCode, true)} text-3xl text-yellow-400`}></i>
+              <i className={`${getWeatherIcon(tomorrowCode, true)} text-3xl text-yellow-400`}></i>
             </div>
           )}
-          <p className="text-xs text-gray-400 mt-3">Прогноз</p>
+          <p className="text-xs opacity-60 mt-3">Прогноз</p>
         </motion.div>
 
         {/* Сезонные работы (оставим статичный текст) */}

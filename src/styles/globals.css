@@ -1,15 +1,15 @@
-/* styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply font-onest bg-almond text-dark;
+  @apply font-onest bg-transparent text-dark;
 }
 
 .btn-primary {
   @apply bg-green-deep text-white px-8 py-3 rounded-full font-medium transition-all hover:bg-[#1b5e20] shadow-sm;
 }
+
 .btn-outline-gold {
   @apply border border-gold text-gold px-8 py-3 rounded-full font-medium transition-all hover:bg-gold hover:text-white;
 }

@@ -9,12 +9,11 @@ import { motion } from 'framer-motion'
 
 export default function Home() {
   return (
-    <div className="relative z-10"> {/* stacking context для всего контента */}
-      <AnimatedBackground />
+    <div className="relative">
       <Navbar />
-
-      <section className="relative min-h-screen flex items-center justify-center">
-        <div className="container mx-auto px-4 py-20 flex justify-center">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <AnimatedBackground />
+        <div className="container mx-auto px-4 py-20 flex justify-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}

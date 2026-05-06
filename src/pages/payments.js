@@ -1,6 +1,6 @@
 // src/pages/payments.js
 import Navbar from '../components/Navbar'
-import AnimatedBackground from '../components/AnimatedBackground'
+import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import { useState, useEffect, useMemo } from 'react'
 
@@ -60,8 +60,8 @@ export default function Payments() {
   }
 
   return (
-    <div className="min-h-screen bg-almond">
-      <AnimatedBackground opacity={0.2} />
+    <div className="min-h-screen bg-almond relative">
+      <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div
@@ -79,8 +79,7 @@ export default function Payments() {
           <p className="text-gray-500 mt-2">по состоянию на 27 апреля 2026 г.</p>
         </motion.div>
 
-        {/* Переключатель вкладок и кнопка скачивания */}
-        <div className="max-w-7xl mx-auto mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="max-w-6xl mx-auto mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex gap-2">
             <button
               onClick={() => setActiveTable('electricity')}
@@ -124,8 +123,7 @@ export default function Payments() {
           </div>
         </div>
 
-        {/* Поиск */}
-        <div className="max-w-7xl mx-auto mb-4">
+        <div className="max-w-6xl mx-auto mb-4">
           <input
             type="text"
             placeholder="Поиск по номеру участка..."
@@ -135,8 +133,7 @@ export default function Payments() {
           />
         </div>
 
-        {/* Таблица */}
-        <div className="max-w-7xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl p-4 md:p-6 shadow-lg border border-white/30 overflow-x-auto">
+        <div className="max-w-6xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl p-4 md:p-6 shadow-lg border border-white/30 overflow-x-auto">
           {activeTable === 'electricity' ? (
             <table className="w-full text-left border-collapse font-sans">
               <thead>

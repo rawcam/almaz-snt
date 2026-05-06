@@ -107,7 +107,7 @@ export default function WeatherWidgets() {
   if (loading) {
     return (
       <section className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="bg-white/70 backdrop-blur-xl rounded-3xl p-5 border border-gray-100 shadow-sm animate-pulse h-48" />
           ))}
@@ -124,7 +124,7 @@ export default function WeatherWidgets() {
 
   return (
     <section className="container mx-auto px-4 py-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
         {/* Погода сейчас */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

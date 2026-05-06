@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }) {
   const isHomePage = router.pathname === '/'
 
   return (
-    <div className="relative min-h-screen">
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
       {!isHomePage && <AnimatedBackgroundLight opacity={0.5} />}
       <Component {...pageProps} />
     </div>

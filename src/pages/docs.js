@@ -1,6 +1,8 @@
 // src/pages/docs.js
 import Navbar from '../components/Navbar'
 import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
+import Breadcrumbs from '../components/Breadcrumbs'
+import ScrollToTop from '../components/ScrollToTop'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
@@ -55,6 +57,7 @@ export default function Docs() {
       <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
+        <Breadcrumbs currentPath="/docs" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -173,6 +176,7 @@ export default function Docs() {
           © 2026 СНТ «Алмаз». Все права защищены.
         </div>
       </footer>
+      <ScrollToTop />
     </div>
   )
 }

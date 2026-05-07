@@ -49,13 +49,11 @@ export default function WeatherWidgets() {
         const lat = 55.1874
         const lon = 37.9858
 
-        // Погода + почасовой прогноз
         const weatherRes = await fetch(
           `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,wind_speed_10m,uv_index&daily=temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,relative_humidity_2m_max&hourly=temperature_2m,weather_code&timezone=Europe%2FMoscow&forecast_days=3&forecast_hours=24`
         )
         const weatherData = await weatherRes.json()
 
-        // Пыльца
         const pollenRes = await fetch(
           `https://api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=european_aqi,us_aqi,pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,aerosol_optical_depth,dust,uv_index,alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen`
         )
@@ -81,18 +79,15 @@ export default function WeatherWidgets() {
           })),
         })
 
-        // Почасовой прогноз (Московское время)
         if (weatherData.hourly) {
-          const times = weatherData.hourly.time.map(t => t.split('T')[1]?.slice(0, 5)) // массив "HH:MM"
+          const times = weatherData.hourly.time.map(t => t.split('T')[1]?.slice(0, 5))
           const temps = weatherData.hourly.temperature_2m
           const codes = weatherData.hourly.weather_code
 
-          // Определяем текущий час по Москве
           const now = new Date()
           const moscowNow = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Moscow' }))
           const currentHour = moscowNow.getHours()
 
-          // Находим первый индекс с часом >= текущему
           let startIndex = 0
           for (let i = 0; i < times.length; i++) {
             const h = parseInt(times[i].split(':')[0], 10)
@@ -102,7 +97,7 @@ export default function WeatherWidgets() {
             }
           }
 
-          const hourlyData = times.slice(startIndex, startIndex + 12).map((time, i) => ({
+          const hourlyData = times.slice(startIndex, startIndex + 24).map((time, i) => ({
             time,
             temp: Math.round(temps[startIndex + i]),
             code: codes[startIndex + i],
@@ -149,6 +144,11 @@ export default function WeatherWidgets() {
   const tomorrowCode = daily && daily.length > 1 ? daily[1].weatherCode : 0
   const pollenInfo = pollen || { birch: 0, grass: 0, ragweed: 0 }
 
+  // Единый стеклянный фон для всех виджетов
+  const glassBg = isDay
+    ? 'bg-white/60 backdrop-blur-xl border border-white/50'
+    : 'bg-slate-800/60 backdrop-blur-xl border border-slate-700 text-white'
+
   return (
     <section className="container mx-auto px-4 py-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
@@ -159,7 +159,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.1 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(56, 189, 248, 0.3)', borderColor: 'rgba(56, 189, 248, 0.8)' }}
-          className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${current.isDay ? 'bg-gradient-to-br from-yellow-100 to-amber-200' : 'bg-gradient-to-br from-indigo-900 to-slate-800 text-white'}`}
+          className={`rounded-3xl p-5 shadow-sm transition-all ${glassBg}`}
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium opacity-80">
@@ -187,7 +187,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.2 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(2, 132, 199, 0.3)', borderColor: 'rgba(2, 132, 199, 0.8)' }}
-          className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${isDay ? 'bg-white' : 'bg-slate-800 text-white'}`}
+          className={`rounded-3xl p-5 shadow-sm transition-all ${glassBg}`}
         >
           <h3 className="text-sm font-medium opacity-80 mb-3">
             <i className="fa-solid fa-seedling mr-1 text-green-deep" /> Пыльца и УФ
@@ -226,7 +226,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.3 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(250, 204, 21, 0.3)', borderColor: 'rgba(250, 204, 21, 0.8)' }}
-          className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${isDay ? 'bg-white' : 'bg-slate-800 text-white'}`}
+          className={`rounded-3xl p-5 shadow-sm transition-all ${glassBg}`}
         >
           <h3 className="text-sm font-medium opacity-80 mb-3">
             <i className="fa-solid fa-calendar-alt mr-1 text-green-deep" /> Завтра
@@ -255,7 +255,7 @@ export default function WeatherWidgets() {
       {/* Почасовой прогноз */}
       {hourly.length > 0 && (
         <div className="mt-4 max-w-5xl mx-auto">
-          <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-4 border border-gray-100 shadow-sm overflow-x-auto">
+          <div className={`rounded-3xl p-4 shadow-sm overflow-x-auto ${glassBg}`}>
             <div className="flex gap-4 min-w-max">
               {hourly.map((hour, i) => (
                 <div key={i} className="flex flex-col items-center gap-1 px-2 py-1">

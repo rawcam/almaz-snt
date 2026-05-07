@@ -1,8 +1,6 @@
 // src/pages/payments.js
 import Navbar from '../components/Navbar'
 import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
-import Breadcrumbs from '../components/Breadcrumbs'
-import ScrollToTop from '../components/ScrollToTop'
 import { motion } from 'framer-motion'
 import { useState, useEffect, useMemo } from 'react'
 
@@ -17,16 +15,18 @@ export default function Payments() {
   useEffect(() => {
     fetch('/almaz-snt/data/payments/electricity-2026-04-27.json')
       .then(res => res.json())
-      .then(json => setElectricityData(json))
+      .then(json => setElectricityData(json || []))
+      .catch(() => setElectricityData([]))
     fetch('/almaz-snt/data/payments/contributions-detail-2026-04-27.json')
       .then(res => res.json())
-      .then(json => setContributionsDetailData(json))
+      .then(json => setContributionsDetailData(json || []))
+      .catch(() => setContributionsDetailData([]))
   }, [])
 
   const currentData = activeTable === 'electricity' ? electricityData : contributionsDetailData
 
   const filtered = useMemo(() => {
-    let result = [...currentData]
+    let result = currentData ? [...currentData] : []
     if (search) {
       result = result.filter(item =>
         item.plot.toString().includes(search)
@@ -66,7 +66,6 @@ export default function Payments() {
       <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10">
-        <Breadcrumbs currentPath="/payments" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,7 +75,7 @@ export default function Payments() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
             Прозрачность
           </span>
-          <h1 className="text-3xl md:text-4xl font-semibold mt-4 text-dark">
+          <h1 className="text-5xl md:text-6xl font-semibold mt-4 text-dark">
             Ведомости
           </h1>
           <p className="text-gray-500 mt-2">по состоянию на 27 апреля 2026 г.</p>
@@ -138,131 +137,127 @@ export default function Payments() {
 
         <div className="max-w-6xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl p-4 md:p-6 shadow-lg border border-white/30 overflow-x-auto">
           {activeTable === 'electricity' ? (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse font-sans min-w-[800px]">
-                <thead>
-                  <tr className="border-b-2 border-gray-300">
-                    <th className="py-3 px-3 font-semibold text-dark cursor-pointer sticky left-0 bg-white/70 z-10" onClick={() => handleSort('plot')}>
-                      Уч. {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('readingStart')}>
-                      Показания на начало {sortBy === 'readingStart' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('readingEnd')}>
-                      На конец {sortBy === 'readingEnd' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('consumption')}>
-                      Расход {sortBy === 'consumption' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtStart')}>
-                      Долг на начало {sortBy === 'debtStart' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overpaymentStart')}>
-                      Переплата на начало {sortBy === 'overpaymentStart' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('charged')}>
-                      Начислено {sortBy === 'charged' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('paid')}>
-                      Оплачено {sortBy === 'paid' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtEnd')}>
-                      Долг на конец {sortBy === 'debtEnd' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overpaymentEnd')}>
-                      Переплата на конец {sortBy === 'overpaymentEnd' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
+            <table className="w-full text-left border-collapse font-sans">
+              <thead>
+                <tr className="border-b-2 border-gray-300">
+                  <th className="py-3 px-3 font-semibold text-dark cursor-pointer" onClick={() => handleSort('plot')}>
+                    Уч. {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('readingStart')}>
+                    Показания на начало {sortBy === 'readingStart' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('readingEnd')}>
+                    На конец {sortBy === 'readingEnd' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('consumption')}>
+                    Расход {sortBy === 'consumption' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtStart')}>
+                    Долг на начало {sortBy === 'debtStart' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overpaymentStart')}>
+                    Переплата на начало {sortBy === 'overpaymentStart' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('charged')}>
+                    Начислено {sortBy === 'charged' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('paid')}>
+                    Оплачено {sortBy === 'paid' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtEnd')}>
+                    Долг на конец {sortBy === 'debtEnd' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overpaymentEnd')}>
+                    Переплата на конец {sortBy === 'overpaymentEnd' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered && filtered.length > 0 && filtered.map((item, idx) => (
+                  <tr key={item.plot} className={`border-b border-gray-200 hover:bg-white/60 transition-colors ${idx % 2 === 0 ? 'bg-white/30' : ''}`}>
+                    <td className="py-2 px-3 font-medium border-r border-gray-200 text-left">{item.plot}</td>
+                    <td className="py-2 px-3 border-r border-gray-200 text-right">{formatNumber(item.readingStart)}</td>
+                    <td className="py-2 px-3 border-r border-gray-200 text-right">{formatNumber(item.readingEnd)}</td>
+                    <td className="py-2 px-3 border-r border-gray-200 text-right">{formatNumber(item.consumption)}</td>
+                    <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.debtStart)}</td>
+                    <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.overpaymentStart)}</td>
+                    <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.charged)}</td>
+                    <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.paid)}</td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtEnd > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.debtEnd)}
+                    </td>
+                    <td className={`py-2 px-3 text-right ${item.overpaymentEnd > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.overpaymentEnd)}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((item, idx) => (
-                    <tr key={item.plot} className={`border-b border-gray-200 hover:bg-white/60 transition-colors ${idx % 2 === 0 ? 'bg-white/30' : ''}`}>
-                      <td className="py-2 px-3 font-medium border-r border-gray-200 text-left sticky left-0 bg-white/70">{item.plot}</td>
-                      <td className="py-2 px-3 border-r border-gray-200 text-right">{formatNumber(item.readingStart)}</td>
-                      <td className="py-2 px-3 border-r border-gray-200 text-right">{formatNumber(item.readingEnd)}</td>
-                      <td className="py-2 px-3 border-r border-gray-200 text-right">{formatNumber(item.consumption)}</td>
-                      <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.debtStart)}</td>
-                      <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.overpaymentStart)}</td>
-                      <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.charged)}</td>
-                      <td className="py-2 px-3 border-r border-gray-200 text-right">{formatMoney(item.paid)}</td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtEnd > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.debtEnd)}
-                      </td>
-                      <td className={`py-2 px-3 text-right ${item.overpaymentEnd > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.overpaymentEnd)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse font-sans min-w-[800px]">
-                <thead>
-                  <tr className="border-b-2 border-gray-300">
-                    <th className="py-3 px-3 font-semibold text-dark cursor-pointer sticky left-0 bg-white/70 z-10" onClick={() => handleSort('plot')}>
-                      Уч. {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtMembership')}>
-                      Долг по членским взносам {sortBy === 'debtMembership' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overMembership')}>
-                      Переплата по членским {sortBy === 'overMembership' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtTarget')}>
-                      Долг по целевым взносам {sortBy === 'debtTarget' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overTarget')}>
-                      Переплата по целевым {sortBy === 'overTarget' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtElectricity')}>
-                      Долг за электроэнергию {sortBy === 'debtElectricity' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overElectricity')}>
-                      Переплата за электроэнергию {sortBy === 'overElectricity' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('totalDebt')}>
-                      Общий долг {sortBy === 'totalDebt' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
-                    <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('totalOverpayment')}>
-                      Общая переплата {sortBy === 'totalOverpayment' && (order === 'asc' ? '↑' : '↓')}
-                    </th>
+            <table className="w-full text-left border-collapse font-sans">
+              <thead>
+                <tr className="border-b-2 border-gray-300">
+                  <th className="py-3 px-3 font-semibold text-dark cursor-pointer" onClick={() => handleSort('plot')}>
+                    Уч. {sortBy === 'plot' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtMembership')}>
+                    Долг по членским взносам {sortBy === 'debtMembership' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overMembership')}>
+                    Переплата по членским {sortBy === 'overMembership' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtTarget')}>
+                    Долг по целевым взносам {sortBy === 'debtTarget' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overTarget')}>
+                    Переплата по целевым {sortBy === 'overTarget' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('debtElectricity')}>
+                    Долг за электроэнергию {sortBy === 'debtElectricity' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('overElectricity')}>
+                    Переплата за электроэнергию {sortBy === 'overElectricity' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('totalDebt')}>
+                    Общий долг {sortBy === 'totalDebt' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th className="py-3 px-3 cursor-pointer" onClick={() => handleSort('totalOverpayment')}>
+                    Общая переплата {sortBy === 'totalOverpayment' && (order === 'asc' ? '↑' : '↓')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered && filtered.length > 0 && filtered.map((item, idx) => (
+                  <tr key={item.plot} className={`border-b border-gray-200 hover:bg-white/60 transition-colors ${idx % 2 === 0 ? 'bg-white/30' : ''}`}>
+                    <td className="py-2 px-3 font-medium border-r border-gray-200 text-left">{item.plot}</td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtMembership > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.debtMembership)}
+                    </td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.overMembership > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.overMembership)}
+                    </td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtTarget > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.debtTarget)}
+                    </td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.overTarget > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.overTarget)}
+                    </td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtElectricity > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.debtElectricity)}
+                    </td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.overElectricity > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.overElectricity)}
+                    </td>
+                    <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.totalDebt > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.totalDebt)}
+                    </td>
+                    <td className={`py-2 px-3 text-right ${item.totalOverpayment > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
+                      {formatMoney(item.totalOverpayment)}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((item, idx) => (
-                    <tr key={item.plot} className={`border-b border-gray-200 hover:bg-white/60 transition-colors ${idx % 2 === 0 ? 'bg-white/30' : ''}`}>
-                      <td className="py-2 px-3 font-medium border-r border-gray-200 text-left sticky left-0 bg-white/70">{item.plot}</td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtMembership > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.debtMembership)}
-                      </td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.overMembership > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.overMembership)}
-                      </td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtTarget > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.debtTarget)}
-                      </td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.overTarget > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.overTarget)}
-                      </td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.debtElectricity > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.debtElectricity)}
-                      </td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.overElectricity > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.overElectricity)}
-                      </td>
-                      <td className={`py-2 px-3 border-r border-gray-200 text-right ${item.totalDebt > 0 ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.totalDebt)}
-                      </td>
-                      <td className={`py-2 px-3 text-right ${item.totalOverpayment > 0 ? 'text-green-600 font-medium' : 'text-gray-500'}`}>
-                        {formatMoney(item.totalOverpayment)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
 
@@ -300,7 +295,6 @@ export default function Payments() {
           © 2026 СНТ «Алмаз». Все права защищены.
         </div>
       </footer>
-      <ScrollToTop />
     </div>
   )
 }

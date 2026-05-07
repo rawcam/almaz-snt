@@ -25,7 +25,7 @@ export default function AnimatedBackground() {
   const isRain = weatherCode >= 51 && weatherCode <= 67
   const isSnow = weatherCode >= 71 && weatherCode <= 77
   const isStorm = weatherCode >= 95 && weatherCode <= 99
-  const isCloudy = weatherCode >= 1 && weatherCode <= 3 // облачно/пасмурно
+  const isCloudy = weatherCode >= 1 && weatherCode <= 3
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }}>
@@ -35,7 +35,7 @@ export default function AnimatedBackground() {
         background: `linear-gradient(180deg, ${skyTop} 0%, ${skyMid} 50%, ${skyBot} 100%)`
       }} />
 
-      {/* Солнце / Луна (скрываем в сильную облачность/дождь/снег/грозу) */}
+      {/* Солнце / Луна */}
       {!(isRain || isSnow || isStorm || (isCloudy && weatherCode === 3)) && (
         <div style={{
           position: 'absolute', top: '12%', left: '10%', fontSize: '5rem', color: celestialColor,
@@ -46,7 +46,7 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Птицы (днём, в хорошую погоду) */}
+      {/* Птицы */}
       {!isRain && !isSnow && !isStorm && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: birdsOpacity, transition: 'opacity 0.8s', pointerEvents: 'none' }}>
           <i className="fa-solid fa-dove" style={{ position: 'absolute', top: '22%', left: '-5%', fontSize: '1.8rem', color: '#555', animation: 'birdFly1 18s linear infinite' }} />
@@ -56,7 +56,7 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Звёзды (ночью, в ясную погоду) */}
+      {/* Звёзды */}
       {!isRain && !isSnow && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: starsOpacity, transition: 'opacity 0.8s', pointerEvents: 'none' }}>
           {Array.from({ length: 40 }).map((_, i) => (
@@ -69,7 +69,7 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Дождевые капли (если дождь) */}
+      {/* Дождевые капли */}
       {isRain && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
           {Array.from({ length: 30 }).map((_, i) => (
@@ -86,7 +86,7 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Снежинки (если снег) */}
+      {/* Снежинки */}
       {isSnow && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
           {Array.from({ length: 30 }).map((_, i) => (
@@ -103,7 +103,7 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Гроза – молнии (появляются редко) */}
+      {/* Гроза – молнии */}
       {isStorm && (
         <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', animation: 'lightning 4s infinite', opacity: 0.8 }}>
           <i className="fa-solid fa-bolt" style={{ fontSize: '4rem', color: '#facc15' }} />
@@ -141,17 +141,17 @@ export default function AnimatedBackground() {
         <i className="fa-solid fa-house"   style={{ position: 'absolute', bottom: '28%', left: '96%',   fontSize: '8rem', color: '#3b82f6', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
       </div>
 
-      {/* Облака (всегда, но меняются в зависимости от погоды) */}
+      {/* Облака */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-        <i className={`fa-solid ${isRain || isStorm ? 'fa-cloud-rain' : isSnow ? 'fa-cloud' : 'fa-cloud'}`} style={{
+        <i className={`fa-solid ${isRain || isStorm ? 'fa-cloud-rain' : 'fa-cloud'}`} style={{
           position: 'absolute', top: '18%', left: '-10%', fontSize: '3rem', color: isRain || isStorm ? '#94a3b8' : 'white',
           opacity: 0.9, textShadow: '0 2px 8px rgba(0,0,0,0.05)', animation: 'cloudDrift1 40s linear infinite'
         }} />
-        <i className={`fa-solid ${isRain || isStorm ? 'fa-cloud-rain' : isSnow ? 'fa-cloud' : 'fa-cloud'}`} style={{
+        <i className={`fa-solid ${isRain || isStorm ? 'fa-cloud-rain' : 'fa-cloud'}`} style={{
           position: 'absolute', top: '30%', left: '-15%', fontSize: '3rem', color: isRain || isStorm ? '#94a3b8' : 'white',
           opacity: 0.9, textShadow: '0 2px 8px rgba(0,0,0,0.05)', animation: 'cloudDrift2 50s linear infinite'
         }} />
-        <i className={`fa-solid ${isRain || isStorm ? 'fa-cloud-rain' : isSnow ? 'fa-cloud' : 'fa-cloud'}`} style={{
+        <i className={`fa-solid ${isRain || isStorm ? 'fa-cloud-rain' : 'fa-cloud'}`} style={{
           position: 'absolute', top: '14%', left: '-20%', fontSize: '3rem', color: isRain || isStorm ? '#94a3b8' : 'white',
           opacity: 0.9, textShadow: '0 2px 8px rgba(0,0,0,0.05)', animation: 'cloudDrift3 45s linear infinite'
         }} />

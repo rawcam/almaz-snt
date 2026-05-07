@@ -126,40 +126,45 @@ export default function WeatherWidgets() {
     return () => clearInterval(interval)
   }, [])
 
-  // Drag-to-scroll для десктопа
+  // Drag-to-scroll через Pointer Events
   useEffect(() => {
     const slider = scrollRef.current
     if (!slider) return
-    let isDown = false
-    let startX = 0
-    let scrollLeft = 0
 
-    const onMouseDown = (e) => {
-      isDown = true
-      slider.classList.add('cursor-grab')
-      startX = e.pageX - slider.offsetLeft
-      scrollLeft = slider.scrollLeft
-    }
-    const onMouseLeave = () => { isDown = false; slider.classList.remove('cursor-grab') }
-    const onMouseUp = () => { isDown = false; slider.classList.remove('cursor-grab') }
-    const onMouseMove = (e) => {
-      if (!isDown) return
-      e.preventDefault()
-      const x = e.pageX - slider.offsetLeft
-      const walk = (x - startX) * 2
-      slider.scrollLeft = scrollLeft - walk
+    let pos = { left: 0, x: 0 }
+
+    const pointerDown = (e) => {
+      slider.setPointerCapture(e.pointerId)
+      pos = {
+        left: slider.scrollLeft,
+        x: e.clientX,
+      }
+      slider.style.cursor = 'grabbing'
+      slider.style.userSelect = 'none'
     }
 
-    slider.addEventListener('mousedown', onMouseDown)
-    slider.addEventListener('mouseleave', onMouseLeave)
-    slider.addEventListener('mouseup', onMouseUp)
-    slider.addEventListener('mousemove', onMouseMove)
+    const pointerMove = (e) => {
+      if (!slider.hasPointerCapture(e.pointerId)) return
+      const dx = e.clientX - pos.x
+      slider.scrollLeft = pos.left - dx
+    }
+
+    const pointerUp = (e) => {
+      slider.releasePointerCapture(e.pointerId)
+      slider.style.cursor = ''
+      slider.style.userSelect = ''
+    }
+
+    slider.addEventListener('pointerdown', pointerDown)
+    slider.addEventListener('pointermove', pointerMove)
+    slider.addEventListener('pointerup', pointerUp)
+    slider.addEventListener('pointercancel', pointerUp)
 
     return () => {
-      slider.removeEventListener('mousedown', onMouseDown)
-      slider.removeEventListener('mouseleave', onMouseLeave)
-      slider.removeEventListener('mouseup', onMouseUp)
-      slider.removeEventListener('mousemove', onMouseMove)
+      slider.removeEventListener('pointerdown', pointerDown)
+      slider.removeEventListener('pointermove', pointerMove)
+      slider.removeEventListener('pointerup', pointerUp)
+      slider.removeEventListener('pointercancel', pointerUp)
     }
   }, [])
 
@@ -294,12 +299,12 @@ export default function WeatherWidgets() {
         <div className="mt-4 max-w-5xl mx-auto">
           <div
             ref={scrollRef}
-            className={`rounded-3xl p-4 shadow-sm no-scrollbar select-none cursor-grab active:cursor-grabbing ${glassBg}`}
-            style={{ overflow: 'hidden' }}
+            className={`rounded-3xl p-4 shadow-sm overflow-x-auto no-scrollbar ${glassBg} touch-pan-x`}
+            style={{ cursor: 'grab' }}
           >
             <div className="flex gap-4 min-w-max">
               {hourly.map((hour, i) => (
-                <div key={i} className="flex flex-col items-center gap-1 px-2 py-1 pointer-events-none">
+                <div key={i} className="flex flex-col items-center gap-1 px-2 py-1 pointer-events-none select-none">
                   <span className="text-xs font-medium opacity-70">{hour.time}</span>
                   {getWeatherIcon(hour.code, hour.isDay, 'text-xl')}
                   <span className="text-sm font-semibold">{hour.temp}°</span>

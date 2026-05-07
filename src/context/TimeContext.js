@@ -1,4 +1,4 @@
-// src/context/TimeContext.js → теперь WeatherContext
+// src/context/TimeContext.js
 import { createContext, useContext, useState, useEffect } from 'react'
 
 const WeatherContext = createContext({
@@ -84,5 +84,5 @@ export function useWeather() {
   return useContext(WeatherContext)
 }
 
-// для обратной совместимости (если где-то ещё используется useTime)
+// для обратной совместимости
 export { useWeather as useTime }

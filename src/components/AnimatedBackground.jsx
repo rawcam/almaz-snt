@@ -76,7 +76,7 @@ export default function AnimatedBackground() {
       </div>
 
       {/* Передний план (трава, дома, животные, деревья) */}
-      <div className="foreground" style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '30%', background: `linear-gradient(to bottom, ${grassTop} 0%, ${grassBot} 60%)`, transition: 'background 0.8s' }}>
+      <div className="foreground" style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '28%', background: `linear-gradient(to bottom, ${grassTop} 0%, ${grassBot} 60%)`, transition: 'background 0.8s' }}>
         <div style={{ position: 'absolute', bottom: '28%', left: 0, width: '100%', height: '2px', background: 'rgba(0,0,0,0.1)' }}></div>
         <div className="smoke" style={{ position: 'absolute', bottom: 'calc(28% + 9rem)', left: 'calc(4% + 4rem)', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <span style={{ display: 'block', width: '10px', height: '10px', background: '#ccc', borderRadius: '50%', margin: '2px 0', opacity: 0.7, animation: 'rise 3s infinite' }}></span>
@@ -84,7 +84,7 @@ export default function AnimatedBackground() {
           <span style={{ display: 'block', width: '10px', height: '10px', background: '#ccc', borderRadius: '50%', margin: '2px 0', opacity: 0.7, animation: 'rise 3s infinite', animationDelay: '1s' }}></span>
           <span style={{ display: 'block', width: '10px', height: '10px', background: '#ccc', borderRadius: '50%', margin: '2px 0', opacity: 0.7, animation: 'rise 3s infinite', animationDelay: '1.5s' }}></span>
         </div>
-        {/* Дома и животные остаются без изменений, просто внутри контейнера */}
+        {/* Дома и животные */}
         <i className="fa-solid fa-house" style={{ position: 'absolute', bottom: '28%', left: '4%', fontSize: '8rem', color: '#ef4444', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }}></i>
         <i className="fa-solid fa-tree" style={{ position: 'absolute', bottom: '28%', left: '13.2%', fontSize: '4rem', color: '#81c784', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }}></i>
         <i className="fa-solid fa-mosquito" style={{ position: 'absolute', bottom: '28%', left: '22.4%', fontSize: '3.5rem', color: '#4a4a4a', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'buzz 0.5s infinite alternate' }}></i>

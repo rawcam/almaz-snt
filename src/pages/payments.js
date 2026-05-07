@@ -4,7 +4,6 @@ import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import { useState, useEffect, useMemo } from 'react'
 
-// Список доступных периодов — значения соответствуют именам файлов (без расширения)
 const availablePeriods = [
   { value: '2026-03', label: 'Март 2026' },
   { value: '2026-04-27', label: 'Апрель 2026' },
@@ -20,14 +19,13 @@ export default function Payments() {
   const [contributionsDetailData, setContributionsDetailData] = useState([])
   const [selectedPeriod, setSelectedPeriod] = useState('2026-04-27')
   const [onlyDebtors, setOnlyDebtors] = useState(false)
+  const [onlyOverpaid, setOnlyOverpaid] = useState(false)
 
   useEffect(() => {
-    // Загружаем electricity‑данные
     fetch(`/almaz-snt/data/payments/electricity-${selectedPeriod}.json`)
       .then(res => res.json())
       .then(json => setElectricityData(json || []))
       .catch(() => setElectricityData([]))
-    // Загружаем contributions‑данные
     fetch(`/almaz-snt/data/payments/contributions-detail-${selectedPeriod}.json`)
       .then(res => res.json())
       .then(json => setContributionsDetailData(json || []))
@@ -36,9 +34,46 @@ export default function Payments() {
 
   const currentData = activeTable === 'electricity' ? electricityData : contributionsDetailData
 
+  // Статистика по должникам и переплатам (до фильтра)
+  const stats = useMemo(() => {
+    const data = currentData || []
+    let debtorsCount = 0
+    let overpaidCount = 0
+    let totalDebt = 0
+    let totalOverpayment = 0
+
+    data.forEach(item => {
+      if (activeTable === 'electricity') {
+        if ((item.debtEnd || 0) > 0 || (item.debtStart || 0) > 0) {
+          debtorsCount++
+          totalDebt += (item.debtEnd || 0) + (item.debtStart || 0)
+        }
+        if ((item.overpaymentEnd || 0) > 0 || (item.overpaymentStart || 0) > 0) {
+          overpaidCount++
+          totalOverpayment += (item.overpaymentEnd || 0) + (item.overpaymentStart || 0)
+        }
+      } else {
+        if ((item.totalDebt || 0) > 0 || (item.debtMembership || 0) > 0 || (item.debtTarget || 0) > 0 || (item.debtElectricity || 0) > 0) {
+          debtorsCount++
+          totalDebt += (item.totalDebt || 0) + (item.debtMembership || 0) + (item.debtTarget || 0) + (item.debtElectricity || 0)
+        }
+        if ((item.totalOverpayment || 0) > 0 || (item.overMembership || 0) > 0 || (item.overTarget || 0) > 0 || (item.overElectricity || 0) > 0) {
+          overpaidCount++
+          totalOverpayment += (item.totalOverpayment || 0) + (item.overMembership || 0) + (item.overTarget || 0) + (item.overElectricity || 0)
+        }
+      }
+    })
+
+    return {
+      debtors: debtorsCount,
+      overpaid: overpaidCount,
+      totalDebt,
+      totalOverpayment,
+    }
+  }, [currentData, activeTable])
+
   const filtered = useMemo(() => {
     let result = currentData ? [...currentData] : []
-    // Фильтр "только должники"
     if (onlyDebtors) {
       result = result.filter(item => {
         if (activeTable === 'electricity') {
@@ -48,13 +83,20 @@ export default function Payments() {
         }
       })
     }
-    // Поиск
+    if (onlyOverpaid) {
+      result = result.filter(item => {
+        if (activeTable === 'electricity') {
+          return (item.overpaymentEnd || 0) > 0 || (item.overpaymentStart || 0) > 0
+        } else {
+          return (item.totalOverpayment || 0) > 0 || (item.overMembership || 0) > 0 || (item.overTarget || 0) > 0 || (item.overElectricity || 0) > 0
+        }
+      })
+    }
     if (search) {
       result = result.filter(item =>
         item.plot.toString().includes(search)
       )
     }
-    // Сортировка
     if (sortBy) {
       result.sort((a, b) => {
         const valA = a[sortBy] ?? 0
@@ -64,7 +106,7 @@ export default function Payments() {
       })
     }
     return result
-  }, [currentData, search, sortBy, order, onlyDebtors, activeTable])
+  }, [currentData, search, sortBy, order, onlyDebtors, onlyOverpaid, activeTable])
 
   const handleSort = (field) => {
     if (sortBy === field) {
@@ -103,9 +145,9 @@ export default function Payments() {
           </h1>
         </motion.div>
 
-        {/* Выбор периода + фильтры */}
-        <div className="max-w-6xl mx-auto mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="flex items-center gap-3">
+        {/* Панель фильтров */}
+        <div className="max-w-6xl mx-auto mb-6 flex flex-wrap items-center gap-4 bg-white/40 backdrop-blur-xl rounded-3xl p-4 border border-white/30 shadow-sm">
+          <div className="flex items-center gap-2">
             <label className="text-sm font-medium text-gray-600">Период:</label>
             <select
               value={selectedPeriod}
@@ -117,20 +159,33 @@ export default function Payments() {
               ))}
             </select>
           </div>
-          <div className="flex items-center gap-3">
+
+          <div className="flex items-center gap-4 flex-wrap">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-600 cursor-pointer">
               <input
                 type="checkbox"
                 checked={onlyDebtors}
-                onChange={(e) => setOnlyDebtors(e.target.checked)}
-                className="rounded border-gray-300 text-green-deep focus:ring-green-deep"
+                onChange={(e) => { setOnlyDebtors(e.target.checked); if (e.target.checked) setOnlyOverpaid(false) }}
+                className="rounded border-gray-300 text-red-500 focus:ring-red-400"
               />
-              Только должники
+              <span className="text-red-500">Должники ({stats.debtors})</span>
             </label>
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-600 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={onlyOverpaid}
+                onChange={(e) => { setOnlyOverpaid(e.target.checked); if (e.target.checked) setOnlyDebtors(false) }}
+                className="rounded border-gray-300 text-green-600 focus:ring-green-400"
+              />
+              <span className="text-green-600">Переплата ({stats.overpaid})</span>
+            </label>
+            <span className="text-xs text-gray-500">
+              Долг: {formatMoney(stats.totalDebt)} · Переплата: {formatMoney(stats.totalOverpayment)}
+            </span>
           </div>
         </div>
 
-        {/* Переключатель таблиц и кнопки скачивания */}
+        {/* Остальное без изменений */}
         <div className="max-w-6xl mx-auto mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex gap-2">
             <button

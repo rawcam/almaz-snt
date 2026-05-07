@@ -1,6 +1,7 @@
 // src/components/FinancialOverview.jsx
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
 const financials = [
   {
@@ -32,12 +33,10 @@ const financials = [
   {
     icon: 'fa-solid fa-exclamation-triangle',
     title: 'Задолженность',
-    amount: 'Всего: 178 971,12 ₽',
+    amount: 'Загрузка...',
     link: '/payments',
     items: [
-      'Электроэнергия: 52 776,12 ₽',
-      'Членские взносы: 76 450,00 ₽',
-      'Целевые взносы: 49 745,00 ₽',
+      'Загрузка данных...',
     ],
     shadowColor: 'rgba(220, 38, 38, 0.3)',
     borderColor: 'rgba(220, 38, 38, 0.8)',
@@ -45,10 +44,60 @@ const financials = [
 ]
 
 export default function FinancialOverview() {
+  const [debtData, setDebtData] = useState(null)
+
+  useEffect(() => {
+    // Загружаем тот же файл, что и страница ведомостей по умолчанию (апрель 2026)
+    fetch('/almaz-snt/data/payments/contributions-detail-2026-04-27.json')
+      .then(res => res.json())
+      .then(json => {
+        let totalDebt = 0
+        let electricityDebt = 0
+        let membershipDebt = 0
+        let targetDebt = 0
+        json.forEach(item => {
+          const el = item.debtElectricity || 0
+          const mb = item.debtMembership || 0
+          const tg = item.debtTarget || 0
+          electricityDebt += el
+          membershipDebt += mb
+          targetDebt += tg
+          totalDebt += el + mb + tg
+        })
+        setDebtData({
+          total: totalDebt,
+          electricity: electricityDebt,
+          membership: membershipDebt,
+          target: targetDebt,
+        })
+      })
+      .catch(() => setDebtData(null))
+  }, [])
+
+  // Формируем актуальные строки для задолженности
+  const debtAmount = debtData
+    ? `Всего: ${debtData.total.toLocaleString()} ₽`
+    : 'Загрузка...'
+  const debtItems = debtData
+    ? [
+        `Электроэнергия: ${debtData.electricity.toLocaleString()} ₽`,
+        `Членские взносы: ${debtData.membership.toLocaleString()} ₽`,
+        `Целевые взносы: ${debtData.target.toLocaleString()} ₽`,
+      ]
+    : ['Загрузка данных...']
+
+  // Подставляем динамические данные в массив financials
+  const dynamicFinancials = financials.map(item => {
+    if (item.title === 'Задолженность') {
+      return { ...item, amount: debtAmount, items: debtItems }
+    }
+    return item
+  })
+
   return (
     <section className="py-12 container mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {financials.map((item, index) => (
+        {dynamicFinancials.map((item, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}

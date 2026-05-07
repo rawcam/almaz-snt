@@ -5,11 +5,11 @@ import GardenerHub from '../components/GardenerHub'
 import FinancialOverview from '../components/FinancialOverview'
 import WeatherWidgets from '../components/WeatherWidgets'
 import NewsCard from '../components/NewsCard'
-import { TimeProvider } from '../context/TimeContext'
+import { WeatherProvider } from '../context/TimeContext'
 
 export default function Home() {
   return (
-    <TimeProvider>
+    <WeatherProvider>
       <div className="relative z-10">
         <AnimatedBackground />
         <Navbar />
@@ -38,11 +38,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Погода (перенесена выше финансов) */}
         <WeatherWidgets />
         <FinancialOverview />
 
-        {/* Новости (горизонтальные карточки) */}
         <section className="py-16 container mx-auto px-4">
           <div className="text-center mb-10">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-deep">
@@ -102,6 +100,6 @@ export default function Home() {
           </div>
         </footer>
       </div>
-    </TimeProvider>
+    </WeatherProvider>
   )
 }

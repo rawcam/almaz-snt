@@ -1,18 +1,26 @@
 // src/components/WeatherWidgets.jsx
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { useTime } from '../context/TimeContext'
 
-// Иконки погоды (Font Awesome классы)
-const weatherIcons = {
-  clear: 'fa-solid fa-sun',
-  partly_cloudy: 'fa-solid fa-cloud-sun',
-  cloudy: 'fa-solid fa-cloud',
-  rain: 'fa-solid fa-cloud-rain',
-  snow: 'fa-solid fa-snowflake',
-  storm: 'fa-solid fa-cloud-bolt',
-  fog: 'fa-solid fa-smog',
-  night_clear: 'fa-solid fa-moon',
-  night_cloudy: 'fa-solid fa-cloud-moon',
+// Функция для получения иконки погоды с цветами
+function getWeatherIcon(code, isDay, size = 'text-3xl') {
+  if (isDay) {
+    if (code === 0) return <i className={`fa-solid fa-sun ${size} text-yellow-400`}></i>
+    if (code <= 2) return <i className={`fa-solid fa-cloud-sun ${size} text-yellow-400`}></i>
+    if (code <= 3) return <i className={`fa-solid fa-cloud ${size} text-white opacity-90`}></i>
+    if (code <= 48) return <i className={`fa-solid fa-smog ${size} text-gray-300`}></i>
+    if (code <= 57) return <i className={`fa-solid fa-cloud-rain ${size} text-blue-400`}></i>
+    if (code <= 67) return <i className={`fa-solid fa-cloud-rain ${size} text-blue-500`}></i>
+    if (code <= 77) return <i className={`fa-solid fa-snowflake ${size} text-blue-200`}></i>
+    if (code <= 82) return <i className={`fa-solid fa-cloud-showers-heavy ${size} text-blue-600`}></i>
+    if (code <= 86) return <i className={`fa-solid fa-snowflake ${size} text-blue-300`}></i>
+    return <i className={`fa-solid fa-cloud-bolt ${size} text-gray-300`}></i> // Гроза – градиент от белого к синему
+  } else {
+    if (code === 0) return <i className={`fa-solid fa-moon ${size} text-gray-200`}></i>
+    if (code <= 2) return <i className={`fa-solid fa-cloud-moon ${size} text-gray-300`}></i>
+    return <i className={`fa-solid fa-cloud ${size} text-gray-400`}></i>
+  }
 }
 
 // Текстовые описания погоды
@@ -30,41 +38,10 @@ function getWeatherDescription(code) {
   return 'Гроза'
 }
 
-function getWeatherIcon(code, isDay) {
-  if (isDay) {
-    if (code === 0) return weatherIcons.clear
-    if (code <= 2) return weatherIcons.partly_cloudy
-    if (code <= 3) return weatherIcons.cloudy
-    if (code <= 48) return weatherIcons.fog
-    if (code <= 57) return weatherIcons.fog
-    if (code <= 67) return weatherIcons.rain
-    if (code <= 77) return weatherIcons.snow
-    if (code <= 82) return weatherIcons.rain
-    if (code <= 86) return weatherIcons.snow
-    return weatherIcons.storm
-  } else {
-    if (code === 0) return weatherIcons.night_clear
-    if (code <= 2) return weatherIcons.night_cloudy
-    if (code <= 3) return weatherIcons.cloudy
-    if (code <= 48) return weatherIcons.fog
-    return weatherIcons.cloudy
-  }
-}
-
-function getWeatherBackground(code, isDay) {
-  if (isDay) {
-    if (code === 0) return 'bg-gradient-to-br from-yellow-100 to-amber-200'
-    if (code <= 3) return 'bg-gradient-to-br from-gray-100 to-slate-300'
-    return 'bg-gradient-to-br from-slate-200 to-gray-400'
-  } else {
-    if (code === 0) return 'bg-gradient-to-br from-indigo-900 to-slate-800 text-white'
-    return 'bg-gradient-to-br from-slate-800 to-gray-900 text-white'
-  }
-}
-
 export default function WeatherWidgets() {
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(true)
+  const { isDay } = useTime()
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -132,7 +109,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.1 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(56, 189, 248, 0.3)', borderColor: 'rgba(56, 189, 248, 0.8)' }}
-          className={`${getWeatherBackground(current.weatherCode, current.isDay)} rounded-3xl p-5 border border-gray-100 shadow-sm transition-all`}
+          className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${current.isDay ? 'bg-gradient-to-br from-yellow-100 to-amber-200' : 'bg-gradient-to-br from-indigo-900 to-slate-800 text-white'}`}
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium opacity-80">
@@ -142,7 +119,7 @@ export default function WeatherWidgets() {
           </div>
           <div className="flex items-end gap-3 mb-2">
             <span className="text-5xl font-light">{current.temp}°</span>
-            <i className={`${getWeatherIcon(current.weatherCode, current.isDay)} text-3xl text-yellow-400 mb-1`}></i>
+            {getWeatherIcon(current.weatherCode, current.isDay)}
           </div>
           <div className="text-sm opacity-80 mb-4">
             Ощущается {current.feelsLike}° · Ветер {current.windSpeed} м/с
@@ -160,7 +137,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.2 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(2, 132, 199, 0.3)', borderColor: 'rgba(2, 132, 199, 0.8)' }}
-          className={`${getWeatherBackground(todayCode, true)} rounded-3xl p-5 border border-gray-100 shadow-sm transition-all`}
+          className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${isDay ? 'bg-white' : 'bg-slate-800 text-white'}`}
         >
           <h3 className="text-sm font-medium opacity-80 mb-3">
             <i className="fa-solid fa-calendar-day mr-1 text-green-deep"></i>Сегодня
@@ -172,7 +149,7 @@ export default function WeatherWidgets() {
                   <div className="text-2xl font-light">{daily[0].maxTemp}°</div>
                   <div className="text-sm opacity-70">{daily[0].minTemp}°</div>
                 </div>
-                <i className={`${getWeatherIcon(todayCode, true)} text-3xl text-yellow-400`}></i>
+                {getWeatherIcon(todayCode, true)}
               </div>
               <div className="text-sm opacity-80 mb-1">
                 {getWeatherDescription(todayCode)}
@@ -192,7 +169,7 @@ export default function WeatherWidgets() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.3 }}
           whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(250, 204, 21, 0.3)', borderColor: 'rgba(250, 204, 21, 0.8)' }}
-          className={`${getWeatherBackground(tomorrowCode, true)} rounded-3xl p-5 border border-gray-100 shadow-sm transition-all`}
+          className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${isDay ? 'bg-white' : 'bg-slate-800 text-white'}`}
         >
           <h3 className="text-sm font-medium opacity-80 mb-3">
             <i className="fa-solid fa-calendar-alt mr-1 text-green-deep"></i>Завтра
@@ -204,7 +181,7 @@ export default function WeatherWidgets() {
                   <div className="text-2xl font-light">{daily[1].maxTemp}°</div>
                   <div className="text-sm opacity-70">{daily[1].minTemp}°</div>
                 </div>
-                <i className={`${getWeatherIcon(tomorrowCode, true)} text-3xl text-yellow-400`}></i>
+                {getWeatherIcon(tomorrowCode, true)}
               </div>
               <div className="text-sm opacity-80 mb-1">
                 {getWeatherDescription(tomorrowCode)}

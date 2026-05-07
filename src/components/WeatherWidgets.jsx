@@ -130,34 +130,23 @@ export default function WeatherWidgets() {
   useEffect(() => {
     const slider = scrollRef.current
     if (!slider) return
-
     let isDown = false
     let startX = 0
     let scrollLeft = 0
 
     const onMouseDown = (e) => {
       isDown = true
-      slider.classList.add('cursor-grabbing')
+      slider.classList.add('cursor-grab')
       startX = e.pageX - slider.offsetLeft
       scrollLeft = slider.scrollLeft
-      e.preventDefault()
     }
-
-    const onMouseLeave = () => {
-      isDown = false
-      slider.classList.remove('cursor-grabbing')
-    }
-
-    const onMouseUp = () => {
-      isDown = false
-      slider.classList.remove('cursor-grabbing')
-    }
-
+    const onMouseLeave = () => { isDown = false; slider.classList.remove('cursor-grab') }
+    const onMouseUp = () => { isDown = false; slider.classList.remove('cursor-grab') }
     const onMouseMove = (e) => {
       if (!isDown) return
       e.preventDefault()
       const x = e.pageX - slider.offsetLeft
-      const walk = (x - startX) * 1.5
+      const walk = (x - startX) * 2
       slider.scrollLeft = scrollLeft - walk
     }
 
@@ -305,8 +294,8 @@ export default function WeatherWidgets() {
         <div className="mt-4 max-w-5xl mx-auto">
           <div
             ref={scrollRef}
-            className={`rounded-3xl p-4 shadow-sm overflow-x-auto no-scrollbar select-none cursor-grab ${glassBg}`}
-            style={{ userSelect: 'none' }}
+            className={`rounded-3xl p-4 shadow-sm no-scrollbar select-none cursor-grab active:cursor-grabbing ${glassBg}`}
+            style={{ overflow: 'hidden' }}
           >
             <div className="flex gap-4 min-w-max">
               {hourly.map((hour, i) => (

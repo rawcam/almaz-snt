@@ -81,21 +81,33 @@ export default function WeatherWidgets() {
           })),
         })
 
-        // Обработка почасовых данных
+        // Почасовой прогноз (Московское время)
         if (weatherData.hourly) {
-          const now = new Date()
-          const currentHour = now.getHours()
-          const hours = weatherData.hourly.time
+          const times = weatherData.hourly.time.map(t => t.split('T')[1]?.slice(0, 5)) // массив "HH:MM"
           const temps = weatherData.hourly.temperature_2m
           const codes = weatherData.hourly.weather_code
-          const hourlyData = hours
-            .map((time, i) => ({
-              time: time.split('T')[1]?.slice(0, 5) || time,
-              temp: Math.round(temps[i]),
-              code: codes[i],
-              isDay: (parseInt(time.split('T')[1]?.slice(0, 2)) >= 6 && parseInt(time.split('T')[1]?.slice(0, 2)) < 22) // упрощённо день/ночь
-            }))
-            .slice(currentHour, currentHour + 12) // 12 часов вперёд
+
+          // Определяем текущий час по Москве
+          const now = new Date()
+          const moscowNow = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Moscow' }))
+          const currentHour = moscowNow.getHours()
+
+          // Находим первый индекс с часом >= текущему
+          let startIndex = 0
+          for (let i = 0; i < times.length; i++) {
+            const h = parseInt(times[i].split(':')[0], 10)
+            if (h >= currentHour) {
+              startIndex = i
+              break
+            }
+          }
+
+          const hourlyData = times.slice(startIndex, startIndex + 12).map((time, i) => ({
+            time,
+            temp: Math.round(temps[startIndex + i]),
+            code: codes[startIndex + i],
+            isDay: parseInt(time.split(':')[0], 10) >= 6 && parseInt(time.split(':')[0], 10) < 22,
+          }))
           setHourly(hourlyData)
         }
 

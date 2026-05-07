@@ -1,8 +1,6 @@
 // src/pages/news/season-opening.js
 import Navbar from '../../components/Navbar'
 import AnimatedBackgroundLight from '../../components/AnimatedBackgroundLight'
-import Breadcrumbs from '../../components/Breadcrumbs'
-import ScrollToTop from '../../components/ScrollToTop'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -12,8 +10,10 @@ export default function SeasonOpening() {
       <AnimatedBackgroundLight opacity={0.5} />
       <Navbar />
       <div className="container mx-auto px-4 py-20 relative z-10 max-w-4xl">
-        <Breadcrumbs currentPath="/news/season-opening" />
-        <article className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 md:p-8 shadow-sm border border-white/50">
+        <Link href="/news" className="text-gold hover:underline text-sm">
+          ← Назад к новостям
+        </Link>
+        <article className="mt-4 bg-white/70 backdrop-blur-xl rounded-2xl p-6 md:p-8 shadow-sm border border-white/50">
           <span className="text-xs font-semibold uppercase tracking-wider text-gold">
             Событие
           </span>
@@ -115,7 +115,6 @@ export default function SeasonOpening() {
           © 2026 СНТ «Алмаз». Все права защищены.
         </div>
       </footer>
-      <ScrollToTop />
     </div>
   )
 }

@@ -4,10 +4,10 @@ import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
 import { useState, useEffect, useMemo } from 'react'
 
-// Список доступных периодов (можно расширять)
+// Список доступных периодов — значения соответствуют именам файлов (без расширения)
 const availablePeriods = [
   { value: '2026-03', label: 'Март 2026' },
-  { value: '2026-04', label: 'Апрель 2026' },
+  { value: '2026-04-27', label: 'Апрель 2026' },
   { value: '2026-05', label: 'Май 2026' },
 ]
 
@@ -18,14 +18,16 @@ export default function Payments() {
   const [order, setOrder] = useState('asc')
   const [electricityData, setElectricityData] = useState([])
   const [contributionsDetailData, setContributionsDetailData] = useState([])
-  const [selectedPeriod, setSelectedPeriod] = useState('2026-04')
+  const [selectedPeriod, setSelectedPeriod] = useState('2026-04-27')
   const [onlyDebtors, setOnlyDebtors] = useState(false)
 
   useEffect(() => {
+    // Загружаем electricity‑данные
     fetch(`/almaz-snt/data/payments/electricity-${selectedPeriod}.json`)
       .then(res => res.json())
       .then(json => setElectricityData(json || []))
       .catch(() => setElectricityData([]))
+    // Загружаем contributions‑данные
     fetch(`/almaz-snt/data/payments/contributions-detail-${selectedPeriod}.json`)
       .then(res => res.json())
       .then(json => setContributionsDetailData(json || []))

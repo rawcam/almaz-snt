@@ -130,32 +130,34 @@ export default function WeatherWidgets() {
   useEffect(() => {
     const slider = scrollRef.current
     if (!slider) return
+
     let isDown = false
     let startX = 0
     let scrollLeft = 0
 
     const onMouseDown = (e) => {
       isDown = true
-      slider.style.cursor = 'grabbing'
-      slider.style.userSelect = 'none'
+      slider.classList.add('cursor-grabbing')
       startX = e.pageX - slider.offsetLeft
       scrollLeft = slider.scrollLeft
+      e.preventDefault()
     }
-    const onMouseLeave = () => { 
+
+    const onMouseLeave = () => {
       isDown = false
-      slider.style.cursor = 'grab'
-      slider.style.userSelect = ''
+      slider.classList.remove('cursor-grabbing')
     }
-    const onMouseUp = () => { 
+
+    const onMouseUp = () => {
       isDown = false
-      slider.style.cursor = 'grab'
-      slider.style.userSelect = ''
+      slider.classList.remove('cursor-grabbing')
     }
+
     const onMouseMove = (e) => {
       if (!isDown) return
       e.preventDefault()
       const x = e.pageX - slider.offsetLeft
-      const walk = (x - startX) * 2
+      const walk = (x - startX) * 1.5
       slider.scrollLeft = scrollLeft - walk
     }
 
@@ -303,12 +305,12 @@ export default function WeatherWidgets() {
         <div className="mt-4 max-w-5xl mx-auto">
           <div
             ref={scrollRef}
-            className="rounded-3xl p-4 shadow-sm overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none"
-            style={{ ...(glassBg.includes('bg-white') ? { background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.5)' } : { background: 'rgba(30,41,59,0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(51,65,85,0.5)', color: 'white' }) }}
+            className={`rounded-3xl p-4 shadow-sm overflow-x-auto no-scrollbar select-none cursor-grab ${glassBg}`}
+            style={{ userSelect: 'none' }}
           >
-            <div className="flex gap-4 min-w-max pointer-events-none">
+            <div className="flex gap-4 min-w-max">
               {hourly.map((hour, i) => (
-                <div key={i} className="flex flex-col items-center gap-1 px-2 py-1">
+                <div key={i} className="flex flex-col items-center gap-1 px-2 py-1 pointer-events-none">
                   <span className="text-xs font-medium opacity-70">{hour.time}</span>
                   {getWeatherIcon(hour.code, hour.isDay, 'text-xl')}
                   <span className="text-sm font-semibold">{hour.temp}°</span>

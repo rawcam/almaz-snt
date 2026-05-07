@@ -21,21 +21,24 @@ export default function AnimatedBackground() {
   const grassTop = lerpColor('#81a86e', '#2d3a2a', nightFactor)
   const grassBot = lerpColor('#4a6b3a', '#1a2415', nightFactor)
 
-  // Определяем тип погоды для фона
   const isRain = weatherCode >= 51 && weatherCode <= 67
   const isSnow = weatherCode >= 71 && weatherCode <= 77
   const isStorm = weatherCode >= 95 && weatherCode <= 99
   const isCloudy = weatherCode >= 1 && weatherCode <= 3
 
+  // Общие размеры для объектов на горизонте (десктоп)
+  const houseSize = '8rem'
+  const treeSize = '4rem'
+  const animalSize = '3.5rem'
+  const horseSize = '6rem'
+
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }}>
-      {/* Небо */}
       <div style={{
         position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
         background: `linear-gradient(180deg, ${skyTop} 0%, ${skyMid} 50%, ${skyBot} 100%)`
       }} />
 
-      {/* Солнце / Луна */}
       {!(isRain || isSnow || isStorm || (isCloudy && weatherCode === 3)) && (
         <div style={{
           position: 'absolute', top: '12%', left: '10%', fontSize: '5rem', color: celestialColor,
@@ -46,7 +49,6 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Птицы */}
       {!isRain && !isSnow && !isStorm && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: birdsOpacity, transition: 'opacity 0.8s', pointerEvents: 'none' }}>
           <i className="fa-solid fa-dove" style={{ position: 'absolute', top: '22%', left: '-5%', fontSize: '1.8rem', color: '#555', animation: 'birdFly1 18s linear infinite' }} />
@@ -56,7 +58,6 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Звёзды */}
       {!isRain && !isSnow && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: starsOpacity, transition: 'opacity 0.8s', pointerEvents: 'none' }}>
           {Array.from({ length: 40 }).map((_, i) => (
@@ -69,7 +70,6 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Дождевые капли */}
       {isRain && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
           {Array.from({ length: 30 }).map((_, i) => (
@@ -86,7 +86,6 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Снежинки */}
       {isSnow && (
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
           {Array.from({ length: 30 }).map((_, i) => (
@@ -103,23 +102,19 @@ export default function AnimatedBackground() {
         </div>
       )}
 
-      {/* Гроза – молнии */}
       {isStorm && (
         <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', animation: 'lightning 4s infinite', opacity: 0.8 }}>
           <i className="fa-solid fa-bolt" style={{ fontSize: '4rem', color: '#facc15' }} />
         </div>
       )}
 
-      {/* Трава */}
       <div style={{
         position: 'absolute', bottom: 0, left: 0, width: '100%', height: '28%',
         background: `linear-gradient(to bottom, ${grassTop} 0%, ${grassBot} 60%)`,
         transition: 'background 0.8s'
       }} />
 
-      {/* Горизонт с домами и животными */}
-      <div style={{ position: 'absolute', bottom: '28%', left: 0, width: '100%', height: 0, pointerEvents: 'none' }}>
-        {/* Дым */}
+      <div className="horizon-container" style={{ position: 'absolute', bottom: '28%', left: 0, width: '100%', height: 0, pointerEvents: 'none' }}>
         <div style={{ position: 'absolute', bottom: 'calc(9rem)', left: 'calc(4% + 4rem)', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <span style={{ display: 'block', width: '10px', height: '10px', background: '#ccc', borderRadius: '50%', margin: '2px 0', opacity: 0.7, animation: 'rise 3s infinite' }} />
           <span style={{ display: 'block', width: '10px', height: '10px', background: '#ccc', borderRadius: '50%', margin: '2px 0', opacity: 0.7, animation: 'rise 3s infinite', animationDelay: '0.5s' }} />
@@ -127,21 +122,19 @@ export default function AnimatedBackground() {
           <span style={{ display: 'block', width: '10px', height: '10px', background: '#ccc', borderRadius: '50%', margin: '2px 0', opacity: 0.7, animation: 'rise 3s infinite', animationDelay: '1.5s' }} />
         </div>
 
-        {/* Дома, деревья, животные */}
-        <i className="fa-solid fa-house"   style={{ position: 'absolute', bottom: '28%', left: '4%',    fontSize: '8rem', color: '#ef4444', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
-        <i className="fa-solid fa-tree"    style={{ position: 'absolute', bottom: '28%', left: '13.2%', fontSize: '4rem', color: '#81c784', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
-        <i className="fa-solid fa-mosquito" style={{ position: 'absolute', bottom: '28%', left: '22.4%', fontSize: '3.5rem', color: '#4a4a4a', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'buzz 0.5s infinite alternate' }} />
-        <i className="fa-solid fa-dog"     style={{ position: 'absolute', bottom: '28%', left: '31.6%', fontSize: '3.5rem', color: '#8b5a2b', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'sway 2.5s ease-in-out infinite' }} />
-        <i className="fa-solid fa-frog"    style={{ position: 'absolute', bottom: '28%', left: '40.8%', fontSize: '3rem',   color: '#4caf50', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'bounce 1.5s ease-in-out infinite' }} />
-        <i className="fa-solid fa-house"   style={{ position: 'absolute', bottom: '28%', left: '50%',   fontSize: '8rem', color: '#eab308', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
-        <i className="fa-solid fa-fire"    style={{ position: 'absolute', bottom: '28%', left: '59.2%', fontSize: '3rem',   color: '#f97316', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'fireFlicker 1.5s ease-in-out infinite' }} />
-        <i className="fa-solid fa-cat"     style={{ position: 'absolute', bottom: '28%', left: '68.4%', fontSize: '3.5rem', color: '#f97316', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'sway 2.8s ease-in-out infinite' }} />
-        <i className="fa-solid fa-horse"   style={{ position: 'absolute', bottom: '28%', left: '77.6%', fontSize: '6rem',   color: '#78350f', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'sway 3.2s ease-in-out infinite' }} />
-        <i className="fa-solid fa-tree"    style={{ position: 'absolute', bottom: '28%', left: '86.8%', fontSize: '4rem',   color: '#4caf50', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
-        <i className="fa-solid fa-house"   style={{ position: 'absolute', bottom: '28%', left: '96%',   fontSize: '8rem', color: '#3b82f6', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
+        <i className="fa-solid fa-house house-icon"   style={{ position: 'absolute', bottom: '28%', left: '4%',    fontSize: houseSize, color: '#ef4444', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
+        <i className="fa-solid fa-tree tree-icon"    style={{ position: 'absolute', bottom: '28%', left: '13.2%', fontSize: treeSize, color: '#81c784', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
+        <i className="fa-solid fa-mosquito animal-icon" style={{ position: 'absolute', bottom: '28%', left: '22.4%', fontSize: animalSize, color: '#4a4a4a', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'buzz 0.5s infinite alternate' }} />
+        <i className="fa-solid fa-dog animal-icon"     style={{ position: 'absolute', bottom: '28%', left: '31.6%', fontSize: animalSize, color: '#8b5a2b', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'sway 2.5s ease-in-out infinite' }} />
+        <i className="fa-solid fa-frog animal-icon"    style={{ position: 'absolute', bottom: '28%', left: '40.8%', fontSize: '3rem',   color: '#4caf50', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'bounce 1.5s ease-in-out infinite' }} />
+        <i className="fa-solid fa-house house-icon"   style={{ position: 'absolute', bottom: '28%', left: '50%',   fontSize: houseSize, color: '#eab308', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
+        <i className="fa-solid fa-fire animal-icon"    style={{ position: 'absolute', bottom: '28%', left: '59.2%', fontSize: '3rem',   color: '#f97316', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'fireFlicker 1.5s ease-in-out infinite' }} />
+        <i className="fa-solid fa-cat animal-icon"     style={{ position: 'absolute', bottom: '28%', left: '68.4%', fontSize: animalSize, color: '#f97316', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'sway 2.8s ease-in-out infinite' }} />
+        <i className="fa-solid fa-horse horse-icon"   style={{ position: 'absolute', bottom: '28%', left: '77.6%', fontSize: horseSize, color: '#78350f', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)', animation: 'sway 3.2s ease-in-out infinite' }} />
+        <i className="fa-solid fa-tree tree-icon"    style={{ position: 'absolute', bottom: '28%', left: '86.8%', fontSize: treeSize, color: '#4caf50', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
+        <i className="fa-solid fa-house house-icon"   style={{ position: 'absolute', bottom: '28%', left: '96%',   fontSize: houseSize, color: '#3b82f6', textShadow: '2px 2px 4px rgba(0,0,0,0.2)', transform: 'translateX(-50%)' }} />
       </div>
 
-      {/* Облака */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
         <i className={`fa-solid ${isRain || isStorm ? 'fa-cloud-rain' : 'fa-cloud'}`} style={{
           position: 'absolute', top: '18%', left: '-10%', fontSize: '3rem', color: isRain || isStorm ? '#94a3b8' : 'white',
@@ -174,6 +167,23 @@ export default function AnimatedBackground() {
         @keyframes rise { 0% { transform: translateY(0) scale(1); opacity: 0.7; } 100% { transform: translateY(-40px) scale(2); opacity: 0; } }
         @keyframes fall { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
         @keyframes lightning { 0%, 90%, 100% { opacity: 0; } 95% { opacity: 1; } }
+
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+          .house-icon { font-size: 5rem !important; }
+          .tree-icon { font-size: 2.5rem !important; }
+          .animal-icon { font-size: 2.2rem !important; }
+          .horse-icon { font-size: 4rem !important; }
+          .horizon-container i[style*="3rem"] { font-size: 2rem !important; }
+        }
+
+        @media (max-width: 480px) {
+          .house-icon { font-size: 4rem !important; }
+          .tree-icon { font-size: 2rem !important; }
+          .animal-icon { font-size: 1.8rem !important; }
+          .horse-icon { font-size: 3.2rem !important; }
+          .horizon-container i[style*="3rem"] { font-size: 1.8rem !important; }
+        }
       `}</style>
     </div>
   )

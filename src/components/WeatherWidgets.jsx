@@ -3,22 +3,22 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useTime } from '../context/TimeContext'
 
-function getWeatherIcon(code, isDay) {
+function getWeatherIcon(code, isDay, size = 'text-2xl') {
   if (isDay) {
-    if (code === 0) return <i className="fa-solid fa-sun text-3xl text-yellow-400" />
-    if (code <= 2) return <i className="fa-solid fa-cloud-sun text-3xl text-yellow-400" />
-    if (code <= 3) return <i className="fa-solid fa-cloud text-3xl text-white opacity-90" />
-    if (code <= 48) return <i className="fa-solid fa-smog text-3xl text-gray-300" />
-    if (code <= 57) return <i className="fa-solid fa-cloud-rain text-3xl text-blue-400" />
-    if (code <= 67) return <i className="fa-solid fa-cloud-rain text-3xl text-blue-500" />
-    if (code <= 77) return <i className="fa-solid fa-snowflake text-3xl text-blue-200" />
-    if (code <= 82) return <i className="fa-solid fa-cloud-showers-heavy text-3xl text-blue-600" />
-    if (code <= 86) return <i className="fa-solid fa-snowflake text-3xl text-blue-300" />
-    return <i className="fa-solid fa-cloud-bolt text-3xl text-gray-300" />
+    if (code === 0) return <i className={`fa-solid fa-sun ${size} text-yellow-400`} />
+    if (code <= 2) return <i className={`fa-solid fa-cloud-sun ${size} text-yellow-400`} />
+    if (code <= 3) return <i className={`fa-solid fa-cloud ${size} text-white opacity-90`} />
+    if (code <= 48) return <i className={`fa-solid fa-smog ${size} text-gray-300`} />
+    if (code <= 57) return <i className={`fa-solid fa-cloud-rain ${size} text-blue-400`} />
+    if (code <= 67) return <i className={`fa-solid fa-cloud-rain ${size} text-blue-500`} />
+    if (code <= 77) return <i className={`fa-solid fa-snowflake ${size} text-blue-200`} />
+    if (code <= 82) return <i className={`fa-solid fa-cloud-showers-heavy ${size} text-blue-600`} />
+    if (code <= 86) return <i className={`fa-solid fa-snowflake ${size} text-blue-300`} />
+    return <i className={`fa-solid fa-cloud-bolt ${size} text-gray-300`} />
   } else {
-    if (code === 0) return <i className="fa-solid fa-moon text-3xl text-gray-200" />
-    if (code <= 2) return <i className="fa-solid fa-cloud-moon text-3xl text-gray-300" />
-    return <i className="fa-solid fa-cloud text-3xl text-gray-400" />
+    if (code === 0) return <i className={`fa-solid fa-moon ${size} text-gray-200`} />
+    if (code <= 2) return <i className={`fa-solid fa-cloud-moon ${size} text-gray-300`} />
+    return <i className={`fa-solid fa-cloud ${size} text-gray-400`} />
   }
 }
 
@@ -39,6 +39,7 @@ function getWeatherDescription(code) {
 export default function WeatherWidgets() {
   const [weather, setWeather] = useState(null)
   const [pollen, setPollen] = useState(null)
+  const [hourly, setHourly] = useState([])
   const [loading, setLoading] = useState(true)
   const { isDay } = useTime()
 
@@ -48,9 +49,9 @@ export default function WeatherWidgets() {
         const lat = 55.1874
         const lon = 37.9858
 
-        // Погода
+        // Погода + почасовой прогноз
         const weatherRes = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,wind_speed_10m,uv_index&daily=temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,relative_humidity_2m_max&timezone=Europe%2FMoscow&forecast_days=3`
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,wind_speed_10m,uv_index&daily=temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,relative_humidity_2m_max&hourly=temperature_2m,weather_code&timezone=Europe%2FMoscow&forecast_days=3&forecast_hours=24`
         )
         const weatherData = await weatherRes.json()
 
@@ -80,6 +81,24 @@ export default function WeatherWidgets() {
           })),
         })
 
+        // Обработка почасовых данных
+        if (weatherData.hourly) {
+          const now = new Date()
+          const currentHour = now.getHours()
+          const hours = weatherData.hourly.time
+          const temps = weatherData.hourly.temperature_2m
+          const codes = weatherData.hourly.weather_code
+          const hourlyData = hours
+            .map((time, i) => ({
+              time: time.split('T')[1]?.slice(0, 5) || time,
+              temp: Math.round(temps[i]),
+              code: codes[i],
+              isDay: (parseInt(time.split('T')[1]?.slice(0, 2)) >= 6 && parseInt(time.split('T')[1]?.slice(0, 2)) < 22) // упрощённо день/ночь
+            }))
+            .slice(currentHour, currentHour + 12) // 12 часов вперёд
+          setHourly(hourlyData)
+        }
+
         if (pollenData.current) {
           setPollen({
             birch: pollenData.current.birch_pollen || 0,
@@ -102,11 +121,12 @@ export default function WeatherWidgets() {
   if (loading) {
     return (
       <section className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto mb-4">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="bg-white/70 backdrop-blur-xl rounded-3xl p-5 border border-gray-100 shadow-sm animate-pulse h-48" />
           ))}
         </div>
+        <div className="max-w-5xl mx-auto h-20 bg-white/70 backdrop-blur-xl rounded-3xl animate-pulse" />
       </section>
     )
   }
@@ -115,7 +135,6 @@ export default function WeatherWidgets() {
 
   const { current, daily } = weather
   const tomorrowCode = daily && daily.length > 1 ? daily[1].weatherCode : 0
-
   const pollenInfo = pollen || { birch: 0, grass: 0, ragweed: 0 }
 
   return (
@@ -138,7 +157,7 @@ export default function WeatherWidgets() {
           </div>
           <div className="flex items-end gap-3 mb-2">
             <span className="text-5xl font-light">{current.temp}°</span>
-            {getWeatherIcon(current.weatherCode, current.isDay)}
+            {getWeatherIcon(current.weatherCode, current.isDay, 'text-3xl')}
           </div>
           <div className="text-sm opacity-80 mb-4">
             Ощущается {current.feelsLike}° · Ветер {current.windSpeed} м/с
@@ -207,7 +226,7 @@ export default function WeatherWidgets() {
                   <div className="text-2xl font-light">{daily[1].maxTemp}°</div>
                   <div className="text-sm opacity-70">{daily[1].minTemp}°</div>
                 </div>
-                {getWeatherIcon(tomorrowCode, true)}
+                {getWeatherIcon(tomorrowCode, true, 'text-3xl')}
               </div>
               <div className="text-sm opacity-80 mb-1">
                 {getWeatherDescription(tomorrowCode)}
@@ -220,6 +239,23 @@ export default function WeatherWidgets() {
           )}
         </motion.div>
       </div>
+
+      {/* Почасовой прогноз */}
+      {hourly.length > 0 && (
+        <div className="mt-4 max-w-5xl mx-auto">
+          <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-4 border border-gray-100 shadow-sm overflow-x-auto">
+            <div className="flex gap-4 min-w-max">
+              {hourly.map((hour, i) => (
+                <div key={i} className="flex flex-col items-center gap-1 px-2 py-1">
+                  <span className="text-xs font-medium opacity-70">{hour.time}</span>
+                  {getWeatherIcon(hour.code, hour.isDay, 'text-xl')}
+                  <span className="text-sm font-semibold">{hour.temp}°</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

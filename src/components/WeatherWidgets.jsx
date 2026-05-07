@@ -254,7 +254,7 @@ export default function WeatherWidgets() {
       {/* Почасовой прогноз */}
       {hourly.length > 0 && (
         <div className="mt-4 max-w-5xl mx-auto">
-          <div className={`rounded-3xl p-4 shadow-sm overflow-x-auto ${glassBg}`}>
+          <div className={`rounded-3xl p-4 shadow-sm overflow-x-auto no-scrollbar ${glassBg}`}>
             <div className="flex gap-4 min-w-max">
               {hourly.map((hour, i) => (
                 <div key={i} className="flex flex-col items-center gap-1 px-2 py-1">
@@ -267,6 +267,17 @@ export default function WeatherWidgets() {
           </div>
         </div>
       )}
+
+      {/* Стили для скрытия скроллбара */}
+      <style jsx>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   )
 }

@@ -3,27 +3,25 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useTime } from '../context/TimeContext'
 
-// Функция для получения иконки погоды с цветами
-function getWeatherIcon(code, isDay, size = 'text-3xl') {
+function getWeatherIcon(code, isDay) {
   if (isDay) {
-    if (code === 0) return <i className={`fa-solid fa-sun ${size} text-yellow-400`}></i>
-    if (code <= 2) return <i className={`fa-solid fa-cloud-sun ${size} text-yellow-400`}></i>
-    if (code <= 3) return <i className={`fa-solid fa-cloud ${size} text-white opacity-90`}></i>
-    if (code <= 48) return <i className={`fa-solid fa-smog ${size} text-gray-300`}></i>
-    if (code <= 57) return <i className={`fa-solid fa-cloud-rain ${size} text-blue-400`}></i>
-    if (code <= 67) return <i className={`fa-solid fa-cloud-rain ${size} text-blue-500`}></i>
-    if (code <= 77) return <i className={`fa-solid fa-snowflake ${size} text-blue-200`}></i>
-    if (code <= 82) return <i className={`fa-solid fa-cloud-showers-heavy ${size} text-blue-600`}></i>
-    if (code <= 86) return <i className={`fa-solid fa-snowflake ${size} text-blue-300`}></i>
-    return <i className={`fa-solid fa-cloud-bolt ${size} text-gray-300`}></i> // Гроза – градиент от белого к синему
+    if (code === 0) return <i className="fa-solid fa-sun text-3xl text-yellow-400" />
+    if (code <= 2) return <i className="fa-solid fa-cloud-sun text-3xl text-yellow-400" />
+    if (code <= 3) return <i className="fa-solid fa-cloud text-3xl text-white opacity-90" />
+    if (code <= 48) return <i className="fa-solid fa-smog text-3xl text-gray-300" />
+    if (code <= 57) return <i className="fa-solid fa-cloud-rain text-3xl text-blue-400" />
+    if (code <= 67) return <i className="fa-solid fa-cloud-rain text-3xl text-blue-500" />
+    if (code <= 77) return <i className="fa-solid fa-snowflake text-3xl text-blue-200" />
+    if (code <= 82) return <i className="fa-solid fa-cloud-showers-heavy text-3xl text-blue-600" />
+    if (code <= 86) return <i className="fa-solid fa-snowflake text-3xl text-blue-300" />
+    return <i className="fa-solid fa-cloud-bolt text-3xl text-gray-300" />
   } else {
-    if (code === 0) return <i className={`fa-solid fa-moon ${size} text-gray-200`}></i>
-    if (code <= 2) return <i className={`fa-solid fa-cloud-moon ${size} text-gray-300`}></i>
-    return <i className={`fa-solid fa-cloud ${size} text-gray-400`}></i>
+    if (code === 0) return <i className="fa-solid fa-moon text-3xl text-gray-200" />
+    if (code <= 2) return <i className="fa-solid fa-cloud-moon text-3xl text-gray-300" />
+    return <i className="fa-solid fa-cloud text-3xl text-gray-400" />
   }
 }
 
-// Текстовые описания погоды
 function getWeatherDescription(code) {
   if (code === 0) return 'Ясно'
   if (code === 1) return 'Преимущественно ясно'
@@ -40,44 +38,64 @@ function getWeatherDescription(code) {
 
 export default function WeatherWidgets() {
   const [weather, setWeather] = useState(null)
+  const [pollen, setPollen] = useState(null)
   const [loading, setLoading] = useState(true)
   const { isDay } = useTime()
 
   useEffect(() => {
-    const fetchWeather = async () => {
+    const fetchData = async () => {
       try {
         const lat = 55.1874
         const lon = 37.9858
-        const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,relative_humidity_2m_max&timezone=Europe%2FMoscow&forecast_days=3`
+
+        // Погода
+        const weatherRes = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day,wind_speed_10m,uv_index&daily=temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,relative_humidity_2m_max&timezone=Europe%2FMoscow&forecast_days=3`
         )
-        const data = await response.json()
+        const weatherData = await weatherRes.json()
+
+        // Пыльца
+        const pollenRes = await fetch(
+          `https://api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=european_aqi,us_aqi,pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,aerosol_optical_depth,dust,uv_index,alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen`
+        )
+        const pollenData = await pollenRes.json()
+
         setWeather({
           current: {
-            temp: Math.round(data.current.temperature_2m),
-            feelsLike: Math.round(data.current.apparent_temperature),
-            humidity: data.current.relative_humidity_2m,
-            windSpeed: data.current.wind_speed_10m,
-            weatherCode: data.current.weather_code,
-            isDay: data.current.is_day === 1,
+            temp: Math.round(weatherData.current.temperature_2m),
+            feelsLike: Math.round(weatherData.current.apparent_temperature),
+            humidity: weatherData.current.relative_humidity_2m,
+            windSpeed: weatherData.current.wind_speed_10m,
+            weatherCode: weatherData.current.weather_code,
+            isDay: weatherData.current.is_day === 1,
+            uvIndex: weatherData.current.uv_index || 0,
           },
-          daily: data.daily.time.map((date, i) => ({
+          daily: weatherData.daily.time.map((date, i) => ({
             date,
-            maxTemp: Math.round(data.daily.temperature_2m_max[i]),
-            minTemp: Math.round(data.daily.temperature_2m_min[i]),
-            weatherCode: data.daily.weather_code[i],
-            windSpeed: data.daily.wind_speed_10m_max[i],
-            humidity: data.daily.relative_humidity_2m_max[i],
+            maxTemp: Math.round(weatherData.daily.temperature_2m_max[i]),
+            minTemp: Math.round(weatherData.daily.temperature_2m_min[i]),
+            weatherCode: weatherData.daily.weather_code[i],
+            windSpeed: weatherData.daily.wind_speed_10m_max[i],
+            humidity: weatherData.daily.relative_humidity_2m_max[i],
           })),
         })
+
+        if (pollenData.current) {
+          setPollen({
+            birch: pollenData.current.birch_pollen || 0,
+            grass: pollenData.current.grass_pollen || 0,
+            ragweed: pollenData.current.ragweed_pollen || 0,
+          })
+        }
       } catch (error) {
-        console.error('Ошибка получения погоды:', error)
+        console.error('Ошибка получения данных:', error)
       } finally {
         setLoading(false)
       }
     }
-    fetchWeather()
-    const interval = setInterval(fetchWeather, 10 * 60 * 1000)
+
+    fetchData()
+    const interval = setInterval(fetchData, 10 * 60 * 1000)
     return () => clearInterval(interval)
   }, [])
 
@@ -96,8 +114,9 @@ export default function WeatherWidgets() {
   if (!weather) return null
 
   const { current, daily } = weather
-  const todayCode = daily && daily.length > 0 ? daily[0].weatherCode : current.weatherCode
-  const tomorrowCode = daily && daily.length > 1 ? daily[1].weatherCode : todayCode
+  const tomorrowCode = daily && daily.length > 1 ? daily[1].weatherCode : 0
+
+  const pollenInfo = pollen || { birch: 0, grass: 0, ragweed: 0 }
 
   return (
     <section className="container mx-auto px-4 py-6">
@@ -113,7 +132,7 @@ export default function WeatherWidgets() {
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium opacity-80">
-              <i className="fa-solid fa-location-dot mr-1 text-green-deep"></i>СНТ Алмаз
+              <i className="fa-solid fa-location-dot mr-1 text-green-deep" /> СНТ Алмаз
             </span>
             <span className="text-xs opacity-70">Сейчас</span>
           </div>
@@ -125,12 +144,12 @@ export default function WeatherWidgets() {
             Ощущается {current.feelsLike}° · Ветер {current.windSpeed} м/с
           </div>
           <div className="flex justify-between text-sm opacity-70">
-            <span><i className="fa-solid fa-droplet mr-1"></i>{current.humidity}%</span>
+            <span><i className="fa-solid fa-droplet mr-1" />{current.humidity}%</span>
             <span>{current.isDay ? 'День' : 'Ночь'}</span>
           </div>
         </motion.div>
 
-        {/* Прогноз на сегодня */}
+        {/* Пыльца и УФ */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -140,26 +159,33 @@ export default function WeatherWidgets() {
           className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${isDay ? 'bg-white' : 'bg-slate-800 text-white'}`}
         >
           <h3 className="text-sm font-medium opacity-80 mb-3">
-            <i className="fa-solid fa-calendar-day mr-1 text-green-deep"></i>Сегодня
+            <i className="fa-solid fa-seedling mr-1 text-green-deep" /> Пыльца и УФ
           </h3>
-          {daily && daily.length > 0 && (
-            <>
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <div className="text-2xl font-light">{daily[0].maxTemp}°</div>
-                  <div className="text-sm opacity-70">{daily[0].minTemp}°</div>
-                </div>
-                {getWeatherIcon(todayCode, true)}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-xs">Берёза</span>
+              <div className="w-20 bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
+                <div className="bg-yellow-400 h-1.5 rounded-full" style={{ width: `${Math.min(pollenInfo.birch * 10, 100)}%` }} />
               </div>
-              <div className="text-sm opacity-80 mb-1">
-                {getWeatherDescription(todayCode)}
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-xs">Злаки</span>
+              <div className="w-20 bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
+                <div className="bg-yellow-400 h-1.5 rounded-full" style={{ width: `${Math.min(pollenInfo.grass * 10, 100)}%` }} />
               </div>
-              <div className="flex justify-between text-xs opacity-70">
-                <span><i className="fa-solid fa-wind"></i> {daily[0].windSpeed} м/с</span>
-                <span><i className="fa-solid fa-droplet"></i> {daily[0].humidity}%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-xs">Амброзия</span>
+              <div className="w-20 bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
+                <div className="bg-yellow-400 h-1.5 rounded-full" style={{ width: `${Math.min(pollenInfo.ragweed * 10, 100)}%` }} />
               </div>
-            </>
-          )}
+            </div>
+          </div>
+          <div className="mt-4 flex items-center gap-2">
+            <i className="fa-solid fa-sun text-yellow-500" />
+            <span className="text-sm font-medium">УФ-индекс: <strong>{current.uvIndex}</strong></span>
+          </div>
+          <p className="text-xs opacity-60 mt-2">* данные Open-Meteo</p>
         </motion.div>
 
         {/* Прогноз на завтра */}
@@ -172,7 +198,7 @@ export default function WeatherWidgets() {
           className={`rounded-3xl p-5 border border-gray-100 shadow-sm transition-all ${isDay ? 'bg-white' : 'bg-slate-800 text-white'}`}
         >
           <h3 className="text-sm font-medium opacity-80 mb-3">
-            <i className="fa-solid fa-calendar-alt mr-1 text-green-deep"></i>Завтра
+            <i className="fa-solid fa-calendar-alt mr-1 text-green-deep" /> Завтра
           </h3>
           {daily && daily.length > 1 && (
             <>
@@ -187,8 +213,8 @@ export default function WeatherWidgets() {
                 {getWeatherDescription(tomorrowCode)}
               </div>
               <div className="flex justify-between text-xs opacity-70">
-                <span><i className="fa-solid fa-wind"></i> {daily[1].windSpeed} м/с</span>
-                <span><i className="fa-solid fa-droplet"></i> {daily[1].humidity}%</span>
+                <span><i className="fa-solid fa-wind" /> {daily[1].windSpeed} м/с</span>
+                <span><i className="fa-solid fa-droplet" /> {daily[1].humidity}%</span>
               </div>
             </>
           )}

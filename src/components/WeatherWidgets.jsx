@@ -1,7 +1,7 @@
 // src/components/WeatherWidgets.jsx
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { useTime } from '../context/TimeContext'
+import { useWeather } from '../context/TimeContext'
 
 function getWeatherIcon(code, isDay, size = 'text-2xl') {
   if (isDay) {
@@ -41,7 +41,7 @@ export default function WeatherWidgets() {
   const [pollen, setPollen] = useState(null)
   const [hourly, setHourly] = useState([])
   const [loading, setLoading] = useState(true)
-  const { isDay } = useTime()
+  const { isDay } = useWeather()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,7 +144,6 @@ export default function WeatherWidgets() {
   const tomorrowCode = daily && daily.length > 1 ? daily[1].weatherCode : 0
   const pollenInfo = pollen || { birch: 0, grass: 0, ragweed: 0 }
 
-  // Единый стеклянный фон для всех виджетов
   const glassBg = isDay
     ? 'bg-white/60 backdrop-blur-xl border border-white/50'
     : 'bg-slate-800/60 backdrop-blur-xl border border-slate-700 text-white'

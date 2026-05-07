@@ -1,6 +1,6 @@
 // src/components/WeatherWidgets.jsx
 import { motion } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useWeather } from '../context/TimeContext'
 
 function getWeatherIcon(code, isDay, size = 'text-2xl') {
@@ -42,7 +42,6 @@ export default function WeatherWidgets() {
   const [hourly, setHourly] = useState([])
   const [loading, setLoading] = useState(true)
   const { isDay } = useWeather()
-  const scrollRef = useRef(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,48 +123,6 @@ export default function WeatherWidgets() {
     fetchData()
     const interval = setInterval(fetchData, 10 * 60 * 1000)
     return () => clearInterval(interval)
-  }, [])
-
-  // Drag-to-scroll через Pointer Events
-  useEffect(() => {
-    const slider = scrollRef.current
-    if (!slider) return
-
-    let pos = { left: 0, x: 0 }
-
-    const pointerDown = (e) => {
-      slider.setPointerCapture(e.pointerId)
-      pos = {
-        left: slider.scrollLeft,
-        x: e.clientX,
-      }
-      slider.style.cursor = 'grabbing'
-      slider.style.userSelect = 'none'
-    }
-
-    const pointerMove = (e) => {
-      if (!slider.hasPointerCapture(e.pointerId)) return
-      const dx = e.clientX - pos.x
-      slider.scrollLeft = pos.left - dx
-    }
-
-    const pointerUp = (e) => {
-      slider.releasePointerCapture(e.pointerId)
-      slider.style.cursor = ''
-      slider.style.userSelect = ''
-    }
-
-    slider.addEventListener('pointerdown', pointerDown)
-    slider.addEventListener('pointermove', pointerMove)
-    slider.addEventListener('pointerup', pointerUp)
-    slider.addEventListener('pointercancel', pointerUp)
-
-    return () => {
-      slider.removeEventListener('pointerdown', pointerDown)
-      slider.removeEventListener('pointermove', pointerMove)
-      slider.removeEventListener('pointerup', pointerUp)
-      slider.removeEventListener('pointercancel', pointerUp)
-    }
   }, [])
 
   if (loading) {
@@ -297,14 +254,10 @@ export default function WeatherWidgets() {
       {/* Почасовой прогноз */}
       {hourly.length > 0 && (
         <div className="mt-4 max-w-5xl mx-auto">
-          <div
-            ref={scrollRef}
-            className={`rounded-3xl p-4 shadow-sm overflow-x-auto no-scrollbar ${glassBg} touch-pan-x`}
-            style={{ cursor: 'grab' }}
-          >
+          <div className={`rounded-3xl p-4 shadow-sm overflow-x-auto hourly-scroll ${glassBg}`}>
             <div className="flex gap-4 min-w-max">
               {hourly.map((hour, i) => (
-                <div key={i} className="flex flex-col items-center gap-1 px-2 py-1 pointer-events-none select-none">
+                <div key={i} className="flex flex-col items-center gap-1 px-2 py-1 select-none">
                   <span className="text-xs font-medium opacity-70">{hour.time}</span>
                   {getWeatherIcon(hour.code, hour.isDay, 'text-xl')}
                   <span className="text-sm font-semibold">{hour.temp}°</span>
@@ -316,12 +269,28 @@ export default function WeatherWidgets() {
       )}
 
       <style jsx>{`
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
+        /* Скрываем скроллбар, показываем при наведении */
+        .hourly-scroll::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+          background: transparent;
         }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        .hourly-scroll::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.1);
+          border-radius: 12px;
+          opacity: 0;
+          transition: opacity 0.2s;
+        }
+        .hourly-scroll:hover::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.25);
+        }
+        /* Firefox */
+        .hourly-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: transparent transparent;
+        }
+        .hourly-scroll:hover {
+          scrollbar-color: rgba(0,0,0,0.25) transparent;
         }
       `}</style>
     </section>

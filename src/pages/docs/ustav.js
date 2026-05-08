@@ -792,7 +792,7 @@ export default function Ustav() {
           </div>
           <div>
             <h5 className="text-white font-semibold">Контакты</h5>
-            <p className="mt-2">cnt-almaz@yandex.ru<br />+7 (496) 123-45-67</p>
+            <p className="mt-2">cntalmaz25@yandex.ru<br />+7 (991) 635-10-80</p>
           </div>
         </div>
         <div className="text-center mt-8 text-sm text-gray-500">

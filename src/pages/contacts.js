@@ -102,7 +102,7 @@ export default function Contacts() {
                 <i className="fa-solid fa-envelope text-green-deep"></i>
                 Электронная почта
               </h3>
-              <p className="text-gray-500 mt-2">cnt-almaz@yandex.ru</p>
+              <p className="text-gray-500 mt-2">cntalmaz25@yandex.ru</p>
             </div>
 
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">

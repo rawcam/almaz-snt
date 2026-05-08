@@ -12,17 +12,13 @@ const documents = [
     title: 'Устав СНТ «Алмаз»',
     description: 'Актуальная редакция устава товарищества.',
     link: '/docs/ustav',
-    isTextPage: true, // флаг, что это текстовая страница без скачивания
   },
   {
-    id: 3,
+    id: 2,
     icon: 'fa-solid fa-file-signature',
     title: 'Протокол собрания от 23.08.2025',
     description: 'Итоги отчетно-выборного собрания.',
-    formats: {
-      xlsx: '/almaz-snt/uploads/documents/protocol-2025-08-23.xlsx',
-      pdf: '/almaz-snt/uploads/documents/protocol-2025-08-23.pdf',
-    },
+    link: '/docs/protocol-2025-08-23',
   },
 ]
 
@@ -83,53 +79,21 @@ export default function Docs() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="bg-white/70 backdrop-blur-xl rounded-2xl p-5 md:p-6 shadow-sm hover:shadow-md transition-all"
             >
-              {doc.isTextPage ? (
-                <Link href={doc.link} className="flex items-start gap-4 group">
-                  <div className="text-3xl text-green-deep shrink-0">
-                    <i className={doc.icon}></i>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-dark text-lg md:text-xl mb-1 group-hover:text-green-600 transition-colors">
-                      {doc.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm mb-3">{doc.description}</p>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-green-deep group-hover:text-green-900 transition-colors">
-                      Читать
-                      <i className="fa-solid fa-arrow-right text-xs"></i>
-                    </span>
-                  </div>
-                </Link>
-              ) : (
-                <div className="flex items-start gap-4">
-                  <div className="text-3xl text-green-deep shrink-0">
-                    <i className={doc.icon}></i>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-dark text-lg md:text-xl mb-1">
-                      {doc.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm mb-3">{doc.description}</p>
-                    <div className="flex flex-wrap gap-3">
-                      <a
-                        href={doc.formats.xlsx}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-deep text-white text-sm font-medium hover:bg-[#12392e] transition-colors shadow-sm"
-                        download
-                      >
-                        <i className="fa-solid fa-file-excel"></i>
-                        Excel
-                      </a>
-                      <a
-                        href={doc.formats.pdf}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold text-green-deep text-sm font-medium hover:bg-gold hover:text-white transition-colors"
-                        download
-                      >
-                        <i className="fa-solid fa-file-pdf"></i>
-                        PDF
-                      </a>
-                    </div>
-                  </div>
+              <Link href={doc.link} className="flex items-start gap-4 group">
+                <div className="text-3xl text-green-deep shrink-0">
+                  <i className={doc.icon}></i>
                 </div>
-              )}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-dark text-lg md:text-xl mb-1 group-hover:text-green-600 transition-colors">
+                    {doc.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm mb-3">{doc.description}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-green-deep group-hover:text-green-900 transition-colors">
+                    Читать
+                    <i className="fa-solid fa-arrow-right text-xs"></i>
+                  </span>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>

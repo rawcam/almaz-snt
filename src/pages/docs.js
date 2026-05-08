@@ -2,47 +2,26 @@
 import Navbar from '../components/Navbar'
 import AnimatedBackgroundLight from '../components/AnimatedBackgroundLight'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { useState } from 'react'
 
 const documents = [
   {
     id: 1,
-    icon: 'fa-solid fa-file-pdf',
+    icon: 'fa-solid fa-file-signature',
     title: 'Устав СНТ «Алмаз»',
     description: 'Актуальная редакция устава товарищества.',
-    formats: {
-      xlsx: '/almaz-snt/uploads/documents/ustav.xlsx',
-      pdf: '/almaz-snt/uploads/documents/ustav.pdf',
-    },
-  },
-  {
-    id: 2,
-    icon: 'fa-solid fa-chart-simple',
-    title: 'Приходно-расходная смета на 2026 год',
-    description: 'Утверждена общим собранием.',
-    formats: {
-      xlsx: '/almaz-snt/uploads/documents/smeta-2026.xlsx',
-      pdf: '/almaz-snt/uploads/documents/smeta-2026.pdf',
-    },
+    link: '/docs/ustav',
+    isTextPage: true, // флаг, что это текстовая страница без скачивания
   },
   {
     id: 3,
     icon: 'fa-solid fa-file-signature',
-    title: 'Протокол собрания от 15.03.2026',
-    description: 'Итоги весеннего собрания.',
+    title: 'Протокол собрания от 23.08.2025',
+    description: 'Итоги отчетно-выборного собрания.',
     formats: {
-      xlsx: '/almaz-snt/uploads/documents/protocol-2026-03-15.xlsx',
-      pdf: '/almaz-snt/uploads/documents/protocol-2026-03-15.pdf',
-    },
-  },
-  {
-    id: 4,
-    icon: 'fa-solid fa-receipt',
-    title: 'Квитанция на оплату взносов',
-    description: 'Бланк для оплаты членских взносов.',
-    formats: {
-      xlsx: '/almaz-snt/uploads/documents/kvitancia.xlsx',
-      pdf: '/almaz-snt/uploads/documents/kvitancia.pdf',
+      xlsx: '/almaz-snt/uploads/documents/protocol-2025-08-23.xlsx',
+      pdf: '/almaz-snt/uploads/documents/protocol-2025-08-23.pdf',
     },
   },
 ]
@@ -104,49 +83,56 @@ export default function Docs() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="bg-white/70 backdrop-blur-xl rounded-2xl p-5 md:p-6 shadow-sm hover:shadow-md transition-all"
             >
-              <div className="flex items-start gap-4">
-                <div className="text-3xl text-green-deep shrink-0">
-                  <i className={doc.icon}></i>
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-dark text-lg md:text-xl mb-1">
-                    {doc.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm mb-3">{doc.description}</p>
-
-                  <div className="flex flex-wrap gap-3">
-                    <a
-                      href={doc.formats.xlsx}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-deep text-white text-sm font-medium hover:bg-[#12392e] transition-colors shadow-sm"
-                      download
-                    >
-                      <i className="fa-solid fa-file-excel"></i>
-                      Excel
-                    </a>
-                    <a
-                      href={doc.formats.pdf}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold text-green-deep text-sm font-medium hover:bg-gold hover:text-white transition-colors"
-                      download
-                    >
-                      <i className="fa-solid fa-file-pdf"></i>
-                      PDF
-                    </a>
+              {doc.isTextPage ? (
+                <Link href={doc.link} className="flex items-start gap-4 group">
+                  <div className="text-3xl text-green-deep shrink-0">
+                    <i className={doc.icon}></i>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-dark text-lg md:text-xl mb-1 group-hover:text-green-600 transition-colors">
+                      {doc.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm mb-3">{doc.description}</p>
+                    <span className="inline-flex items-center gap-1 text-sm font-medium text-green-deep group-hover:text-green-900 transition-colors">
+                      Читать
+                      <i className="fa-solid fa-arrow-right text-xs"></i>
+                    </span>
+                  </div>
+                </Link>
+              ) : (
+                <div className="flex items-start gap-4">
+                  <div className="text-3xl text-green-deep shrink-0">
+                    <i className={doc.icon}></i>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-dark text-lg md:text-xl mb-1">
+                      {doc.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm mb-3">{doc.description}</p>
+                    <div className="flex flex-wrap gap-3">
+                      <a
+                        href={doc.formats.xlsx}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-deep text-white text-sm font-medium hover:bg-[#12392e] transition-colors shadow-sm"
+                        download
+                      >
+                        <i className="fa-solid fa-file-excel"></i>
+                        Excel
+                      </a>
+                      <a
+                        href={doc.formats.pdf}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold text-green-deep text-sm font-medium hover:bg-gold hover:text-white transition-colors"
+                        download
+                      >
+                        <i className="fa-solid fa-file-pdf"></i>
+                        PDF
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </motion.div>
           ))}
         </div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center text-gray-400 text-sm mt-10"
-        >
-          Все документы доступны в двух форматах. Если у вас возникли трудности с открытием, обратитесь в правление.
-        </motion.p>
       </div>
 
       <footer className="bg-[#0f1a15] text-gray-400 py-12 mt-20 relative z-10">

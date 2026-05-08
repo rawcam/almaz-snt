@@ -11,22 +11,22 @@ const responsiblePersons = [
     icon: 'fa-solid fa-user-tie',
   },
   {
-    role: 'Электрик',
-    name: 'Сергей',
-    phone: '+7 (926) 753-26-33',
-    icon: 'fa-solid fa-bolt',
-  },
-  {
     role: 'Бухгалтер',
     name: 'Елена',
     phone: '+7 (906) 039-79-28',
     icon: 'fa-solid fa-calculator',
   },
   {
-    role: 'Внесение номеров, подключение пультов ворот',
-    name: 'Дмитрий Петрович',
-    phone: '+7 (916) 420-73-22',
-    icon: 'fa-solid fa-key',
+    role: 'Электрик',
+    name: 'Сергей',
+    phone: '+7 (926) 753-26-33',
+    icon: 'fa-solid fa-bolt',
+  },
+  {
+    role: 'Освещение СНТ',
+    name: 'Алексей Владимирович',
+    phone: '+7 (905) 592-56-28',
+    icon: 'fa-solid fa-lightbulb',
   },
   {
     role: 'Уборка снега',
@@ -35,16 +35,16 @@ const responsiblePersons = [
     icon: 'fa-solid fa-snowplow',
   },
   {
+    role: 'Внесение номеров, подключение пультов ворот',
+    name: 'Дмитрий Петрович',
+    phone: '+7 (916) 420-73-22',
+    icon: 'fa-solid fa-key',
+  },
+  {
     role: 'Сторож',
     name: 'Амир',
     phone: '+7 (915) 444-00-19',
     icon: 'fa-solid fa-shield-haltered',
-  },
-  {
-    role: 'Освещение СНТ',
-    name: 'Алексей Владимирович',
-    phone: '+7 (905) 592-56-28',
-    icon: 'fa-solid fa-lightbulb',
   },
 ]
 
@@ -67,9 +67,26 @@ export default function Contacts() {
           </h1>
         </motion.div>
 
+        {/* Основная сетка: карта слева, контакты справа */}
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Левая колонка: общая информация */}
+          {/* Левая колонка: карта и реквизиты */}
           <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white/70 backdrop-blur-xl rounded-2xl overflow-hidden shadow-sm h-[450px]"
+            >
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=37.9858%2C55.1874&z=15&pt=37.9858,55.1874,pm2rdl&l=map"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allowFullScreen={true}
+                title="Карта СНТ Алмаз"
+              />
+            </motion.div>
+
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">
               <h3 className="font-semibold text-lg text-dark flex items-center gap-3">
                 <i className="fa-solid fa-location-dot text-green-deep"></i>
@@ -85,7 +102,7 @@ export default function Contacts() {
                 <i className="fa-solid fa-envelope text-green-deep"></i>
                 Электронная почта
               </h3>
-              <p className="text-gray-500 mt-2">cntalmaz25@yandex.ru</p>
+              <p className="text-gray-500 mt-2">cnt-almaz@yandex.ru</p>
             </div>
 
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">
@@ -100,7 +117,6 @@ export default function Contacts() {
               </p>
             </div>
 
-            {/* Часы приёма */}
             <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 shadow-sm">
               <h3 className="font-semibold text-lg text-dark flex items-center gap-3">
                 <i className="fa-solid fa-clock text-green-deep"></i>
@@ -113,7 +129,7 @@ export default function Contacts() {
             </div>
           </div>
 
-          {/* Правая колонка: ответственные лица */}
+          {/* Правая колонка: ответственные лица в столбик */}
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold text-dark mb-2 flex items-center gap-2">
               <i className="fa-solid fa-address-book text-green-deep"></i>

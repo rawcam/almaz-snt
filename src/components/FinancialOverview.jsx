@@ -47,7 +47,6 @@ export default function FinancialOverview() {
   const [debtData, setDebtData] = useState(null)
 
   useEffect(() => {
-    // Загружаем тот же файл, что и страница ведомостей по умолчанию (апрель 2026)
     fetch('/almaz-snt/data/payments/contributions-detail-2026-04-27.json')
       .then(res => res.json())
       .then(json => {
@@ -56,13 +55,12 @@ export default function FinancialOverview() {
         let membershipDebt = 0
         let targetDebt = 0
         json.forEach(item => {
-          const el = item.debtElectricity || 0
-          const mb = item.debtMembership || 0
-          const tg = item.debtTarget || 0
-          electricityDebt += el
-          membershipDebt += mb
-          targetDebt += tg
-          totalDebt += el + mb + tg
+          // Суммируем отдельные поля для расшифровки
+          electricityDebt += item.debtElectricity || 0
+          membershipDebt += item.debtMembership || 0
+          targetDebt += item.debtTarget || 0
+          // Главное: общий долг считаем как сумму поля totalDebt (как и в ведомости)
+          totalDebt += item.totalDebt || 0
         })
         setDebtData({
           total: totalDebt,
@@ -74,7 +72,6 @@ export default function FinancialOverview() {
       .catch(() => setDebtData(null))
   }, [])
 
-  // Формируем актуальные строки для задолженности
   const debtAmount = debtData
     ? `Всего: ${debtData.total.toLocaleString()} ₽`
     : 'Загрузка...'
@@ -86,7 +83,6 @@ export default function FinancialOverview() {
       ]
     : ['Загрузка данных...']
 
-  // Подставляем динамические данные в массив financials
   const dynamicFinancials = financials.map(item => {
     if (item.title === 'Задолженность') {
       return { ...item, amount: debtAmount, items: debtItems }

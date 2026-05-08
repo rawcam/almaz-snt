@@ -22,7 +22,7 @@ export default function MeetingRules() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/meeting.jpg"
+            src="/assets/articles/meeting.jpg"
             alt="Общее собрание"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

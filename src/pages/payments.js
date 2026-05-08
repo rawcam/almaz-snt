@@ -22,11 +22,11 @@ export default function Payments() {
   const [onlyOverpaid, setOnlyOverpaid] = useState(false)
 
   useEffect(() => {
-    fetch(`/almaz-snt/data/payments/electricity-${selectedPeriod}.json`)
+    fetch(`/data/payments/electricity-${selectedPeriod}.json`)
       .then(res => res.json())
       .then(json => setElectricityData(json || []))
       .catch(() => setElectricityData([]))
-    fetch(`/almaz-snt/data/payments/contributions-detail-${selectedPeriod}.json`)
+    fetch(`/data/payments/contributions-detail-${selectedPeriod}.json`)
       .then(res => res.json())
       .then(json => setContributionsDetailData(json || []))
       .catch(() => setContributionsDetailData([]))
@@ -209,7 +209,7 @@ export default function Payments() {
           <div className="flex gap-2">
             {activeTable === 'electricity' ? (
               <a
-                href={`/almaz-snt/uploads/payments/electricity-${selectedPeriod}.xls`}
+                href={`/uploads/payments/electricity-${selectedPeriod}.xls`}
                 className="inline-flex items-center gap-1 px-4 py-2 bg-white/70 rounded-full text-sm font-medium text-green-deep hover:bg-white/90 transition-colors shadow-sm"
                 download
               >
@@ -217,7 +217,7 @@ export default function Payments() {
               </a>
             ) : (
               <a
-                href={`/almaz-snt/uploads/payments/contributions-${selectedPeriod}.xls`}
+                href={`/uploads/payments/contributions-${selectedPeriod}.xls`}
                 className="inline-flex items-center gap-1 px-4 py-2 bg-white/70 rounded-full text-sm font-medium text-green-deep hover:bg-white/90 transition-colors shadow-sm"
                 download
               >

@@ -22,7 +22,7 @@ export default function TransportRules() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/transport.jpg"
+            src="/assets/articles/transport.jpg"
             alt="Въезд в СНТ"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

@@ -22,7 +22,7 @@ export default function AppleTrees() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/apple-orchard.jpg"
+            src="/assets/articles/apple-orchard.jpg"
             alt="Яблоневый сад"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

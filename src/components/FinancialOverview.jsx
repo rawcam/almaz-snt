@@ -47,7 +47,7 @@ export default function FinancialOverview() {
   const [debtData, setDebtData] = useState(null)
 
   useEffect(() => {
-    fetch('/almaz-snt/data/payments/contributions-detail-2026-04-27.json')
+    fetch('/data/payments/contributions-detail-2026-04-27.json')
       .then(res => res.json())
       .then(json => {
         let totalDebt = 0

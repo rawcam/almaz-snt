@@ -23,7 +23,7 @@ export default function GarbageSchedule() {
           <p className="text-gray-500 text-sm mb-6">10 апреля 2026</p>
 
           <img
-            src="/almaz-snt/assets/news/garbage-schedule.jpg"
+            src="/assets/news/garbage-schedule.jpg"
             alt="Контейнерная площадка СНТ Алмаз"
             className="rounded-xl w-full mb-6 shadow-md"
           />

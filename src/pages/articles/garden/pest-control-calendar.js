@@ -22,7 +22,7 @@ export default function PestControlCalendar() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/pest-control.jpg"
+            src="/assets/articles/pest-control.jpg"
             alt="Обработка сада"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

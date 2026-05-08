@@ -23,7 +23,7 @@ export default function SeasonOpening() {
           <p className="text-gray-500 text-sm mb-6">01 мая 2026</p>
 
           <img
-            src="/almaz-snt/assets/news/season-opening.jpg"
+            src="/assets/news/season-opening.jpg"
             alt="Открытие сезона в СНТ Алмаз"
             className="rounded-xl w-full mb-6 shadow-md"
           />

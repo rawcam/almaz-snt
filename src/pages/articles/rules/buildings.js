@@ -22,7 +22,7 @@ export default function BuildingRules() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/buildings.jpg"
+            src="/assets/articles/buildings.jpg"
             alt="Строительство в СНТ"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

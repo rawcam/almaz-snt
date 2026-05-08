@@ -22,7 +22,7 @@ export default function Fire() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/fire.jpg"
+            src="/assets/articles/fire.jpg"
             alt="Пожарная безопасность"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

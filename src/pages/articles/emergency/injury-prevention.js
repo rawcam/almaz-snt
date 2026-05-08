@@ -22,7 +22,7 @@ export default function InjuryPrevention() {
           </h1>
 
           <img
-            src="/almaz-snt/assets/articles/injury-prevention.jpg"
+            src="/assets/articles/injury-prevention.jpg"
             alt="Предупреждение травматизма"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

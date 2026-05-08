@@ -23,7 +23,7 @@ export default function Meeting15May() {
           <p className="text-gray-500 text-sm mb-6">25 апреля 2026</p>
 
           <img
-            src="/almaz-snt/assets/news/meeting-15-may.jpg"
+            src="/assets/news/meeting-15-may.jpg"
             alt="Общее собрание СНТ Алмаз"
             className="rounded-xl w-full mb-6 shadow-md"
           />

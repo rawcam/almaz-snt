@@ -22,7 +22,7 @@ export default function LawnCare() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/lawn.jpg"
+            src="/assets/articles/lawn.jpg"
             alt="Ухоженный газон"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

@@ -22,7 +22,7 @@ export default function ToolsSafety() {
           </h1>
 
           <img
-            src="/almaz-snt/assets/articles/tools-safety.jpg"
+            src="/assets/articles/tools-safety.jpg"
             alt="Безопасная работа"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

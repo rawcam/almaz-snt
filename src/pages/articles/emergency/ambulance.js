@@ -22,7 +22,7 @@ export default function Ambulance() {
           </h1>
           
           <img
-            src="/almaz-snt/assets/articles/ambulance.jpg"
+            src="/assets/articles/ambulance.jpg"
             alt="Скорая помощь"
             className="rounded-2xl w-full object-cover h-64 md:h-96 mb-8 shadow-md"
           />

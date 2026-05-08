@@ -12,13 +12,15 @@ const documents = [
     title: 'Устав СНТ «Алмаз»',
     description: 'Актуальная редакция устава товарищества.',
     link: '/docs/ustav',
+    isTextPage: true,
   },
   {
-    id: 2,
+    id: 3,
     icon: 'fa-solid fa-file-signature',
     title: 'Протокол собрания от 23.08.2025',
     description: 'Итоги отчетно-выборного собрания.',
     link: '/docs/protocol-2025-08-23',
+    isTextPage: true,
   },
 ]
 
@@ -116,7 +118,10 @@ export default function Docs() {
           </div>
           <div>
             <h5 className="text-white font-semibold">Контакты</h5>
-            <p className="mt-2">cntalmaz25@yandex.ru<br />+7 (991) 635-10-80</p>
+            <p className="mt-2">
+              <a href="mailto:cntalmaz25@yandex.ru" className="hover:text-gold">cntalmaz25@yandex.ru</a><br />
+              <a href="tel:+79916351080" className="hover:text-gold">+7 (991) 635-10-80</a>
+            </p>
           </div>
         </div>
         <div className="text-center mt-8 text-sm text-gray-500">

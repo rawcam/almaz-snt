@@ -34,7 +34,7 @@ export default function Payments() {
 
   const currentData = activeTable === 'electricity' ? electricityData : contributionsDetailData
 
-  // Статистика по должникам и переплатам (до фильтра)
+  // Исправленная статистика
   const stats = useMemo(() => {
     const data = currentData || []
     let debtorsCount = 0
@@ -44,23 +44,20 @@ export default function Payments() {
 
     data.forEach(item => {
       if (activeTable === 'electricity') {
-        if ((item.debtEnd || 0) > 0 || (item.debtStart || 0) > 0) {
-          debtorsCount++
-          totalDebt += (item.debtEnd || 0) + (item.debtStart || 0)
-        }
-        if ((item.overpaymentEnd || 0) > 0 || (item.overpaymentStart || 0) > 0) {
-          overpaidCount++
-          totalOverpayment += (item.overpaymentEnd || 0) + (item.overpaymentStart || 0)
-        }
+        const debt = (item.debtEnd || 0) + (item.debtStart || 0)
+        const over = (item.overpaymentEnd || 0) + (item.overpaymentStart || 0)
+        if (debt > 0) debtorsCount++
+        if (over > 0) overpaidCount++
+        totalDebt += debt
+        totalOverpayment += over
       } else {
-        if ((item.totalDebt || 0) > 0 || (item.debtMembership || 0) > 0 || (item.debtTarget || 0) > 0 || (item.debtElectricity || 0) > 0) {
-          debtorsCount++
-          totalDebt += (item.totalDebt || 0) + (item.debtMembership || 0) + (item.debtTarget || 0) + (item.debtElectricity || 0)
-        }
-        if ((item.totalOverpayment || 0) > 0 || (item.overMembership || 0) > 0 || (item.overTarget || 0) > 0 || (item.overElectricity || 0) > 0) {
-          overpaidCount++
-          totalOverpayment += (item.totalOverpayment || 0) + (item.overMembership || 0) + (item.overTarget || 0) + (item.overElectricity || 0)
-        }
+        // Для взносов используем totalDebt, который уже сумма всех долгов
+        const debt = (item.totalDebt || 0)
+        const over = (item.totalOverpayment || 0)
+        if (debt > 0) debtorsCount++
+        if (over > 0) overpaidCount++
+        totalDebt += debt
+        totalOverpayment += over
       }
     })
 
@@ -79,7 +76,7 @@ export default function Payments() {
         if (activeTable === 'electricity') {
           return (item.debtEnd || 0) > 0 || (item.debtStart || 0) > 0
         } else {
-          return (item.totalDebt || 0) > 0 || (item.debtMembership || 0) > 0 || (item.debtTarget || 0) > 0 || (item.debtElectricity || 0) > 0
+          return (item.totalDebt || 0) > 0
         }
       })
     }
@@ -88,7 +85,7 @@ export default function Payments() {
         if (activeTable === 'electricity') {
           return (item.overpaymentEnd || 0) > 0 || (item.overpaymentStart || 0) > 0
         } else {
-          return (item.totalOverpayment || 0) > 0 || (item.overMembership || 0) > 0 || (item.overTarget || 0) > 0 || (item.overElectricity || 0) > 0
+          return (item.totalOverpayment || 0) > 0
         }
       })
     }
@@ -185,7 +182,7 @@ export default function Payments() {
           </div>
         </div>
 
-        {/* Остальное без изменений */}
+        {/* Переключатель таблиц и кнопки скачивания */}
         <div className="max-w-6xl mx-auto mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex gap-2">
             <button

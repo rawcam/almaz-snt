@@ -73,9 +73,9 @@ const sections = [
     title: 'Контакты правления',
     link: '/articles/contacts-board',
     items: [
-      { text: 'Председатель: +7 (496) 123-45-67', link: '/articles/contacts-board' },
-      { text: 'Бухгалтер: +7 (496) 123-45-78', link: '/articles/contacts-board' },
-      { text: 'Электрик: +7 (496) 123-45-89', link: '/articles/contacts-board' },
+      { text: 'Председатель: +7 (991) 635-10-80', link: '/articles/contacts-board' },
+      { text: 'Бухгалтер: +7 (906) 039-79-28', link: '/articles/contacts-board' },
+      { text: 'Электрик: +7 (926) 753-26-33', link: '/articles/contacts-board' },
       { text: 'Приём по субботам с 11:00 до 14:00', link: '/articles/contacts-board' },
     ],
     shadowColor: 'rgba(107, 114, 128, 0.3)',
